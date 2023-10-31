@@ -1,6 +1,7 @@
 @extends('frontend.layouts.app')
 @section('content')
 <section>
+    
     <div style="background: #c5e3ed">
         <div class="container d-flex justify-content-center align-items-center">
             <div class="intro-box ">
