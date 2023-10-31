@@ -4,7 +4,6 @@
         a {
             text-decoration: none;
         }
-
         .loginColor a,
         .loginColor a i {
             color: red !important;

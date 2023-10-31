@@ -16,7 +16,6 @@
     font-size: 1.0em;
     clear: both;
   }
-
   #cwcReportHeader {
     color: #FFF;
     font-family: Tahoma, Verdana, Segoe, sans-serif;

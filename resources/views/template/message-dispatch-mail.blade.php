@@ -61,7 +61,6 @@
                                             {{$user['token']}}
                                         </p>
 
-
                                         <p style="margin:1px 0 12px 0;font-size:16px;font-family:Arial,sans-serif;font-weight: 600;text-align: end;color: #606060;">
                                             Thank you </p>
                                     </td>

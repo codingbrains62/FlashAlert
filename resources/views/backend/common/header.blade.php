@@ -7,7 +7,6 @@
         <span class="logo-lg text-left"><img src="{{asset('admin_assets/dist/img/FlashAlert-Icon.png')}}"><b>Flash Alert</b></span>
 
     </a>
-
     <nav class="navbar navbar-static-top">
 @if(Session::has('loginId'))
         <a href="javascript:void(0)" class="sidebar-toggle" data-toggle="push-menu" role="button">

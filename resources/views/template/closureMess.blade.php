@@ -15,7 +15,6 @@
             font-weight: 500;
             font-family: Arial, sans-serif;
         }
-
         .btn {
             margin: 10px 0px;
             border-radius: 4px;

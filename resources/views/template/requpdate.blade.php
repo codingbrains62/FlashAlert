@@ -81,7 +81,6 @@
                                         @endforeach
                                         <!-- <p>codingbrains32@gmail.com - News Releases</p>
                                         <p>codingbrains62@gmail.com - Emergency</p> -->
-
                                     </td>
                                 </tr>
                             </table>
