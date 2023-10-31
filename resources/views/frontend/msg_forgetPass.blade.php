@@ -1,7 +1,6 @@
 @extends('frontend.layouts.app')
 @section('content')
 <section>
-    
     <div style="background: #c5e3ed">
         <div class="container d-flex justify-content-center align-items-center">
             <div class="intro-box ">
@@ -10,6 +9,7 @@
                 </div>
             </div>
         </div>
+        
     </div>
     <div class="container bank-union my-4" style="min-height: 42vh;">
         <form class="log-input front-login" method="post" action="your_action_url_here">
