@@ -105,22 +105,6 @@ class RegionalUserManagementController extends Controller
             return view('backend.uorg_inform',compact('response','response1','response2','response3','response4','response5','response6','response7','logo'));
     }
 
-    public function emulateLogin(Request $request)
-    {
-        $orgID = $request->input('orgID');
-        $user=DB::table('users')->where('OrgID',$orgID)->first(); 
-    //dd($user);
-    if ($user) {
-        // Authenticate the user using their orgID
-        $request->session()->put('loginId', $user->id);
-        $request->session()->put('role', $user->SecurityLevel);
-        // Session::setName('org_session');
-        // session(['user' => $user]);
-        session(['loginId' => $user->id, 'role' => $user->SecurityLevel]);
-        return back();
-    }
-}
-
     public function usrorg_inform_sub($id){
         //echo $id=base64_decode($id);
         $id=base64_decode($id);
@@ -784,6 +768,9 @@ class RegionalUserManagementController extends Controller
         }else{
          DB::table('orggroupmember')->where('OrgID',$orgid)->delete();  
         }
-        return back()->with('success', 'Data Updated Successfully!');  
+        return back()->with('success', 'Data Updated Successfully!'); 
+        
       }
+     
+
 }

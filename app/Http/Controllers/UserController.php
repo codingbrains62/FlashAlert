@@ -11,30 +11,22 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\MyTestMail;
 use Illuminate\Support\Facades\Crypt;
 use Validator;
-use RateLimiter;
 use App\Mail\MyMail;
 use Illuminate\Support\Str;
 class UserController extends Controller
 {
     // Login Page
     public function login(){
-        $key = "login.".request()->ip();
-        return view('backend.signin',[
-            'key'=>$key,
-            'retries'=>RateLimiter::retriesLeft($key, 5),
-            'seconds'=>RateLimiter::availableIn($key),
-        ]);
+        return view('backend.signin');
     }
     public function customLogin(Request $request)
     {
-        //dd ($request->orgID);
         $ip= $request->ip();
         $fail=[
             'username'=>$request->email,
             'password'=>$request->password,
             'address'=>$ip,
         ];
-        //dd (session()->all());
         $request->validate([
             'email' => 'required',
             'password'=>'required|min:4|max:20'
@@ -42,15 +34,10 @@ class UserController extends Controller
         $user = DB::table('users')->where('UserName', $request->email)->first();
         if ($user) {
             if (Hash::check($request->password, $user->PasswordHash)) {
-
-              
-
-                // dd ($request->session()->regenerateToken());
             //if (Crypt::decrypt($user->PasswordHash) == $request->password) {
                 $request->session()->put('loginId',$user->id);
                 $request->session()->put('role',$user->SecurityLevel);
                 session(['loginId' => $user->id, 'role' => $user->SecurityLevel]);
-                RateLimiter::clear("login.".$request->ip());
                     return redirect()->route('backend.dashboard');
             }else{
             DB::table('failed_login')->insert($fail);
@@ -67,9 +54,6 @@ class UserController extends Controller
         if (Session::has('loginId')) {
          $data=DB::table('users')->where('id',session::get('loginId'))->get(); 
         }
-        // echo"<pre>";
-        // print_r($data);
-        // die;
          
          return view('backend.dashboard',compact('data'));
     }

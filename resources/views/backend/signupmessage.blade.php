@@ -17,7 +17,7 @@
             FlashAlert Policy :
             <small></small>
         </h1>
-        <ol class="breadcrumb">
+        <ol class="breadcrumb font-14 fw-6">
             <li><a href="{{ url('/IIN/dashboard') }}"><i class="fa fa-dashboard"></i> Home</a></li>
             <li class="active">FlashAlert Policy :</li>
         </ol>
@@ -43,8 +43,8 @@
                 @csrf
                 <div class="col-md-12 col-sm-12 col-xs-12">
                 FlashAlert Newswire Signup
-                    <div class="info-box" style="padding:18px;">
-                        <h4 class="bg-info" style="padding:5px;">SignUp Completed!:</h4>
+                    <div class="info-box box-body">
+                        <h4 class="bg-info p-3" >SignUp Completed!</h4>
                        <p style="text-align:center;"><b>Your Sign Up was Succesfull</b></p> 
                      
                        <p style="text-align:center;">  Your account will be active as soon as it is authenticated by FlashAlert.</p>

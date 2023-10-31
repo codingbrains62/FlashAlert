@@ -58,7 +58,7 @@
                                     @if ($prevUserID !== $email->PublicUserID)
                                         @if (!is_null($prevUserID))
                                             <div>
-                                                <a href=""> {{ rtrim($emailString, ', ') }} </a>
+                                                <a href="{{ route('messengersub.login') }}"> {{ rtrim($emailString, ', ') }} </a>
                                             </div>
                                         @endif
                                         @php
@@ -72,7 +72,7 @@
                                 @endforeach
                                 @if (!is_null($prevUserID))
                                     <div>
-                                        <a href=""> {{ rtrim($emailString, ', ') }} </a>
+                                        <a href="{{ route('messengersub.login') }}"> {{ rtrim($emailString, ', ') }} </a>
                                     </div>
                                 @endif
                                 @if (!is_null($prevUserID))

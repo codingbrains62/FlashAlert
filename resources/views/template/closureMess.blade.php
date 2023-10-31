@@ -15,6 +15,7 @@
             font-weight: 500;
             font-family: Arial, sans-serif;
         }
+
         .btn {
             margin: 10px 0px;
             border-radius: 4px;
@@ -43,7 +44,7 @@
                     <tr style="border-collapse:collapse;border:1px solid #cccccc;border-spacing:0;">
                         <td align="left"
                             style="padding:10px 230px; display: flex; align-items: center;justify-content: center;background: #e4e5eb;">
-                            <img src="https://flashalert.projects-codingbrains.com/admin_assets/dist/img/FlashAlert-Icon.png"
+                            <img src="flashalert.projects-codingbrains.com/admin_assets/dist/img/FlashAlert-Icon.png"
                                 alt="logo" style="pading:6px;">
                             <span style="font-weight: bold;font-size: 16px;color: #9b381b;margin: 4px 5px;"> Flash Alert
                             </span>

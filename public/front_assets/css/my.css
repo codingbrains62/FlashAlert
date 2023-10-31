@@ -1041,6 +1041,45 @@ form.front-login {
     /* align-items: center; */
     position: relative;
 }
+#loginDropdown{
+    font-weight: bold;
+    font-size: 12px;
+    color: #097397;
+    font-family: inherit;
+}
+#loginDropdown:hover{
+    text-decoration: none;
+    color: #097397;
+    font-weight: bold;
+    background: #c2e5f1;
+}
+#loginDropdown:focus{
+    box-shadow: none;
+    border: 1px solid #097397;
+}
+.iconTbl-mh{
+    min-height: 160px;;
+}
+.loginColor .dropdown-menu{
+    margin: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.loginColor .dropdown-menu li a{
+    
+    font-size: 12px;
+    font-weight: 700;
+    color: #097397 !important;
+    padding: 6px 18px;
+}
+.loginColor .dropdown-menu li a:hover{
+    color: #097397;
+    font-weight: bold;
+    background: #c2e5f1;
+}
+..loginColor .dropdown-menu li i{
+    color: #097397;
+}
 /*Media Query*/
 @media (max-width: 920.98px) {
     .form-select.info-select {

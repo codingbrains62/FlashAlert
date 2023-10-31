@@ -173,7 +173,8 @@ $region=Helper::getData('regions',$dataRegion[0]->RegionID,'','');
                                 <td> @php echo (($cities->Tier2Enabled==1) ? 'Y' : ''); @endphp</td>
                                 <td class="d-flex">
                                     <a href="{{url('IIN/edit-org/'.$cities->id)}}" class="btn btn-social-icon cst-edit scrollToTopButton" data-toggle="tooltip" title="Edit" ><i class="fa fa-fw fa-edit"></i></a>
-                                    <a style="margin-left:3px"href="{{url('IIN/delete-org/'.$cities->id)}}" class="btn btn-social-icon cst-del" data-toggle="tooltip" title="Delete"  onclick="showConfirmDialog(event)"><i class="fa fa-trash"></i></a>
+                                    {{-- <a style="margin-left:3px"href="{{url('IIN/delete-org/'.$cities->id)}}" class="btn btn-social-icon cst-del" data-toggle="tooltip" title="Delete"  onclick="showConfirmDialog(event)"><i class="fa fa-trash"></i></a> --}}
+                                    <a style="margin-left:3px"href="{{url('IIN/delete-org/'.$cities->id)}}" class="btn btn-social-icon cst-del" data-toggle="tooltip" title="Delete"  onclick="confirm('Are you sure you want to delete this ?')"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
                             @endforeach

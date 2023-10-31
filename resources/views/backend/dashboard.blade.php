@@ -1,13 +1,14 @@
 @extends('backend.layouts.backapp')
 @section('title', 'Dashboard')
 @section('content')
-    
+    {{-- <?php
+    echo"<pre>";
+    print_r($data[0]);
+    die;
+    ?> --}}
     <div class="content-wrapper">
         <section class="content-header">
-            <h1>
-                Dashboard
-                <small></small>
-            </h1>
+        <h2 class="blu mt-0" style="text-decoration: underline;">Welcome to FlashAlert Newswire & FAQs</h2>
             <ol class="breadcrumb fw-6 font-14">
                 <li><a href="{{ url('/IIN/dashboard') }}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
                 <li class="active">Dashboard</li>
@@ -17,8 +18,8 @@
             <section class="content">
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="info-box" style="padding:18px;">
-                            <h2 class="blu" style="text-decoration: underline;">Welcome to FlashAlert Newswire & FAQs</h2>
+                        <div class="info-box box-body">
+                            <!-- <h2 class="blu" style="text-decoration: underline;">Welcome to FlashAlert Newswire & FAQs</h2> -->
                             <p>FlashAlert has collected and distributed school weather closure information to the news media
                                 for 44 years. With
                                 the arrival of the Internet two decades ago, the system grew from 60 school districts in

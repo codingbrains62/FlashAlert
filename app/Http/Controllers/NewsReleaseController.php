@@ -7,12 +7,17 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use stdClass;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\newsReleaseMail;
+use App\Mail\newsReleasePreviewEmail;
 
 class NewsReleaseController extends Controller
 {
     public function postNews(Request $request)
     {
+
+        $url = $request->fullUrl();
+        $segments = explode('/', $url);
+        $lastSegment = end($segments);
+        //dd($lastSegment);
         // Calculate the date 60 days ago from the current date
         $daysAgo = Carbon::now()->subDays(60);
         $decodedRegion = $request->input('region');
@@ -76,8 +81,84 @@ class NewsReleaseController extends Controller
         $response = $response->orderBy('Description', 'asc')->orderBy('CatagoryName', 'asc')->paginate(25);
         // Preserve checkbox state after data retrieval
         $checkboxState = $showAllData ? '1' : '';
+
         return view('backend.post-news-release',compact('data','response','category','selectedRegion','selectedorgcat','firstselectbox', 'checkboxState', 'searchHeadline'));
-    }
+}
+
+// ------------------------News Release Archive ----------------------------------- //
+public function newsReleaseArchive(Request $request)
+    {
+
+        $url = $request->fullUrl();
+        $segments = explode('/', $url);
+        $lastSegment = end($segments);
+        //dd($lastSegment);
+        // Calculate the date 60 days ago from the current date
+        $daysAgo = Carbon::now()->subDays(60);
+        $decodedRegion = $request->input('region');
+        $decodedOrgCatSelect = $request->input('orgCatSelect');
+        $searchHeadline = $request->input('searchHeadline');
+        $selectedRegion = $decodedRegion ?? '0';
+        $selectedorgcat = $decodedOrgCatSelect ?? '0';
+        $firstselectbox = $request->input('firstselectbox') ?? '0';
+        $companyname = $request->input('companyname') ?? '0';
+        $data = DB::table('regions')->orderBy('Description', 'asc')->get();
+
+        // Check if region is selected and the checkbox is checked
+        $isRegionSelected = !empty($decodedRegion);
+        $showAllData = $isRegionSelected && $request->has('olderThan60');
+
+        // Calculate the date based on the checkbox and region selection
+        $daysAgo = $showAllData ? null : Carbon::now()->subDays(60);
+
+        // Your existing DB query
+        $response = DB::table('regions as r')
+            ->join('orgcats as oc', 'oc.RegionID', '=', 'r.id')
+            ->leftjoin('orgs as o', 'o.OrgCatID', '=', 'oc.id')
+            ->join('users as u', 'o.id', '=', 'u.OrgID')
+            ->join('pressreleases as p', 'o.id', '=', 'p.OrgID')
+            ->when($isRegionSelected, function ($query) use ($decodedRegion) {
+                return $query->where('o.RegionID', '=', $decodedRegion);
+            })
+            ->when(!empty($decodedOrgCatSelect), function ($query) use ($decodedOrgCatSelect) {
+                return $query->where('o.OrgCatID', '=', $decodedOrgCatSelect);
+            })
+            ->when($daysAgo !== null, function ($query) use ($daysAgo) {
+                return $query->where('p.EffectiveDate', '>=', $daysAgo);
+            })
+            ->when(!empty($searchHeadline), function ($query) use ($searchHeadline) {
+                return $query->where('p.Headline', 'LIKE', '%' . $searchHeadline . '%');
+            })
+            ->orderBy('r.Description', 'asc')
+            ->orderBy('oc.CatagoryName', 'asc')
+            ->orderBy('o.Name', 'asc')
+            ->orderBy('p.EffectiveDate', 'desc');
+
+        $category='';
+        if (!empty($firstselectbox)) {
+            if ($firstselectbox === '1') {
+                $response->where('u.Tier', '=', $firstselectbox);
+            } elseif ($firstselectbox === '2') {
+                $response->where('u.Tier', '=', $firstselectbox);
+            } elseif ($firstselectbox === 'active') {
+                $response->where('u.bActivated', '=', $firstselectbox);
+            }
+        }
+        if (!empty($decodedRegion)) {
+                $response->where('o.RegionID', '=', $decodedRegion);
+                $category=DB::table('orgcats')->where('RegionID',$decodedRegion)->get();
+        }
+        if (!empty($decodedOrgCatSelect)) {
+            $response->where('o.OrgCatID', $decodedOrgCatSelect);
+            $category=DB::table('orgcats')->where('RegionID',$decodedRegion)->get();
+        }
+        
+        $response = $response->orderBy('Description', 'asc')->orderBy('CatagoryName', 'asc')->paginate(25);
+        // Preserve checkbox state after data retrieval
+        $checkboxState = $showAllData ? '1' : '';
+        return view('backend.newsReleaseArchives',compact('data','response','category','selectedRegion','selectedorgcat','firstselectbox', 'checkboxState', 'searchHeadline'));
+}
+// ------------------------News Release Archive ----------------------------------- //
     public function newsRelease(Request $request)
     {
         $data['selectedregion'] = $request->region;
@@ -166,29 +247,16 @@ class NewsReleaseController extends Controller
         }
         return view('backend.news-release', $data);
     }
-    public function postnewsrelMail(Request $request){
-    // echo "<pre>";
-    // print_r($request->all());
-    // die;
-    $selectedEmail = $request->email;
-    $headline = $request->headline;
-    $postText = $request->post_text;
-    $contactInfo = $request->contact_info;
-    // $orgDropdown1 = $request->orgDropdown;
-    $orgDropdown2 = DB::table('orgs')->where('id', $request->orgDropdown)->get();
-    
-    // echo $orgDropdown2[0]->Name;
-    // die;
-    $orgDropdown = $orgDropdown2[0]->Name;
-    // echo $selectedEmail;
-    // echo $headline;
-    // echo $postText;
-    // echo $contactInfo;
-    // echo $orgDropdown;
-    // die;
 
-    Mail::to($selectedEmail)->send(new newsReleaseMail($headline, $postText, $contactInfo, $orgDropdown)); 
- echo "Preview emailed to: $selectedEmail";
-}
+    public function postnewsrelMail(Request $request){
+        $selectedEmail = $request->email;
+        $headline = $request->headline;
+        $postText = $request->post_text;
+        $contactInfo = $request->contact_info;
+        $orgData = DB::table('orgs')->where('id', $request->orgDropdown)->get();
+        $orgDropdown = $orgData[0]->Name;
+        Mail::to($selectedEmail)->send(new newsReleasePreviewEmail($headline, $postText, $contactInfo, $orgDropdown)); 
+         return "Preview emailed to: $selectedEmail";
+    }
          
 }

@@ -184,7 +184,7 @@
                                 <div class="d-flex space-between">
                                     <p class="m-0">Preview: Normal text goes to all; Italic text is additional info for
                                         Messenger/Web</p>
-                                    <p class="m-0">( 10 Charasters )</p>
+                                    <p class="m-0">( 10 characters )</p>
                                 </div>
                                 <div class="callout callout-warning">
                                     <strong style="font-size: 16px;">FlashAlert:</strong>
@@ -210,9 +210,10 @@
                                             <select class="form-control" name="deletedAt" id="deletedAt" size="1">
                                                 <?php
                                                 // Set the timezone to India Standard Time
-                                                //date_default_timezone_set('Asia/Kolkata');
+                                                // date_default_timezone_set('Asia/Kolkata');
                                                 // Set the timezone to Pacific Time Zone
                                                 date_default_timezone_set('America/Los_Angeles'); // Pacific Time Zone
+                                                
                                                 // Set the timezone to Mountain Time Zone
                                                 date_default_timezone_set('America/Denver'); // Mountain Time Zone
                                                 // Get the current time
@@ -234,9 +235,18 @@
                                                 while ($start_time <= $end_time) {
                                                     // Calculate the current time
                                                     $time = $start_time->format('h:i a');
+                                                    // Check if the time is 12:00 AM
+                                                    if ($start_time->format('H:i') === '00:00') {
+                                                        $time .= ' (Midnight)';
+                                                    }
+                                                    // Check if the time is 12:00 PM
+                                                    if ($start_time->format('H:i') === '12:00') {
+                                                        $time .= ' (Noon)';
+                                                    }
                                                     // Calculate the current date and time in the desired format
                                                     $formatted_option = $start_time->format('D. M. j - ') . $time;
                                                     // Check if the start time is greater than or equal to the current time
+                                                
                                                     if ($start_time >= $current_time) {
                                                         // Determine if the current option is selected
                                                         $selected = '';
@@ -498,7 +508,7 @@
             $("#openingStatus").on("change", function() {
                 // Get the selected value from the "Opening Status" dropdown
                 const selectedValue = $(this).val();
-                alert(selectedValue)
+                alert("Message will delete at: " + selectedValue);
 
                 // Find the corresponding option in the "Deleted At" dropdown and set it as selected
                 $("#deletedAt").val(selectedValue);

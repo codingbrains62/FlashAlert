@@ -7,6 +7,7 @@
         <p>Using the FA Messenger app is easy. After creating your account online, load/open the app and enter the email address and password and the app will link to it. The app may ask permission to send you Push Notifications. That’s it. You will continue to make changes to your account (i.e. adding schools or orgs you want to hear from or changing an email address) through your online account.</p>
         <p><strong>ORGS: Please note that you can substiture the address of your specific FlashAlert home page (i.e. for Oregon State Police, <em>www.flashalert.net/id/OSPOre</em> ) in lieu of the third paragraph.</strong></p>
         
+        
         <div>
             <section></section>
         </div>

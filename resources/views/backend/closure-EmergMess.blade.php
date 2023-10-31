@@ -186,7 +186,7 @@
                                         Messenger/Web</p>
                                 
                                 <div class="callout callout-warning countchar mb-2">
-                                    <strong style="font-size: 16px;">{{ $orgCatWithOrg->Name }}</strong>
+                                    <strong style="font-size: 16px;" id="orgCatName">{{ $orgCatWithOrg->Name }}</strong>
                                     <span class="mx-2" id="selectedOptionText1"></span>
                                     <span id="selectedOptionText2"></span>
                                     <span id="selectedOptionText3"></span>

@@ -62,25 +62,11 @@ class RouteServiceProvider extends ServiceProvider
         //     return Limit::perMinute(60)->by(optional($request->user())->id ?: $request->ip());
         // });
 
-        // RateLimiter::for('loginattempt', function (Request $request) {
-        //     return Limit::perMinute(5)->response(function () {
-        //         return redirect()->route('backend.signin')->with('error', ' <div class="col-md-8"><b>Too Many Login Failures</b> <br> Please wait two minutes before trying again. </div>');
-        //     })->by($request->ip());
-        // });
-
-        RateLimiter::for('api', function (Request $request) {
-            return Limit::perMinute(60)->by(optional($request->user())->id ?: $request->ip());
+        RateLimiter::for('loginattempt', function (Request $request) {
+            return Limit::perMinute(5)->response(function () {
+                return redirect()->route('backend.signin')->with('error', ' <div class="col-md-8"><b>Too Many Login Failures</b> <br> Please wait two minutes before trying again. </div>');
+            })->by($request->ip());
         });
-
-        RateLimiter::for('loginattempt', function(Request $request){
-            $key = "loginattempt.".$request->ip();
-            $max = 5; // attempt
-            $decay = 120; // seconds
-            if(RateLimiter::tooManyAttempts($key,$max)){
-                return back()->with("error",' <div class="col-md-8"><b>Too Many Login Failures</b> <br> Please wait two minutes before trying again. </div>');
-            } else {
-                RateLimiter::hit($key,$decay);
-            }
-        });
+       
     }
 }
