@@ -37,7 +37,7 @@
                         <div class="col-md-12">
                             <div class="box box-warning">
                                 <div class="box-body">
-                                    <form method="post" action="{{ route('fa.postnewsrelease') }}">
+                                    <form method="post" action="{{ route('fa.newsReleaseArchives') }}">
                                         @csrf
                                         <div class="row">
                                             <div class="col-md-2">
@@ -103,10 +103,20 @@
                                                     </div>
                                                 </div>
                                             @endif
-                                        </div>
-                                        <div class="col-md-12 mt-3">
-                                            <div class="form-group">
-                                                <a href="{{route('fa.fa-news-release')}}" class="btn btn-primary">Add a News Release</a>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <div class="col-md-6 mb-999">
+                                                    <label for="searchHeadline">Search Headline:</label>
+                                                    <input type="text" name="searchHeadline" class="form-control"
+                                                        value="{{ $searchHeadline }}" placeholder="Enter headline...">
+                                                    </div>
+                                                    <!-- Use type="submit" for the search button -->
+                                                    <div class="col-md-6 mt-25">
+                                                    <button type="submit" class="btn btn-primary">Find</button>
+                                                    <button type="submit" name="allButton" value="1"
+                                                        class="btn btn-primary" onclick="resetInput()">All</button>
+                                                </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </form>
@@ -163,8 +173,8 @@
                                                 <td value="">
                                                     {{ date('d/m/y g:i A', strtotime(@$datas->EffectiveDate)) }}</td>
                                                 <td class="text-nowrap">
-                                                    <form action="" class="m-0">
-                                                        <a href="" class="btn btn-primary">Edit</a>
+                                                    <form action="">
+                                                        <a href="" class="button">Edit</a>
                                                     </form>
                                                 </td>
                                             </tr>

@@ -233,8 +233,8 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-6 text-end my-2">
-                                    <button class="btn btn-success fw-6" onclick="event.preventDefault();">Convert release
-                                        to voice? (Additional $10 charge per release)</button>
+                                    <button class="btn btn-success fw-6"  ><a href="mailto:voice@flashalert.net" onclick="location.href='voice@flashalert.net'" style="color: #fff;">Convert release
+                                        to voice? (Additional $10 charge per release)</a></button>
                                 </div>
                             </div>
                         </div>
@@ -251,12 +251,11 @@
                                             <label>Email Address</label>
                                             <input type="email" class="form-control" id="modalEmailInput"
                                                 placeholder="Enter Email">
-                                            <div id="emailError" style="color: red; display: none;">Please enter an email
-                                                address</div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-success" onclick="sendEmail()">Send
+                                        <button type="button" class="btn btn-success" data-dismiss="modal"
+                                            onclick="selectEmail(document.getElementById('modalEmailInput').value)">Send
                                             Mail</button>
                                         <button type="button" class="btn btn-default pull-right"
                                             data-dismiss="modal">Cancel</button>
@@ -524,6 +523,19 @@
             let orgDropdown = document.getElementById('orgSelect');
             var selectedOrgDropdownValue = orgDropdown.value;
             //alert(contactInfo);
+
+            if (email !== null) {
+                $("#msg").text("Sending....");
+            } else {
+                // Prompt the user to enter an email address
+                var modalEmailInput = document.getElementById("modalEmailInput").value;
+                    if (modalEmailInput === "") {
+                        alert("Please enter an email address in the modal.");
+                        return;
+                    }
+                email = modalEmailInput;
+                $("#modal-default").modal("hide");
+            }
             $.ajax({
                 type: 'post',
                 // url: '{{ route('detailsform') }}',

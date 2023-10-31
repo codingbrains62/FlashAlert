@@ -1,28 +1,31 @@
 @extends('frontend.layouts.app')
 
 @section('content')
-<style>
-    .info-select{
-        padding: 7px 10px;
-        width: 37%;
-        font-weight: 600;
-        color: #727272;
-        cursor: pointer;
-    }
-    .info-select:hover{
-        background: #097397;
-        border-color: #097397;
-        color:#fff;
-    }
-    .info-select:hover, .info-select:focus{
-        /* background: #097397; */
-    }
+    <style>
+        .info-select {
+            padding: 7px 10px;
+            width: 37%;
+            font-weight: 600;
+            color: #727272;
+            cursor: pointer;
+        }
 
-    .info-select option{
-        background: #fff !important;
-        color:#000 !important;
-    }
-</style>
+        .info-select:hover {
+            background: #097397;
+            border-color: #097397;
+            color: #fff;
+        }
+
+        .info-select:hover,
+        .info-select:focus {
+            /* background: #097397; */
+        }
+
+        .info-select option {
+            background: #fff !important;
+            color: #000 !important;
+        }
+    </style>
     <div id="introaction">
 
         <div id="introaction-core">
@@ -72,16 +75,16 @@
                             its own web page where the public can see their closure status and latest news.</p>
 
                         <!-- <p class="iconurl">
-                            <a class="themebutton2"
-                                href="https://flashalert.projects-codingbrains.com/post-your-news/portland–salem–vancouver–longview/1">MORE
-                                INFO</a>
-                        </p> -->
+                                <a class="themebutton2"
+                                    href="https://flashalert.projects-codingbrains.com/post-your-news/portland–salem–vancouver–longview/1">MORE
+                                    INFO</a>
+                            </p> -->
 
                         {{-- <select class="form-select" aria-label="Default select example" style="font-size: 14px;"> --}}
                         {{-- <option value={{$regions->id}}>{{$regions->post_news_region}}</option> --}}
                         <div class="d-flex justify-content-center">
-                            <select class="form-select info-select" aria-label="Default select example" style="font-size: 14px;"
-                                onchange="redirectToNewsPage(this)">
+                            <select class="form-select info-select" aria-label="Default select example"
+                                style="font-size: 14px;" onchange="redirectToNewsPage(this)">
                                 <option selected disabled>MORE INFO</option>
                                 @foreach ($postnewsregion as $regions)
                                     <option value="{{ $regions->id }}" data-region="{{ $regions->post_news_region }}">
@@ -111,7 +114,8 @@
 
                             subscriptions).</p>
 
-                        <p class="iconurl"><a class="themebutton2" href="{{ route('messengersub.login') }}">MORE INFO</a></p>
+                        <p class="iconurl"><a class="themebutton2" href="{{ route('messengersub.login') }}">MORE INFO</a>
+                        </p>
 
                     </div>
 
@@ -164,17 +168,19 @@
                         <p class="has-text-align-center cst-blu">
                             <a href="{{ route('messengersub.login') }}"
                                 class="su-button su-button-style-3d mb-3 mb-md-0 width-sm9"
-                                target="_blank" rel="noopener noreferrer">
+                                rel="noopener noreferrer">
                                 <span> Messenger <em>Public</em> Login</span>
                             </a>
-                            <a href="{{ route('backend.signin') }}" class="su-button su-button-style-3d mb-2 mb-md-0 width-sm9" target="_blank" rel="noopener noreferrer">
+                            <a href="{{ route('backend.signin') }}"
+                                class="su-button su-button-style-3d mb-2 mb-md-0 width-sm9"
+                                rel="noopener noreferrer">
                                 <span> Newswire <em> Client</em> Login</span>
                             </a>
 
                         </p>
 
                         <p class="has-text-align-center cst-green">
-                            <a href="{{route('blog')}}" class="su-button su-button-style-3d width-sm9 mb-3 mb-md-0"
+                            <a href="{{ route('blog') }}" class="su-button su-button-style-3d width-sm9 mb-3 mb-md-0"
                                 style="color:#FFFFFF;background-color:#355E3B;border-color:#2b4c30;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px"
                                 target="_blank" rel="noopener noreferrer"><span
                                     style="color:#FFFFFF;padding:0px 22px;font-size:17px;line-height:34px;border-color:#728f76;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;text-shadow:none;-moz-text-shadow:none;-webkit-text-shadow:none">
@@ -206,15 +212,27 @@
 
                         </div>
 
-                        <div class="">
+                        <!-- <div class="homepage-barcode">
 
-                            <figure class="aligncenter size-full text-center"><img decoding="async" width="537" height="349"
-                                    class="" src="{{ asset('front_assets/images/USAmapButtons2GotNews.jpeg') }}" alt
-                                    srcset="" sizes="(max-width: 537px) 100vw, 537px"></figure>
+                            
+                        </div> -->
 
+                        <div class="homepage-barcode align-items-center">
+
+                            <figure class="aligncenter size-full text-center" style="width: 50%;"><img decoding="async" width="100%"
+                                    height="auto" class=""
+                                    src="{{ asset('front_assets/images/USAmapButtons2GotNews.jpeg') }}" alt srcset=""
+                                    sizes="(max-width: 537px) 100vw, 537px">
+                            </figure>
+
+                            <figure class="aligncenter size-full text-center" style="width: 50%;"><img decoding="async" width="45%"
+                                    height="auto" class=""
+                                    src="{{ asset('front_assets/images/KeepCalm-1.png') }}" alt srcset=""
+                                    sizes="(max-width: 537px) 100vw, 537px"
+                                    style="border-radius: 12px;box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
+                            </figure>
                         </div>
-
-                        </p>
+                    </p>
 
                     </article>
 

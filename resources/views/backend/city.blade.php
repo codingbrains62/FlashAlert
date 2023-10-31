@@ -139,9 +139,12 @@ $region=Helper::getData('regions',$dataRegion[0]->RegionID,'','');
                                             <td class="d-flex justify-center">
                                                 <a href="{{url('IIN/edit-city/'.$cities->cid)}}" data-toggle="tooltip" title="Edit" class="btn btn-social-icon cst-edit"><i
                                                         class="fa fa-fw fa-edit"></i></a>
-                                                <a href="{{url('IIN/delete-city/'.$cities->cid)}}" data-toggle="tooltip" title="Delete" class="btn btn-social-icon cst-del"
+                                                        <a href="{{url('IIN/delete-city/'.$cities->cid)}}" data-toggle="tooltip" title="Delete" class="btn btn-social-icon cst-del"
+                                                            onclick="confirm('Are you sure you want to delete ?')"><i
+                                                                class="fa fa-trash"></i></a>
+                                                {{-- <a href="{{url('IIN/delete-city/'.$cities->cid)}}" data-toggle="tooltip" title="Delete" class="btn btn-social-icon cst-del"
                                                     onclick="showConfirmDialog(event)"><i
-                                                        class="fa fa-trash"></i></a>
+                                                        class="fa fa-trash"></i></a> --}}
                                             </td>
                                         </tr>
                                         

@@ -19,7 +19,6 @@ use App\Http\Controllers\MessengerSubscriptionController;
 use App\Http\Controllers\MonitoringReportController;
 use App\Http\Controllers\ParticipantsController;
 use App\Http\Controllers\FTInfoController;
-use App\Http\Controllers\emulateController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -102,8 +101,6 @@ Route::prefix('IIN')->group(function () {
         return "Optimization cleared!";
     });
     Route::get('login', [UserController::class,'login'])->name('backend.signin')->middleware('alreadyLoggedIN')->middleware('prevent-back-history');
-    //Route::get('lorginform/{id}', [UserController::class,'emulateLogin'])->name('emulatelogin');
-    Route::post('emulate-login', [RegionalUserManagementController::class, 'emulateLogin'])->name('emulate-login');
     Route::get('onetimelogin', [UserController::class,'onetimelogin'])->name("onetime.login");
     Route::get('getorgdata', [UserController::class,'getorgdata'])->name("getogron");
     Route::get('orgcategory', [UserController::class,'orgcategory'])->name("orgcategory");
@@ -112,7 +109,7 @@ Route::prefix('IIN')->group(function () {
     Route::post('custom-login', [UserController::class, 'customLogin'])->name('login')->middleware(['throttle:loginattempt']);
     Route::middleware(['isLoggedIN', 'prevent-back-history'])->group(function () {
         Route::get('dashboard', [UserController::class,'admindashboard'])->name('backend.dashboard');
-        Route::get('/logout', [UserController::class,'logout'])->name('logout')->middleware('org');
+        Route::get('/logout', [UserController::class,'logout'])->name('logout');
         Route::get('failed-login', [UserController::class,'failedlogin'])->name('f.login');
         Route::get('del-failed-login/{id}', [UserController::class,'delfailedlogin']);
         Route::post('/delete-selected', [UserController::class,'deleteSelected'])->name('delete.selected');
@@ -233,9 +230,9 @@ Route::prefix('IIN')->group(function () {
         Route::get('fa-closurereports',[FAToolsController::class,'fa_closurereports'])->name('fa.closurereports');
         Route::match(array('GET','POST'),'closurereports-Submission',[FAToolsController::class,'fa_closurereportsSubmission'])->name('fa.closurereportssubmission');
         Route::match(array('GET','POST'),'Post-N-R',[NewsReleaseController::class,'postNews'])->name('fa.postnewsrelease');
-        //Route::match(array('GET','POST'),'N-R-Archive',[NewsReleaseController::class,'postNews'])->name('fa.newsReleaseArchives');
+        Route::match(array('GET','POST'),'N-R-Archive',[NewsReleaseController::class,'newsReleaseArchive'])->name('fa.newsReleaseArchives');
         Route::match(['GET', 'POST'], 'fa-news-release', [NewsReleaseController::class, 'newsRelease'])->name('fa.fa-news-release');
-        Route::post('postnewsrel',[NewsReleaseController::class,'postnewsrelMail'])->name('detailsform');
+        Route::post('postnewsrel',[NewsReleaseController::class,'postnewsrelMail'])->name('detailsform');   
         Route::post('fa-news-release/get-categories', [NewsReleaseController::class, 'getCategories'])->name('fa.fa-news-release.getCategories');
         Route::post('fa-news-release/get-org-data-for-org-cat', [NewsReleaseController::class, 'getOrgDataForOrgCat'])->name('fa.fa-news-release.getOrgDataForOrgCat');
         //---------------------------FlashAlert Tools-----------------------//

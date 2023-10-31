@@ -164,8 +164,9 @@
                                         <td class="d-flex">
                                         {{-- <a href="{{url('IIN/styletempdel/' . base64_encode($datas->id))}}" class="outline-btn"><i class="fa fa-trash" aria-hidden="true"></i></a> --}}
                                         <a href="{{url('IIN/styletempedit/' . base64_encode($datas->id))}}"class="btn btn-social-icon cst-edit" data-toggle="tooltip" title="Edit" ><i class="fa fa-fw fa-edit"></i></a>
-                                        <a href="{{url('IIN/styletempdel/' . base64_encode($datas->id))}}" class="btn btn-social-icon cst-del" data-toggle="tooltip" title="Delete" onclick="return showConfirmDialog(event)"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                                        </td>
+                                        {{-- <a href="{{url('IIN/styletempdel/' . base64_encode($datas->id))}}" class="btn btn-social-icon cst-del" data-toggle="tooltip" title="Delete" onclick="return showConfirmDialog(event)"><i class="fa fa-trash" aria-hidden="true"></i></a> --}}
+                                        <a href="{{url('IIN/styletempdel/' . base64_encode($datas->id))}}" class="btn btn-social-icon cst-del" data-toggle="tooltip" title="Delete" onclick="deleteData()"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                    </td>
                                     </tr>
                                 @endforeach
                                
@@ -178,17 +179,29 @@
     </section>
 </div>
 <script>
-    function showConfirmDialog(event) {
-        var result = confirm("Are you sure you want to delete this item?");
-        if (result) {
-            // The user clicked "OK" in the confirmation dialog, proceed with the deletion
-            return true;
-        } else {
-            // The user clicked "Cancel" in the confirmation dialog, cancel the deletion
-            event.preventDefault(); // Prevent the default link behavior
-            return false;
-        }
+    function deleteData() {
+    var confirmed = confirm('Are you sure you want to delete?');
+    if (confirmed) {
+        // Perform the deletion action here
+        // This is where you would put your code to delete the data
+        alert('Data deleted successfully.');
+    } else {
+        // The user clicked "Cancel," no data is deleted
+        alert('Deletion canceled.');
     }
+}
+
+    // function showConfirmDialog(event) {
+    //     var result = confirm("Are you sure you want to delete this item?");
+    //     if (result) {
+    //         // The user clicked "OK" in the confirmation dialog, proceed with the deletion
+    //         return true;
+    //     } else {
+    //         // The user clicked "Cancel" in the confirmation dialog, cancel the deletion
+    //         event.preventDefault(); // Prevent the default link behavior
+    //         return false;
+    //     }
+    // }
 </script>
 
 @endsection

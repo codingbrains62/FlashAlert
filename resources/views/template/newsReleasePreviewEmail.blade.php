@@ -44,7 +44,7 @@
                     <tr style="border-collapse:collapse;border:1px solid #cccccc;border-spacing:0;">
                         <td align="left"
                             style="padding:10px 230px; display: flex; align-items: center;justify-content: center;background: #e4e5eb;">
-                            <img src="flashalert.projects-codingbrains.com/admin_assets/dist/img/FlashAlert-Icon.png"
+                            <img src="https://flashalert.projects-codingbrains.com/admin_assets/dist/img/FlashAlert-Icon.png"
                                 alt="logo" style="pading:6px;">
                             <span style="font-weight: bold;font-size: 16px;color: #9b381b;margin: 4px 5px;"> Flash Alert
                             </span>
@@ -56,23 +56,39 @@
                                 style="width:100%;border-collapse:collapse;border:0;border-spacing:0;">
                                 <tr>
                                     <td style="padding:0 0 3px 0;color:#153643;">
-                                        <p style="font-weight:bold;font-family:'Roboto';font-size:16px;color:#606060">
-                                            Hello {{ $user ? $user['name'] : '' }},</h1>
+                                        <p style="font-weight:bold;font-family:'Roboto';font-size:18px;color:#606060;text-transform: uppercase;">
+                                            {{ $user['headline'] }},</p>
                                         <p
-                                            style="margin:10px 0 12px 0;font-size:13px;font-weight: 600;line-height:24px;font-family:Arial,sans-serif;color:#504f4f">
-                                            We've received a request to grant you login access.
+                                            style="margin:10px 0 0px 0;font-size:13px;font-weight: 600;line-height:24px;font-family:'Roboto';color:#504f4f">
+                                            PREVIEW News Release from {{ $user['orgDropdown'] }}
+                                        </p>
+                                        <?php
+                                        $dateTime = new DateTime('now', new DateTimeZone('America/Los_Angeles')); // 'now' gets the current time
+                                        $currentPDTTime = $dateTime->format('F jS, Y g:i A');
+                                        ?>
+                                        <p
+                                            style="margin:10px 0 0px 0;font-size:13px;font-weight: 600;line-height:24px;font-family:'Roboto';color:#504f4f">
+                                            Preview posted on FlashAlert: <?php echo $currentPDTTime; ?>
+                                        </p>
+
+                                        <p
+                                            style="margin:10px 0 0px 0;font-size:13px;font-weight: 600;line-height:24px;font-family:'Roboto';color:#504f4f">
+                                            {!! $user['postText'] !!}
                                         </p>
                                         {{-- <p
-                                            style="margin:10px 0 12px 0;font-size:13px;font-weight: 600;line-height:24px;font-family:Arial,sans-serif;">
+                                            style="margin:10px 0 0px 0;font-size:13px;font-weight: 600;line-height:24px;font-family:'Roboto';">
                                             Click here to log in automatically by clicking the button below.
                                         </p> --}}
-                                        <p style="text-align: center;margin: 60px  0;">
-                                            <a href="{{ 'https://flashalert.projects-codingbrains.com/login-link/' . $user['token'] }}"
-                                                class="btn">Click here to receive your OTL</a>
+                                        <p style="margin: 60px  0;">
+                                            <strong>Contact Info: </strong><br>
+                                            {{ $user['contactInfo'] }}
                                         </p>
                                         <p
-                                            style="margin:50px 0 12px 0;font-size:16px;font-family:Arial,sans-serif;font-weight:600;text-align:end;color:#606060">
-                                            Thank you</p>
+                                            style="margin:50px 0 12px 0;font-size:14px;font-family:'Roboto';font-weight:500;color:#606060">
+                                            Sent via FlashAlert Newswire. Replies to this message do not go back to the
+                                            sender.
+                                            Go to {{ route('messengersub.login') }} to change or delete these messages.
+                                            Preview emails do not include file attachments.</p>
                                     </td>
                                 </tr>
                             </table>

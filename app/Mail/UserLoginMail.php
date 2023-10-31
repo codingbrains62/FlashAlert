@@ -43,7 +43,7 @@ class UserLoginMail extends Mailable
         $user['url'] =   $this->url;
         $user['useremail'] =  $this->useremail;
 
-        return $this->from("craig@flashalert.net", "Test")
+        return $this->from("flashalert@projects-codingbrains.com", "Test")
         ->subject('Your Login Details With us')
         ->view('template.send-user-login-mail', ['user' => $user]);
     }

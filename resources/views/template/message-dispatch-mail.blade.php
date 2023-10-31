@@ -40,7 +40,7 @@
                     style="width:600px;border-collapse:collapse;border:1px solid #cccccc;border-spacing:0;text-align:left;">
                     <tr style="border-collapse:collapse;border:1px solid #cccccc;border-spacing:0;">
                         <td align="left" style="padding:10px 230px; display: flex; align-items: center;justify-content: center;background: #e4e5eb;">
-                            <img src="https://flashalert.projects-codingbrains.com/admin_assets/dist/img/FlashAlert-Icon.png" alt="logo" style="pading:6px;">
+                            <img src="flashalert.projects-codingbrains.com/admin_assets/dist/img/FlashAlert-Icon.png" alt="logo" style="pading:6px;">
                              <span style="font-weight: bold;font-size: 16px;color: #9b381b;margin: 4px 5px;"> Flash Alert </span>
                         </td>
                     </tr>
@@ -52,14 +52,11 @@
                                     <td style="padding:0 0 3px 0;color:#153643;">
                                         <p style="font-weight:bold;font-family: 'Roboto';font-size: 16px;color: #606060;">
                                            Hello,</h1>
-                                       <!--  <p
-                                            style="margin:0 0 12px 0;font-size:14px;line-height:24px;font-family:Arial,sans-serif;">
-                                            {{ $user ? $user['name'] : '' }}
-                                            </p> -->
 
-                                        <p  style="margin:10px 0 12px 0;font-size:14px;line-height:24px;font-family:Arial,sans-serif;min-height: 180px;color: #504f4f;">
-                                            {{$user['token']}}
+                                        <p  style="margin:10px 0 12px 0;font-size:14px;line-height:24px;font-family:Arial,sans-serif;min-height: auto;color: #504f4f;">
+                                            {!!$user['token']!!}
                                         </p>
+
 
                                         <p style="margin:1px 0 12px 0;font-size:16px;font-family:Arial,sans-serif;font-weight: 600;text-align: end;color: #606060;">
                                             Thank you </p>

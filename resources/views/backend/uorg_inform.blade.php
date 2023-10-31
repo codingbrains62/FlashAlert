@@ -70,11 +70,6 @@
                                 class="fa fa-fw fa-arrow-circle-up"></i> Top</button>
                         <button id="jumpToSaveButton" type="button" class="btn btn-danger btn-xs"><i
                                 class="fa fa-fw fa-floppy-o"></i> Save Button</button>
-                                <form method="post" action="{{ route('emulate-login') }}" target="_blank">
-                                    @csrf
-                            <input type="hidden" value="{{ $response1[0]->id }}" name="orgID">
-                        <button class="srch-btn mt-3" type="submit">Emulate</button>
-                                </form>
                     </div>
                 </div>
                 <div class="col-md-12 col-lg-12">
@@ -249,14 +244,14 @@
                                     @endif
                                     @if ($data[0]->SecurityLevel != 1)
                                         <div class="col-md-5">
-                                            <label> Last Paid on: <Span>**Please follow this format only
-                                                    (MM/DD/YY)**</Span></label>
+                                            <label> Last Paid on: <Span> 
+                                                    (MM/DD/YY) </Span></label>
                                             <input type="text" name="lastpaid" class="form-control"
                                                 value="{{ $response[0]->DateLastPaid && $response[0]->DateLastPaid != '0000-00-00 00:00:00' ? \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $response[0]->DateLastPaid)->format('m/d/y') : '00-00-0000' }}">
                                         </div>
                                         <div class="col-md-4">
-                                            <label> Year Paid For: <Span>**Please follow this format only
-                                                (YYYY)**</Span></label>
+                                            <label> Year Paid For: <Span>
+                                                 (YYYY) </Span></label>
                                             <input type="text" name="yearpaidfor" class="form-control"
                                                 value="{{ $response[0]->DateLastPaid && $response[0]->DateLastPaid != '0000-00-00 00:00:00' ? \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $response[0]->DateLastPaid)->format('Y') : '00-00-0000' }}">
                                         </div>

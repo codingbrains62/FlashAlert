@@ -117,6 +117,7 @@
 
 
 
+
             // Get the offset top of the search result div
             scrollToElement(); // Call the function to scroll to the element with class .scrollcls
         };

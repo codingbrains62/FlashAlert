@@ -18,7 +18,7 @@
                 Verify your Information: :
                 <small></small>
             </h1>
-            <ol class="breadcrumb">
+            <ol class="breadcrumb font-14 fw-6">
                 <li><a href="{{ url('/IIN/dashboard') }}"><i class="fa fa-dashboard"></i> Home</a></li>
                 <li class="active">Verify your Information::</li>
             </ol>
@@ -44,8 +44,8 @@
                     @csrf
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         FlashAlert Newswire Signup
-                        <div class="info-box" style="padding:18px;">
-                            <h4 class="bg-info" style="padding:5px;">Verify your Information::</h4>
+                        <div class="box-body info-box">
+                            <h4 class="bg-info p-3">Verify your Information</h4>
                             <div class="row">
                                 <div class="col-md-10">
                                     @php

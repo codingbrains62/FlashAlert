@@ -51,7 +51,6 @@ class RegionController extends Controller
                 $data['orgcat'] = $arr2;
                 return view('frontend.region', compact('data'));
         }
-        
         // search org by input
         // public function searchByOrgName(Request $request)
         // {

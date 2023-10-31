@@ -1,10 +1,10 @@
 <style>
     hr {
-    background-color: #302f2f
-    border: 0;
-    height: 1px;
-    margin-bottom: 1.5em;
-}
+        background-color: #302f2f;
+        border: 0;
+        height: 1px;
+        margin-bottom: 1.5em;
+    }
 </style>
 @extends('frontend.layouts.app')
 @section('content')
@@ -33,6 +33,20 @@
         <p>FlashAlert has managed emergency communications for the school districts in the Portland-Vancouver area for 44 years and now covers all of the NW and Colorado Springs. There is no cost to the media and schools and organizations pay an annual fee ranging from $150 to $250 to post news.</p>
         <p><strong>The Portland region alone has nearly 1,000 member organizations, including all police and fire agencies in the region. To see how two Portland stations use the emergency information FlashAlert automatically posts into their websites, visit <a href="http://www.katu.com/weather/closings">KATU TV</a>.</strong></p>
         <hr>
+        <div class="report-links">
+            <p>Region report pages for News Media</p>
+            <div>
+                <a href="http://www.flashalertportland.net">www.flashalertportland.net</a>
+                <a href="http://www.flashalerteugene.net">www.flashalerteugene.net</a>
+                <a href="http://www.flashalertmedford.net">www.flashalertmedford.net</a>
+                <a href="http://www.flashalertbend.net">www.flashalertbend.net</a>
+                <a href="http://www.flashalertseattle.net">www.flashalertseattle.net</a>
+                <a href="http://www.flashalertcolumbia.net">www.flashalertcolumbia.net</a>
+                <a href="http://www.flashalertspokane.net">www.flashalertspokane.net</a>
+                <a href="http://www.flashalertboise.net">www.flashalertboise.net</a>
+                <a href="">www.flashalert.net/xxxx (combo page)</a>
+            </div>
+        </div>
         <div style="text-align: center;">
             <figure class="aligncenter size-full">
                 <img decoding="async" width="537" height="349" class=""

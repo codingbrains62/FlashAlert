@@ -45,7 +45,7 @@
                                         <th>User Name</th>
                                         <th>Address</th>
                                         <th>Time</th>
-                                        <!-- <th>Action</th> -->
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -55,8 +55,8 @@
                                         <td>{{$users->username}}</td>
                                         <td>{{$users->address}}</td>
                                         <td>{{$users->failed_at}}</td>
-                                    <!--  <td > <a href="{{url('IIN/del-failed-login/'.base64_encode(@$users->id))}}" class="btn btn-danger btn-xs" onclick="showConfirmDialog(event)">Delete</a>
-                                        </td> -->
+                                        <td > <a href="{{url('IIN/del-failed-login/'.base64_encode(@$users->id))}}" class="btn btn-danger btn-xs" onclick="showConfirmDialog(event)">Delete</a>
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
