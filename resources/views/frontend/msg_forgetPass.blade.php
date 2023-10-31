@@ -7,6 +7,7 @@
                 <div class="intro-text d-flex justify-content-center align-items-center">
                     <h1>PASSWORD RECOVERY</h1>
                 </div>
+                shaved
             </div>
         </div>
     </div>
