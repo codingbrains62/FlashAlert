@@ -80,7 +80,7 @@
                                         </p>
                                         <ul>
                                             <li> Post emergency messages in English. Spanish stations translate them and
-                                                multi-language translation is available on <a href=""> your org’s
+                                                multi-language translation is available on <a href="/id/{{$orgCatWithOrg->URLName}}"> your org’s
                                                     FlashAlert page</a></li>
                                             <li> Please read <a href="{{ url('guide.html') }}">Guidelines for Posting News
                                                     on FlashAlert</a>

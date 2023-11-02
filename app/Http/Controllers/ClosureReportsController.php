@@ -97,7 +97,8 @@ class ClosureReportsController extends Controller
          $orgID = base64_decode($orgID);
          $data['orgCatWithOrg'] = DB::table('orgs')
              ->join('orgcats', 'orgs.OrgCatID', '=', 'orgcats.id')
-             ->select('orgs.*', 'orgcats.CatagoryName as orgcat_name')
+             ->join('users', 'orgs.id', '=', 'users.OrgID')
+             ->select('orgs.*', 'orgcats.CatagoryName as orgcat_name', 'users.URLName as URLName')
              ->where('orgs.id', $orgID)
              ->first();
              $data['childOrganizations'] = DB::table('orgs')->where('ParentOrgID', $data['orgCatWithOrg']->id)->get();
