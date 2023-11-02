@@ -18,32 +18,37 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <label for="RegionID" class="mb-2"><b>Region Name</b></label><br>
-                        <select class="form-select form-select-lg mb-3" name="RegionID" id=""
-                            style="font-size: 16px;">
+                        <select class="form-select form-select-lg mb-3" name="RegionID" style="font-size: 16px;">
                             <option value="" name="any selected" selected="selected">Any Region</option>
                             @foreach ($regionlist as $rl)
-                                <option value={{ $rl->id }} name={{ $rl->id }}>{{ $rl->Description }}</option>
+                                <option value="{{ $rl->id }}" name="{{ $rl->id }}"
+                                        {{ old('RegionID') == $rl->id ? 'selected' : '' }}>
+                                    {{ $rl->Description }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
                     <div class="col-lg-6">
                         <label for="" class="mb-2"><b>Organization Name</b></label>
                         <input placeholder="Type organization name for search" type="text" name="organizationName"
-                            id="" minlength="2" class="srch-form mb-3" value="{{ old('organizationName') }}" style="height: 35px;" required>
+                            id="" minlength="2" class="srch-form mb-3" value="{{ !empty($orgName) ? $orgName : '' }}" style="height: 35px;" required>
                     </div>
                     <div class="col-lg-12 my-2 text-end">
                         <button type="submit" class="srch-btn" name="search">Search</button>
                     </div>
-                    @if(isset($searchResults) && count($searchResults) > 0)
-                    <div>
-                        @foreach($searchResults as $result)
-                      <span>{{$result->regionDescription}}</span><br>
-                      <span><a href="/id/{{$result->URLName}}">{{$result->Name}}</a> *<br></span>
-                      @endforeach
-                    </div>
-                    @endif
                 </div>
-            </form>
+            
+                @if(isset($searchResults) && count($searchResults) > 0)
+                <div>
+                    @foreach($searchResults as $result)
+                        <span>{{$result->regionDescription}}</span><br>
+                        <span><a href="/id/{{$result->URLName}}">{{$result->Name}}</a> *<br></span>
+                    @endforeach
+                </div>
+                @else
+                <div>No search results for '{{ !empty($orgName) ? $orgName : '' }}'. Try refining your search or browsing the categories instead. </div>
+                @endif
+            </form>            
             <hr>
 
             <div id="regions_wrapper">

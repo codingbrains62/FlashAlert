@@ -23,6 +23,7 @@ class MessengerSubscriptionController extends Controller
         if ($request->has('search')) {
             $regionID = $request->input('RegionID');
             $organizationName = $request->input('organizationName');
+            $data['orgName'] = $request->input('organizationName');
             // Construct the query for searching organizations based on the selected region and organization name
             $query = DB::table('orgs')
             ->join('regions', 'orgs.RegionID', '=', 'regions.id')// Add a join with the 'regions' table
