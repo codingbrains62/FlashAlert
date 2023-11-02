@@ -51,7 +51,7 @@ Route::get('monitor',[NewsMediaMonitoringController::class,'newsMediaMonitor'])-
 Route::get('messenger-login',[MessengerSubscriptionController::class,'loginme'])->name('messengersub.login');
 Route::get('forgetPass',[MessengerSubscriptionController::class,'lostpass'])->name('frontend-lostpass');
 Route::get('attach-app-tutor',[MessengerSubscriptionController::class,'attach_app'])->name('attach-app-tut');
-Route::get('regions',[MessengerSubscriptionController::class,'frontend_region'])->name('frontend-region');
+Route::match(['get', 'post'],'regions',[MessengerSubscriptionController::class,'frontend_region'])->name('frontend-region');
 
 // Route::get('/tutorial.pdf', function () {
 //     $file = Storage::disk('local')->path('pdffile/tutorial.pdf');

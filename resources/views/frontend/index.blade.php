@@ -217,7 +217,7 @@
                             
                         </div> -->
 
-                        <div class="homepage-barcode align-items-center">
+                        <div class="homepage-barcode align-items-end">
 
                             <figure class="aligncenter size-full text-center" style="width: 50%;"><img decoding="async" width="100%"
                                     height="auto" class=""

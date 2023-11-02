@@ -165,7 +165,7 @@
                                         {{-- <a href="{{url('IIN/styletempdel/' . base64_encode($datas->id))}}" class="outline-btn"><i class="fa fa-trash" aria-hidden="true"></i></a> --}}
                                         <a href="{{url('IIN/styletempedit/' . base64_encode($datas->id))}}"class="btn btn-social-icon cst-edit" data-toggle="tooltip" title="Edit" ><i class="fa fa-fw fa-edit"></i></a>
                                         {{-- <a href="{{url('IIN/styletempdel/' . base64_encode($datas->id))}}" class="btn btn-social-icon cst-del" data-toggle="tooltip" title="Delete" onclick="return showConfirmDialog(event)"><i class="fa fa-trash" aria-hidden="true"></i></a> --}}
-                                        <a href="{{url('IIN/styletempdel/' . base64_encode($datas->id))}}" class="btn btn-social-icon cst-del" data-toggle="tooltip" title="Delete" onclick="deleteData()"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                        <a href="{{url('IIN/styletempdel/' . base64_encode($datas->id))}}" class="btn btn-social-icon cst-del" data-toggle="tooltip" title="Delete" onclick="return confirm('Are you sure you want to delete?')"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                     </td>
                                     </tr>
                                 @endforeach

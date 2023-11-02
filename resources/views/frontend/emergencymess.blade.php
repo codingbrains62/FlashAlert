@@ -15,7 +15,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;400&family=Poppins:ital,wght@0,100;0,400;0,500;0,700;1,400&family=Raleway:wght@200;300;500&family=Roboto:wght@300;500;700&display=swap"
         rel="stylesheet">
-
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=loadGoogleTranslate"></script>
     <title>Document</title>
 </head>
 <style>
@@ -86,9 +86,14 @@
     .head-btn .form-switch{
         padding-left: 0px;
     }
+    .skiptranslate.goog-te-gadget {
+    position: absolute;
+    top: 185px;
+    right: 280px;
+}
 </style>
 
-<body>
+<body id="translate">
     <section class="emergency-msg">
         <div class="">
             <div class="box-padding" style="border-bottom: 3px solid #99212e;">
@@ -135,17 +140,21 @@
                         <p>No information currently posted.</p>
                     </div>
                     <div class="col-md-4 col-lg-3 col-xl-2 g-translate">
-                        <select class="form-select" aria-label="Default select example">
+                        {{-- <select class="form-select" aria-label="Default select example">
                             <option selected disabled>Select Language</option>
                             <option value="1">Chinies</option>
                             <option value="2">French</option>
                             <option value="3">German</option>
                         </select>
-                        <p class="my-1">Powered by 
-
+                        <p class="my-1">Powered by
                             <img
                                 src="https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_42x16dp.png"
-                                alt="translate"> translate</p>
+                                alt="translate"> translate</p> --}}
+                                <script>
+                                    function loadGoogleTranslate(){
+                                        new google.translate.TranslateElement('translate')
+                                    }
+                                </script>
                     </div>
                     <div class="col-md-3 text-center">
                         <figure>
