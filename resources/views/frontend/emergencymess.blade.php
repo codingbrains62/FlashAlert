@@ -151,9 +151,17 @@
                                 src="https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_42x16dp.png"
                                 alt="translate"> translate</p> --}}
                                 <script>
-                                    function loadGoogleTranslate(){
-                                        new google.translate.TranslateElement('translate')
-                                    }
+                                    // function loadGoogleTranslate(){
+                                    //     new google.translate.TranslateElement('translate')
+                                    // }
+                                   function loadGoogleTranslate() {
+                                            new google.translate.TranslateElement({
+                                                pageLanguage: 'en', 
+                                                includedLanguages: 'zh-CN,fr,de,ja,ko,ru,es,vi', 
+                                                //layout: google.translate.TranslateElement.InlineLayout.SIMPLE, 
+                                                autoDisplay: false, 
+                                            }, 'translate');
+                                        }
                                 </script>
                     </div>
                     <div class="col-md-3 text-center">
