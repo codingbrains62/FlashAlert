@@ -133,9 +133,10 @@ class RegionController extends Controller
         public function EmergencyMess($id)
         {      
                 $data1=DB::table('users')->where('URLName',$id)->get();
-                $data=DB::table('orgs')->where('id',$data1[0]->OrgID)->get();  
+                $data=DB::table('orgs')->where('id',$data1[0]->OrgID)->get();
                 return view('frontend.emergencymess', compact('data','data1'));
         }
+        
         public function EmergencyMess1($id)
         {      
                 $data1=DB::table('users')->where('OrgID',$id)->get();

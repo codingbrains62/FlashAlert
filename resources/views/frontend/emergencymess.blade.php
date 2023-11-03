@@ -17,6 +17,7 @@
         rel="stylesheet">
     <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=loadGoogleTranslate">
     </script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <title>Document</title>
 </head>
 <style>
@@ -98,6 +99,26 @@
 
 <body id="translate">
     <section class="emergency-msg">
+        {{-- @if (Session::has('success'))
+            <script>
+                swal({
+                    title: "Done!",
+                    text: "{{ Session::get('success') }}",
+                    icon: "success",
+                    timer: 3000
+                });
+            </script>
+            <!-- <div class="alert alert-success alert-dismissible fade show">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                aria-label="Close"></button>
+            {{ Session::get('success') }}
+        </div> -->
+        @elseif (Session::has('failed'))
+            <div class="alert alert-danger alert-dismissible fade show">
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                {{ Session::get('failed') }}
+            </div>
+        @endif --}}
         <div class="">
             <div class="box-padding" style="border-bottom: 3px solid #99212e;">
                 <div class="row">
@@ -183,37 +204,43 @@
                     </div>
                 </div>
             </div>
-            @if ($data1[0]->FlashAlertSubscriber == 1)
-                <div class="box-padding bg-head">
-                    <p class="mb-0">Subscribe to receive FlashAlert messages from {{ $data[0]->Name }}.</p>
-                </div>
+            {{-- @if ($data1[0]->FlashAlertSubscriber == 1) --}}
+            <div class="box-padding bg-head">
+                <p class="mb-0">Subscribe to receive FlashAlert messages from {{ $data[0]->Name }}.</p>
+            </div>
+            <form action="{{ route('messSubscribe') }}" method="post">
+                @csrf
                 <div class="box-padding">
                     <div class="search-bar emg-srch">
                         <label class="form-label">Primary email address for a new account</label>
                         <div class="d-flex flex-wrap">
-                            <input class="srch-form" type="text" id="searchInput" placeholder="Enter Email..."
-                                autocomplete="off">
+                            <input type="hidden" name="OrgID" value="{{ $data[0]->id }}">
+                            <input class="srch-form" type="text" name="EmailAddress" id="searchInput"
+                                placeholder="Enter Email..." autocomplete="off">
                             <div class="d-flex align-items-center emg-mail-check">
                                 <div class="form-check form-check-inline mx-2">
-                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
-                                        value="option1">
+                                    <input class="form-check-input" type="checkbox" name="EmergSub"
+                                        id="inlineCheckbox1" value="1" checked>
                                     <label class="form-check-label" for="inlineCheckbox1">Emergency Alerts</label>
                                 </div>
                                 <div class="form-check form-check-inline mx-2">
-                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
-                                        value="option2">
+                                    <input class="form-check-input" type="checkbox" name="NewsSub"
+                                        id="inlineCheckbox2" value="1" checked>
                                     <label class="form-check-label" for="inlineCheckbox2">News Releases</label>
                                 </div>
                             </div>
-                            <button class="srch-btn">Subscribe</button>
+                            <button type="submit" class="srch-btn">Subscribe</button>
                         </div>
                     </div>
                 </div>
+            </form>
+            @if ($data1[0]->FlashAlertSubscriber == 1)
                 <div class="box-padding bg-head">
                     <p class="mb-0">News Release</p>
                 </div>
                 <div class="box-padding">
                     <div class="row">
+                        {{-- pressrelease table data --}}
                         <div class="col-md-8">
                             <h1 class="my-3">WVCI First in Lane County to offer TrueBeam Radiotherapy
                                 <em>12/02/2002</em>
@@ -269,8 +296,9 @@
                         <div class="col-md-4"></div>
                     </div>
                 </div>
+            @endif
         </div>
-        @endif
+        {{-- @endif --}}
     </section>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="

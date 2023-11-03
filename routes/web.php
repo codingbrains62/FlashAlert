@@ -36,6 +36,8 @@ Route::post('/getorgName', [RegionController::class,'searchByOrgName'])->name("s
 Route::post('/getorgData', [RegionController::class,'orgList']);
 Route::get('/id/{org}', [RegionController::class,'EmergencyMess']);
 Route::get('/ids/{org}', [RegionController::class,'EmergencyMess1']);
+Route::match(array('GET','POST'),'/signup', [MessengerSubscriptionController::class, 'subscribe'])->name('messSubscribe');
+// Route::get('/signup', [MessengerSubscriptionController::class,'signup'])->name('signup');
 Route::get('/post-your-news/{url}/{id}', [RegionController::class,'postnews'])->name('postnewsregions');
 Route::get('/user-login', [CommonController::class,'ulogin'])->name('userlogin');
 Route::post('/submit-form', [RegionController::class,'submitForm']);

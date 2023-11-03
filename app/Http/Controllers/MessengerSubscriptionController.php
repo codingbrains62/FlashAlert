@@ -40,6 +40,45 @@ class MessengerSubscriptionController extends Controller
             // die;
         }
         return view('frontend.regionsForMsgLogin', $data);
-
     }
+
+    public function subscribe(Request $request)
+    {
+
+          
+            $emergencyAlerts = $request->has('EmergSub') ? 1 : 0;
+            $newsReleases = $request->has('NewsSub') ? 1 : 0;
+            $request->validate([
+                'EmailAddress' => 'required|email',
+            ]);
+            $data=[
+            'EmailAddress' => $request->input('EmailAddress'),
+            'ResetCode' => 'abcdssdd', // 1 if checked, 0 if not
+            'ResetDate' => '2023-10-10 11:55:55',
+            'NPW' => 'test',
+            'LastLogin' => '2023-10-10 11:55:55',
+            'LastMailTest' => '2023-10-10 11:55:55',
+            'DateCreated' => '2023-10-10',
+            ];
+             $lastid=  DB::table('publicuser')->insertGetId($data);
+        
+            //  dd($lastid);
+        
+           
+        DB::table('publicusersubscription')->insert([
+            'OrgID' =>$request->OrgID,
+            'PublicUserID' =>$lastid,
+            'EmergSub' => $emergencyAlerts, // 1 if checked, 0 if not
+            'NewsSub' => $newsReleases, // 1 if checked, 0 if not
+        ]);
+        // Redirect or return a response as needed
+        // return redirect()->route('signup')->with(['success' => 'Subscription successful.', 'data' => $data]);
+        return view('frontend.subSignup', ['data' => $data]);
+    }
+
+    // public function signup(Request $request) {
+    //     $data['data'] = $request->session()->get('data');
+    //     return view('frontend.subSignup', $data);
+    // }
+    
 }
