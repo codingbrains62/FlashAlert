@@ -221,7 +221,7 @@
                         <div class="login-head-info" style="margin-top:40px;">
                             <p style="font-size:18px; margin-bottom:10px;"><strong>Are you a FlashAlert Messanger
                                     subscriber?</strong></p>
-                            <a href="{{ url('user-login') }}">Click here</a> to go to the Messanger login.
+                            <a href="{{ route('messengersub.login') }}">Click here</a> to go to the Messanger login.
                         </div>
                     </div>
                 </div>

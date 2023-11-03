@@ -15,7 +15,8 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;400&family=Poppins:ital,wght@0,100;0,400;0,500;0,700;1,400&family=Raleway:wght@200;300;500&family=Roboto:wght@300;500;700&display=swap"
         rel="stylesheet">
-    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=loadGoogleTranslate"></script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=loadGoogleTranslate">
+    </script>
     <title>Document</title>
 </head>
 <style>
@@ -80,17 +81,19 @@
         display: grid;
         justify-content: end;
     } */
-    .head-btn .form-switch label{
+    .head-btn .form-switch label {
         font-size: 14px;
     }
-    .head-btn .form-switch{
+
+    .head-btn .form-switch {
         padding-left: 0px;
     }
+
     .skiptranslate.goog-te-gadget {
-    position: absolute;
-    top: 185px;
-    right: 280px;
-}
+        position: absolute;
+        top: 165px;
+        right: 280px;
+    }
 </style>
 
 <body id="translate">
@@ -99,7 +102,7 @@
             <div class="box-padding" style="border-bottom: 3px solid #99212e;">
                 <div class="row">
                     <div class="col-md-5 col-lg-5 col-xl-6">
-                        <h1>{{$data[0]->Name}}.</h1>
+                        <h1>{{ $data[0]->Name }}</h1>
                     </div>
                     <div class="col-md-7 col-lg-7 col-xl-6">
                         <!-- <div class="head-btn">
@@ -115,8 +118,9 @@
                         </div> -->
                         <div class="row head-btn">
                             <div class="col-md-5 col-lg-6 col-xl-7 d-flex">
-                                <p class="mb-0 mx-2"> Follow our emergency messages on</p> <a href="" class="btn-rss">RSS</a>
-                             </div>
+                                <p class="mb-0 mx-2"> Follow our emergency messages on</p> <a href=""
+                                    class="btn-rss">RSS</a>
+                            </div>
                             <div class="col-md-7 col-lg-6 col-xl-5">
                                 <div class="form-check form-switch d-flex pl-0 justify-content-between">
                                     <label class="form-check-label px-2" for="flexSwitchCheckDefault">New information
@@ -131,8 +135,12 @@
                 </div>
             </div>
             <div class="box-padding bg-head">
-                <a href="" class="text-muted">View our emergency closure guidelines.</a>
-                <p class="mb-0">Emergency Messages as of 11:58 am, Thu. Apr. 13</p>
+                <?php
+                $dateTime = new DateTime('now', new DateTimeZone('GMT')); // 'now' gets the current time
+                $currentPDTTime = $dateTime->format('g:i A, D. M j');
+                ?>
+                {{-- <a href="" class="text-muted">View our emergency closure guidelines.</a> --}}
+                <p class="mb-0">Emergency Messages as of <?php echo $currentPDTTime; ?></p>
             </div>
             <div class="box-padding">
                 <div class="row">
@@ -150,104 +158,117 @@
                             <img
                                 src="https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_42x16dp.png"
                                 alt="translate"> translate</p> --}}
-                                <script>
-                                    // function loadGoogleTranslate(){
-                                    //     new google.translate.TranslateElement('translate')
-                                    // }
-                                   function loadGoogleTranslate() {
-                                            new google.translate.TranslateElement({
-                                                pageLanguage: 'en', 
-                                                includedLanguages: 'zh-CN,fr,de,ja,ko,ru,es,vi', 
-                                                //layout: google.translate.TranslateElement.InlineLayout.SIMPLE, 
-                                                autoDisplay: false, 
-                                            }, 'translate');
-                                        }
-                                </script>
+                        <script>
+                            // function loadGoogleTranslate(){
+                            //     new google.translate.TranslateElement('translate')
+                            // }
+                            function loadGoogleTranslate() {
+                                new google.translate.TranslateElement({
+                                    pageLanguage: 'en',
+                                    includedLanguages: 'zh-CN,fr,de,ja,ko,ru,es,vi',
+                                    //layout: google.translate.TranslateElement.InlineLayout.SIMPLE, 
+                                    autoDisplay: false,
+                                }, 'translate');
+                            }
+                        </script>
                     </div>
                     <div class="col-md-3 text-center">
                         <figure>
-                             @if(isset($logo[0]))
-                             <img src="{{ $logo[0]->ThumbURL }}" height="300" width="300" class="img-thumbnail">
-                             @endif
-                           <!--  <img src="https://flashalertnewswire.net/images/logo/6866/thumb_WVCI-believe_rgb.jpg.jpg"
+                            @if (isset($logo[0]))
+                                <img src="{{ $logo[0]->ThumbURL }}" height="300" width="300" class="img-thumbnail">
+                            @endif
+                            <!--  <img src="https://flashalertnewswire.net/images/logo/6866/thumb_WVCI-believe_rgb.jpg.jpg"
                                 alt="logo"> -->
                         </figure>
                     </div>
                 </div>
             </div>
-            @if($data1[0]->FlashAlertSubscriber==1)
-            <div class="box-padding bg-head">
-                <p class="mb-0">Subscribe to receive FlashAlert messages from {{$data[0]->Name}}.</p>
-            </div>
-            <div class="box-padding">
-                <div class="search-bar emg-srch">
-                    <label class="form-label">Primary email address for a new account</label>
-                    <div class="d-flex flex-wrap">
-                        <input class="srch-form" type="text"
-                            id="searchInput" placeholder="Enter Email..." autocomplete="off">
-                        <div class="d-flex align-items-center emg-mail-check">
-                            <div class="form-check form-check-inline mx-2">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                                <label class="form-check-label" for="inlineCheckbox1">Emergency Alerts</label>
+            @if ($data1[0]->FlashAlertSubscriber == 1)
+                <div class="box-padding bg-head">
+                    <p class="mb-0">Subscribe to receive FlashAlert messages from {{ $data[0]->Name }}.</p>
+                </div>
+                <div class="box-padding">
+                    <div class="search-bar emg-srch">
+                        <label class="form-label">Primary email address for a new account</label>
+                        <div class="d-flex flex-wrap">
+                            <input class="srch-form" type="text" id="searchInput" placeholder="Enter Email..."
+                                autocomplete="off">
+                            <div class="d-flex align-items-center emg-mail-check">
+                                <div class="form-check form-check-inline mx-2">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
+                                        value="option1">
+                                    <label class="form-check-label" for="inlineCheckbox1">Emergency Alerts</label>
+                                </div>
+                                <div class="form-check form-check-inline mx-2">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
+                                        value="option2">
+                                    <label class="form-check-label" for="inlineCheckbox2">News Releases</label>
+                                </div>
                             </div>
-                            <div class="form-check form-check-inline mx-2">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-                                <label class="form-check-label" for="inlineCheckbox2">News Releases</label>
-                            </div>
+                            <button class="srch-btn">Subscribe</button>
                         </div>
-                        <button class="srch-btn">Subscribe</button>
                     </div>
                 </div>
-            </div>
-            <div class="box-padding bg-head">
-                <p class="mb-0">News Release</p>
-            </div>
-            <div class="box-padding">
-                <div class="row">
-                    <div class="col-md-8">
-                        <h1 class="my-3">WVCI First in Lane County to offer TrueBeam Radiotherapy <em>12/02/2002</em>
-                        </h1>
-
-                        <p><b>Willamette Valley Cancer Institute and Research Center on the Forefront of Cancer
-                                Treatment with the TrueBeam® Radiotherapy System from Varian</b> </p>
-                        <p>
-                            <b> Medical Systems</b> <br>
-                            Fast, powerful, accurate technology enables an advanced standard of precision in cancer
-                            treatment
-                        </p>
-
-                        <p><b>Eugene, OR., April 3, 2023 —</b> In a promising development for cancer patients in Lane
-                            County, Willamette Valley Cancer Institute and Research Center (WVCI) announced today that
-                            it has begun treating patients on a newly acquired TrueBeam® radiotherapy system. The first
-                            of its kind in Lane County, the TrueBeam expands options, especially for complex cancer
-                            cases.</p>
-
-                        <p><i>“Thanks to our great team, the machine runs flawlessly. It allows us to treat some
-                                patients, such as those with very small brain tumors, that we otherwise would not be
-                                able to treat at WVCI</i> - .” – Dr. Merideth Wendland, M.D.</p>
-
-                        <p><b>Enhanced Precision</b></p>
-                        <p>TrueBeam® technology was engineered to deliver powerful cancer treatments with speed and
-                            pinpoint accuracy measured in millimeters. The system targets tumors with tremendous
-                            precision made possible by synchronizing imaging, beam shaping, and dose delivery. As a
-                            patient is lying stationary, the linear accelerator moves smoothly and quietly around them
-                            delivering a pain-free treatment while performing accuracy checks every ten milliseconds to
-                            ensure extreme precision.</p>
-
-                        <p><b>Faster Treatment</b></p>
-                        <p>The TrueBeam system integrates state-of-the-art imaging, “intelligent” automation, and motion
-                            management technologies to deliver treatments more quickly while monitoring patient beathing
-                            and compensating for tumor motion during treatment to reduce dose to healthy tissues.</p>
-
-                        <p>For more information on radiation therapy please visit <a
-                                href="">www.oregoncancer.com/radiation-therapies</a></p>
-
-                        <p>For more information on Willamette Valley Cancer Institute and Research Center please visit
-                            <a href="">www.oregoncancer.com</a></p>
-                    </div>
-                    <div class="col-md-4"></div>
+                <div class="box-padding bg-head">
+                    <p class="mb-0">News Release</p>
                 </div>
-            </div>
+                <div class="box-padding">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h1 class="my-3">WVCI First in Lane County to offer TrueBeam Radiotherapy
+                                <em>12/02/2002</em>
+                            </h1>
+
+                            <p><b>Willamette Valley Cancer Institute and Research Center on the Forefront of Cancer
+                                    Treatment with the TrueBeam® Radiotherapy System from Varian</b> </p>
+                            <p>
+                                <b> Medical Systems</b> <br>
+                                Fast, powerful, accurate technology enables an advanced standard of precision in cancer
+                                treatment
+                            </p>
+
+                            <p><b>Eugene, OR., April 3, 2023 —</b> In a promising development for cancer patients in
+                                Lane
+                                County, Willamette Valley Cancer Institute and Research Center (WVCI) announced today
+                                that
+                                it has begun treating patients on a newly acquired TrueBeam® radiotherapy system. The
+                                first
+                                of its kind in Lane County, the TrueBeam expands options, especially for complex cancer
+                                cases.</p>
+
+                            <p><i>“Thanks to our great team, the machine runs flawlessly. It allows us to treat some
+                                    patients, such as those with very small brain tumors, that we otherwise would not be
+                                    able to treat at WVCI</i> - .” – Dr. Merideth Wendland, M.D.</p>
+
+                            <p><b>Enhanced Precision</b></p>
+                            <p>TrueBeam® technology was engineered to deliver powerful cancer treatments with speed and
+                                pinpoint accuracy measured in millimeters. The system targets tumors with tremendous
+                                precision made possible by synchronizing imaging, beam shaping, and dose delivery. As a
+                                patient is lying stationary, the linear accelerator moves smoothly and quietly around
+                                them
+                                delivering a pain-free treatment while performing accuracy checks every ten milliseconds
+                                to
+                                ensure extreme precision.</p>
+
+                            <p><b>Faster Treatment</b></p>
+                            <p>The TrueBeam system integrates state-of-the-art imaging, “intelligent” automation, and
+                                motion
+                                management technologies to deliver treatments more quickly while monitoring patient
+                                beathing
+                                and compensating for tumor motion during treatment to reduce dose to healthy tissues.
+                            </p>
+
+                            <p>For more information on radiation therapy please visit <a
+                                    href="">www.oregoncancer.com/radiation-therapies</a></p>
+
+                            <p>For more information on Willamette Valley Cancer Institute and Research Center please
+                                visit
+                                <a href="">www.oregoncancer.com</a>
+                            </p>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                </div>
         </div>
         @endif
     </section>
