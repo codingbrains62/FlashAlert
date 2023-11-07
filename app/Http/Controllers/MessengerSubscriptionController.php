@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class MessengerSubscriptionController extends Controller
 {
@@ -61,8 +64,9 @@ class MessengerSubscriptionController extends Controller
             'DateCreated' => '2023-10-10',
             ];
              $lastid=  DB::table('publicuser')->insertGetId($data);
-        
-            //  dd($lastid);
+             $id=['id'=>$lastid];
+             $data['data'] = array_merge($data,$id);
+            // dd( $data['data']);
         
            
         DB::table('publicusersubscription')->insert([
@@ -73,12 +77,80 @@ class MessengerSubscriptionController extends Controller
         ]);
         // Redirect or return a response as needed
         // return redirect()->route('signup')->with(['success' => 'Subscription successful.', 'data' => $data]);
-        return view('frontend.subSignup', ['data' => $data]);
+        return view('frontend.subSignup', $data);
+    }
+    public function msmanage(Request $request)
+    {
+        $decrypted = Hash::make($request->input('NPW'));
+        //dd($decrypted);
+        $data=[
+            'EmailAddress' => $request->input('EmailAddress'),
+            'ResetCode' => 'abcdssdd', // 1 if checked, 0 if not
+            'ResetDate' => '2023-10-10 11:55:55',
+            'NPW' => $decrypted,
+            'LastLogin' => '2023-10-10 11:55:55',
+            'LastMailTest' => '2023-10-10 11:55:55',
+            'DateCreated' => '2023-10-10',
+            ];
+            
+            try{
+                $request->validate([
+                    'ConfirmEmailAddress' => 'required_with:EmailAddress|email|same:EmailAddress',
+                    'NPW' => 'required',
+                    'confirm_password' => 'required_with:NPW|same:NPW',""
+                ]);
+                //dd($request->id );
+                if ($request->id != '') {
+                   // dd($data);
+                    $user = DB::table('publicuser')->where('id',$request->id)->update($data);
+                    //dd($data);
+               }
+            }
+            catch (\Illuminate\Validation\ValidationException $e) {
+                $errors = $e->validator->errors();
+                return  back()->withErrors($errors)->withInput();
+            }
+            $request->session()->put('ret',$request->id);
+                    session(['ret' => $request->id]);
+            return redirect()->route('sub-dashboard');
+            // return view('frontend.msmanage');
+        }
+
+        public function mesSubLogin(Request $request)
+        {
+            //dd($fail);
+            $request->validate([
+                'EmailAddress'=>'required|email',
+                'NPW'=>'required',
+            ]);
+            $user = DB::table('publicuser')->where('EmailAddress', $request->EmailAddress)->first();
+            // dd($request->NPW);
+            if ($user) {
+                if (Hash::check($request->NPW, $user->NPW)) {
+                //if (Crypt::decrypt($user->PasswordHash) == $request->password) {
+                    $request->session()->put('ret',$user->id);
+                    session(['ret' => $user->id,]);
+                    //  dd($user);
+                        return redirect()->route('sub-dashboard');
+                        //return view('frontend.msmanage');
+                }else{
+                    return back()->withErrors(['NPW' => 'Failed! Invalid password'])->withInput();
+                }
+            }else{
+                return back()->with('failed', 'Failed! Invalid email');
+            }
+        }
+
+        public function subdashboard()
+    {    
+
+        //echo Session::get('ret');
+        if (Session::has('ret')) {
+         $data=DB::table('publicuser')->where('id',session::get('ret'))->get(); 
+        }
+         
+         return view('frontend.msmanage',compact('data'));
     }
 
-    // public function signup(Request $request) {
-    //     $data['data'] = $request->session()->get('data');
-    //     return view('frontend.subSignup', $data);
-    // }
-    
+
 }

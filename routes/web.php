@@ -36,7 +36,12 @@ Route::post('/getorgName', [RegionController::class,'searchByOrgName'])->name("s
 Route::post('/getorgData', [RegionController::class,'orgList']);
 Route::get('/id/{org}', [RegionController::class,'EmergencyMess']);
 Route::get('/ids/{org}', [RegionController::class,'EmergencyMess1']);
+Route::get('messenger-login',[MessengerSubscriptionController::class,'loginme'])->name('messengersub.login');
 Route::match(array('GET','POST'),'/signup', [MessengerSubscriptionController::class, 'subscribe'])->name('messSubscribe');
+Route::match(array('GET','POST'),'/manage', [MessengerSubscriptionController::class,'subdashboard'])->name('sub-dashboard');
+Route::match(array('GET','POST'),'/create', [MessengerSubscriptionController::class, 'msmanage'])->name('messSubscribeManage');
+Route::post('sub-login', [MessengerSubscriptionController::class, 'mesSubLogin'])->name('mesSubLogin');
+Route::get('forgetPass',[MessengerSubscriptionController::class,'lostpass'])->name('frontend-lostpass');
 // Route::get('/signup', [MessengerSubscriptionController::class,'signup'])->name('signup');
 Route::get('/post-your-news/{url}/{id}', [RegionController::class,'postnews'])->name('postnewsregions');
 Route::get('/user-login', [CommonController::class,'ulogin'])->name('userlogin');
@@ -50,8 +55,6 @@ Route::get('login-link/{token}', [CommonController::class, 'LoginLinkValidate'])
 Route::get('guide.html',[CommonController::class,'guideForPostingNews'])->name('closure.guide');
 Route::get('flashblog',[CommonController::class,'flashblog'])->name('blog');
 Route::get('monitor',[NewsMediaMonitoringController::class,'newsMediaMonitor'])->name('monitor');
-Route::get('messenger-login',[MessengerSubscriptionController::class,'loginme'])->name('messengersub.login');
-Route::get('forgetPass',[MessengerSubscriptionController::class,'lostpass'])->name('frontend-lostpass');
 Route::get('attach-app-tutor',[MessengerSubscriptionController::class,'attach_app'])->name('attach-app-tut');
 Route::match(['get', 'post'],'regions',[MessengerSubscriptionController::class,'frontend_region'])->name('frontend-region');
 

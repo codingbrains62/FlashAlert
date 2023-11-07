@@ -16,12 +16,13 @@
 
                 <div id="main">
                     <div id="main-core">
-                        <form class="log-input front-login" method="post" action="your_action_url_here">
+                        <form class="log-input front-login" method="post" action="{{ route('mesSubLogin') }}">
+                            @csrf
                             <label for="EmailAddress" class="mb-2"><b>Email Address</b></label>
                             <input placeholder="E-mail" type="text" id="EmailAddress" name="EmailAddress" class="srch-form" required>
                             <!-- <br> -->
                             <label for="PW" class="mb-2"><b>Password (Min. 4 characters, not case sensitive)</b></label>
-                            <input placeholder="Password" type="password" id="PW" name="PW" minlength="4" class="srch-form" required>
+                            <input placeholder="Password" type="password" id="PW" name="NPW" minlength="4" class="srch-form" required>
                             <!-- <br> -->
                             <span>
                                 <label class="my-3">
@@ -34,10 +35,6 @@
                             <b class="text-center my-2"><a href="{{route('frontend-lostpass')}}">Click here</a> to reset your password</b>
                         </form>
                         <hr>
-                        <p please="" note="" that="" not="" all="" orgs=""
-                            offer="" messenger="" subscriptions="" to="" the="" public.<=""
-                            p="">
-                        </p>
                         <!-- <p>Reset your Password: <a href="">Click here.</a></p> -->
                         <p>Create new account: <a href="{{route('frontend-region')}}">Click here,</a> then choose your region, then the org.
                         </p>

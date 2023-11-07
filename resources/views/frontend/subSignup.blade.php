@@ -19,20 +19,22 @@
                                     href="{{ route('messengersub.login') }}">Click here to log in</a>.<br>
                             </div>
                             <div class="SubscribeEmail">
-                                <form method="post" action="">
+                                <form action="{{ route('messSubscribeManage') }}" method="post">
+                                    @csrf
+                                    <input type="hidden" value={{$data['id']}} name="id" class="srch-form">
                                     <label for="EmailAddress" class="mb-2"><b>Email Address</b></label>
                                     <input type="text" value={{$data['EmailAddress']}} name="EmailAddress" class="srch-form" required>
                                     <label for="EmailAddress" class="mb-2"><b>Confirm Email Address</b></label>
-                                    <input type="text" name="EmailAddress" class="srch-form" required>
+                                    <input type="text" name="ConfirmEmailAddress" class="srch-form" required>
                                     <label for="PW" class="mb-2"><b>Password (Min. 4 characters, not case
                                             sensitive)</b></label>
-                                    <input type="password" name="PW" class="srch-form" required>
+                                    <input type="password" name="NPW" class="srch-form" required>
                                     <label for="PW" class="mb-2"><b>Confirm Password</b></label>
-                                    <input type="password" name="PW" class="srch-form" required>
-                                    <input type="hidden" value="Subscribe" name="UpdateSub">
-                                    <input type="hidden" value="1" name="SubNews">
-                                    <input type="hidden" value="1" name="SubEmergency">
-                                    <input type="hidden" value="4" name="OrgID">
+                                    <input type="password" name="confirm_password" class="srch-form" required>
+                                    <input type="hidden" value="" name="UpdateSub">
+                                    <input type="hidden" value="" name="SubNews">
+                                    <input type="hidden" value="" name="SubEmergency">
+                                    <input type="hidden" value="" name="OrgID">
                                     <input type="submit" name="Submit" value="Create your Account">
                                 </form>
                             </div>
