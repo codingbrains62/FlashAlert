@@ -127,16 +127,12 @@ class MessengerSubscriptionController extends Controller
             // dd($request->NPW);
             if ($user) {
                 if (Hash::check($request->NPW, $user->NPW)) {
-                //if (Crypt::decrypt($user->PasswordHash) == $request->password) {
-                    $request->session()->put('ret',$user->id);
-                    session(['ret' => $user->id,]);
-                    //  dd($user);
-                        return redirect()->route('sub-dashboard');
-                        //return view('frontend.msmanage');
-                }else{
-                    return back()->withErrors(['NPW' => 'Failed! Invalid password'])->withInput();
+                    $request->session()->put('ret', $user->id);
+                    return redirect()->route('sub-dashboard');
+                } else {
+                    return back()->with('failed', 'Failed! Invalid password');
                 }
-            }else{
+            } else {
                 return back()->with('failed', 'Failed! Invalid email');
             }
         }
