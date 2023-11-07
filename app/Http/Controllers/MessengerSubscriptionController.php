@@ -10,49 +10,60 @@ use Illuminate\Support\Facades\Session;
 
 class MessengerSubscriptionController extends Controller
 {
-    public function loginme(){
-        return view('frontend.messengerLogin');
-    }
-    public function lostpass(){
-        return view('frontend.msg_forgetPass');
-    }
-    public function attach_app(){
-        return view('frontend.attachAppTut');
-    }
-    public function frontend_region(Request $request){
-        $data['regionlist'] = DB::table('regions')->get();
-        if ($request->has('search')) {
-            $regionID = $request->input('RegionID');
-            $organizationName = $request->input('organizationName');
-            $data['orgName'] = $request->input('organizationName');
-            // Construct the query for searching organizations based on the selected region and organization name
-             $query = DB::table('orgs')
-             ->join('regions', 'orgs.RegionID', '=', 'regions.id')// Add a join with the 'regions' table
-             ->join('users', 'orgs.id', '=', 'users.OrgID') // Add a join with the 'users' table
-             ->select('orgs.*', 'regions.Description as regionDescription', 'users.URLName as URLName');
-            if ($regionID != 0) {
-                $query->where('regions.id', $regionID);
-            }
-            if (!empty($organizationName)) {
-                $query->where('orgs.Name', 'like', '%' . $organizationName . '%');
-            }
-        //Execute the query and fetch search results
-         $data['searchResults'] = $query->get();
-            // echo"<pre>";
-            // print_r($data['searchResults']);
-            // die;
+    public function EmergencyMess($id)
+        {      
+                $data1=DB::table('users')->where('URLName',$id)->get();
+                $data=DB::table('orgs')->where('id',$data1[0]->OrgID)->get();
+                return view('frontend.emergencymess', compact('data','data1'));
         }
-        return view('frontend.regionsForMsgLogin', $data);
-    }
-
+        
+        public function EmergencyMess1($id)
+        {      
+                $data1=DB::table('users')->where('OrgID',$id)->get();
+                $data=DB::table('orgs')->where('id',$data1[0]->OrgID)->get();
+                $logo=DB::table('mediafile')->where('id', $data[0]->LogoMediaFileID)->get();  
+                return view('frontend.emergencymess', compact('data','data1','logo'));
+        }
+        public function loginme(){
+            return view('frontend.messengerLogin');
+        }
+        public function lostpass(){
+            return view('frontend.msg_forgetPass');
+        }
+        public function attach_app(){
+            return view('frontend.attachAppTut');
+        }
+        public function frontend_region(Request $request){
+            $data['regionlist'] = DB::table('regions')->get();
+            if ($request->has('search')) {
+                $regionID = $request->input('RegionID');
+                $organizationName = $request->input('organizationName');
+                $data['orgName'] = $request->input('organizationName');
+                // Construct the query for searching organizations based on the selected region and organization name
+                $query = DB::table('orgs')
+                ->join('regions', 'orgs.RegionID', '=', 'regions.id')// Add a join with the 'regions' table
+                ->join('users', 'orgs.id', '=', 'users.OrgID') // Add a join with the 'users' table
+                ->select('orgs.*', 'regions.Description as regionDescription', 'users.URLName as URLName');
+                if ($regionID != 0) {
+                    $query->where('regions.id', $regionID);
+                }
+                if (!empty($organizationName)) {
+                    $query->where('orgs.Name', 'like', '%' . $organizationName . '%');
+                }
+            //Execute the query and fetch search results
+            $data['searchResults'] = $query->get();
+                // echo"<pre>";
+                // print_r($data['searchResults']);
+                // die;
+            }
+            return view('frontend.regionsForMsgLogin', $data);
+        }
     public function subscribe(Request $request)
-    {
-
-          
+    {         
             $emergencyAlerts = $request->has('EmergSub') ? 1 : 0;
             $newsReleases = $request->has('NewsSub') ? 1 : 0;
             $request->validate([
-                'EmailAddress' => 'required|email',
+                'EmailAddress' => 'required|email|unique:publicuser,EmailAddress',
             ]);
             $data=[
             'EmailAddress' => $request->input('EmailAddress'),
@@ -67,9 +78,7 @@ class MessengerSubscriptionController extends Controller
              $id=['id'=>$lastid];
              $data['data'] = array_merge($data,$id);
             // dd( $data['data']);
-        
-           
-        DB::table('publicusersubscription')->insert([
+           DB::table('publicusersubscription')->insert([
             'OrgID' =>$request->OrgID,
             'PublicUserID' =>$lastid,
             'EmergSub' => $emergencyAlerts, // 1 if checked, 0 if not
@@ -92,7 +101,6 @@ class MessengerSubscriptionController extends Controller
             'LastMailTest' => '2023-10-10 11:55:55',
             'DateCreated' => '2023-10-10',
             ];
-            
             try{
                 $request->validate([
                     'ConfirmEmailAddress' => 'required_with:EmailAddress|email|same:EmailAddress',
@@ -138,15 +146,13 @@ class MessengerSubscriptionController extends Controller
         }
 
         public function subdashboard()
-    {    
-
-        //echo Session::get('ret');
-        if (Session::has('ret')) {
-         $data=DB::table('publicuser')->where('id',session::get('ret'))->get(); 
-        }
-         
-         return view('frontend.msmanage',compact('data'));
-    }
+            {
+                //echo Session::get('ret');
+                if (Session::has('ret')) {
+                $data=DB::table('publicuser')->where('id',session::get('ret'))->get(); 
+                }
+                return view('frontend.msmanage',compact('data'));
+            }
 
 
 }

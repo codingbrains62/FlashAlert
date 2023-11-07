@@ -208,6 +208,7 @@
             <div class="box-padding bg-head">
                 <p class="mb-0">Subscribe to receive FlashAlert messages from {{ $data[0]->Name }}.</p>
             </div>
+            
             <form action="{{ route('messSubscribe') }}" method="post">
                 @csrf
                 <div class="box-padding">
@@ -219,18 +220,21 @@
                                 placeholder="Enter Email..." autocomplete="off">
                             <div class="d-flex align-items-center emg-mail-check">
                                 <div class="form-check form-check-inline mx-2">
-                                    <input class="form-check-input" type="checkbox" name="EmergSub"
-                                        id="inlineCheckbox1" value="1" checked>
+                                    <input class="form-check-input" type="checkbox" name="EmergSub" id="inlineCheckbox1"
+                                        value="1" checked>
                                     <label class="form-check-label" for="inlineCheckbox1">Emergency Alerts</label>
                                 </div>
                                 <div class="form-check form-check-inline mx-2">
-                                    <input class="form-check-input" type="checkbox" name="NewsSub"
-                                        id="inlineCheckbox2" value="1" checked>
+                                    <input class="form-check-input" type="checkbox" name="NewsSub" id="inlineCheckbox2"
+                                        value="1" checked>
                                     <label class="form-check-label" for="inlineCheckbox2">News Releases</label>
                                 </div>
                             </div>
                             <button type="submit" class="srch-btn">Subscribe</button>
                         </div>
+                        @error('EmailAddress')
+                                <div class="text-danger">{{ str_replace('The email address has already been taken.', 'This email address already is associated with an account.',$message)  }} <a href="{{ route('messengersub.login') }}">Click here to log in.</a></div>
+                            @enderror
                     </div>
                 </div>
             </form>

@@ -130,20 +130,7 @@ class RegionController extends Controller
                  //echo $OrgNameList;
                 return $OrgNameList;
         }
-        public function EmergencyMess($id)
-        {      
-                $data1=DB::table('users')->where('URLName',$id)->get();
-                $data=DB::table('orgs')->where('id',$data1[0]->OrgID)->get();
-                return view('frontend.emergencymess', compact('data','data1'));
-        }
         
-        public function EmergencyMess1($id)
-        {      
-                $data1=DB::table('users')->where('OrgID',$id)->get();
-                $data=DB::table('orgs')->where('id',$data1[0]->OrgID)->get();
-                $logo=DB::table('mediafile')->where('id', $data[0]->LogoMediaFileID)->get();  
-                return view('frontend.emergencymess', compact('data','data1','logo'));
-        }
         //after click Post Your News page Dropdown
         public function postnews(Request $request)
         {
