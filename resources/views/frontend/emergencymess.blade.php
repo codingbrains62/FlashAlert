@@ -204,7 +204,7 @@
                     </div>
                 </div>
             </div>
-            {{-- @if ($data1[0]->FlashAlertSubscriber == 1) --}}
+            @if ($data1[0]->FlashAlertSubscriber == 1)
             <div class="box-padding bg-head">
                 <p class="mb-0">Subscribe to receive FlashAlert messages from {{ $data[0]->Name }}.</p>
             </div>
@@ -238,7 +238,7 @@
                     </div>
                 </div>
             </form>
-            @if ($data1[0]->FlashAlertSubscriber == 1)
+            {{-- @if ($data1[0]->FlashAlertSubscriber == 1) --}}
                 <div class="box-padding bg-head">
                     <p class="mb-0">News Release</p>
                 </div>
@@ -300,9 +300,9 @@
                         <div class="col-md-4"></div>
                     </div>
                 </div>
-            @endif
+            {{-- @endif --}}
         </div>
-        {{-- @endif --}}
+        @endif
     </section>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="

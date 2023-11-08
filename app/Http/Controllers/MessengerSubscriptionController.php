@@ -62,65 +62,82 @@ class MessengerSubscriptionController extends Controller
     {         
             $emergencyAlerts = $request->has('EmergSub') ? 1 : 0;
             $newsReleases = $request->has('NewsSub') ? 1 : 0;
-            $request->validate([
-                'EmailAddress' => 'required|email|unique:publicuser,EmailAddress',
-            ]);
+            // $request->validate([
+            //     'EmailAddress' => 'required|email|unique:publicuser,EmailAddress',
+            // ]);
             $data=[
-            'EmailAddress' => $request->input('EmailAddress'),
+            'EmailAddress' => $request->EmailAddress,
+            'OrgID' => $request->OrgID,
             'ResetCode' => 'abcdssdd', // 1 if checked, 0 if not
-            'ResetDate' => '2023-10-10 11:55:55',
+            'ResetDate' => '',
             'NPW' => 'test',
-            'LastLogin' => '2023-10-10 11:55:55',
-            'LastMailTest' => '2023-10-10 11:55:55',
-            'DateCreated' => '2023-10-10',
-            ];
-             $lastid=  DB::table('publicuser')->insertGetId($data);
-             $id=['id'=>$lastid];
-             $data['data'] = array_merge($data,$id);
-            // dd( $data['data']);
-           DB::table('publicusersubscription')->insert([
-            'OrgID' =>$request->OrgID,
-            'PublicUserID' =>$lastid,
+            'LastLogin' => '',
+            'LastMailTest' => '',
+            'DateCreated' => now(),
             'EmergSub' => $emergencyAlerts, // 1 if checked, 0 if not
-            'NewsSub' => $newsReleases, // 1 if checked, 0 if not
-        ]);
+            'NewsSub' => $newsReleases,
+            ];
+            //  $lastid=  DB::table('publicuser')->insertGetId($data);
+            //  $id=['id'=>$lastid];
+            //  $data['data'] = array_merge($data,$id);
+            // dd( $data['data']);
+        //    DB::table('publicusersubscription')->insert([
+        //     'OrgID' =>$request->OrgID,
+        //     'PublicUserID' =>$lastid,
+        //     'EmergSub' => $emergencyAlerts, // 1 if checked, 0 if not
+        //     'NewsSub' => $newsReleases, // 1 if checked, 0 if not
+        // ]);
         // Redirect or return a response as needed
         // return redirect()->route('signup')->with(['success' => 'Subscription successful.', 'data' => $data]);
-        return view('frontend.subSignup', $data);
+        return view('frontend.subSignup')->with('data', $data);
     }
-    public function msmanage(Request $request)
-    {
-        $decrypted = Hash::make($request->input('NPW'));
-        //dd($decrypted);
-        $data=[
-            'EmailAddress' => $request->input('EmailAddress'),
-            'ResetCode' => 'abcdssdd', // 1 if checked, 0 if not
-            'ResetDate' => '2023-10-10 11:55:55',
-            'NPW' => $decrypted,
-            'LastLogin' => '2023-10-10 11:55:55',
-            'LastMailTest' => '2023-10-10 11:55:55',
-            'DateCreated' => '2023-10-10',
-            ];
+            public function msmanage(Request $request)
+        {
+            // echo"<pre>";
+            // print_r($request->all());
+            // die;
+            $decrypted = Hash::make($request->input('NPW'));
+            //dd($decrypted);
+            $data=[
+                'EmailAddress' => $request->input('EmailAddress'),
+                'ResetCode' => 'abcdssdd', // 1 if checked, 0 if not
+                'ResetDate' => '2023-10-10 11:55:55',
+                'NPW' => $decrypted,
+                'LastLogin' => now(),
+                'LastMailTest' => now(),
+                'DateCreated' => now(),
+                ];
             try{
                 $request->validate([
+                    'EmailAddress' => 'required|email|unique:publicuser,EmailAddress',
                     'ConfirmEmailAddress' => 'required_with:EmailAddress|email|same:EmailAddress',
                     'NPW' => 'required',
-                    'confirm_password' => 'required_with:NPW|same:NPW',""
+                    'confirm_password' => 'required_with:NPW|same:NPW',
                 ]);
+                $lastid=  DB::table('publicuser')->insertGetId($data);
+                $id=['id'=>$lastid];
+                $data['data'] = array_merge($data,$id);
+
+             DB::table('publicusersubscription')->insert([
+            'OrgID' =>$request->OrgID,
+            'PublicUserID' =>$lastid,
+            'EmergSub' => $request->EmergSub, // 1 if checked, 0 if not
+            'NewsSub' => $request->NewsSub, // 1 if checked, 0 if not
+             ]);
                 //dd($request->id );
-                if ($request->id != '') {
-                   // dd($data);
-                    $user = DB::table('publicuser')->where('id',$request->id)->update($data);
-                    //dd($data);
-               }
+            //     if ($request->id != '') {
+            //        // dd($data);
+            //         $user = DB::table('publicuser')->where('id',$request->id)->update($data);
+            //         //dd($data);
+            //    }
+               $request->session()->put('ret',$lastid);
+                    session(['ret' => $lastid]);
+              return redirect()->route('sub-dashboard');
             }
             catch (\Illuminate\Validation\ValidationException $e) {
                 $errors = $e->validator->errors();
-                return  back()->withErrors($errors)->withInput();
+                return back()->withErrors($errors)->withInput();
             }
-            $request->session()->put('ret',$request->id);
-                    session(['ret' => $request->id]);
-            return redirect()->route('sub-dashboard');
             // return view('frontend.msmanage');
         }
 
