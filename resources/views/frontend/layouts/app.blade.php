@@ -17,7 +17,6 @@
 <link rel="stylesheet" id="wp-block-library-css" href="{{asset('front_assets/css/style.min.css')}}" type="text/css" media="all">
 <link rel="stylesheet"  href="{{asset('front_assets/css/style.css')}}" type="text/css" media="all">
 <link rel="stylesheet"  href="//fonts.googleapis.com/css?family=Raleway%3A300%2C400%2C600%2C700%7COpen+Sans%3A300%2C400%2C600%2C700&amp;subset=latin%2Clatin-ext" type="text/css" media="all">
-<link rel="stylesheet"  href="{{asset('front_assets/css/bootstrap.min.css')}}" type="text/css" media="all">
 <link rel="stylesheet"  href="{{asset('front_assets/css/font-awesome.min.css')}}" type="text/css" media="all">
 <link rel="stylesheet"  href="{{asset('front_assets/css/style-shortcodes.css')}}" type="text/css" media="all">
 <link rel="stylesheet"  href="{{asset('front_assets/css/style.css')}}" type="text/css" media="all">
@@ -40,5 +39,6 @@ $data=Helper::MenuHeaderData();
 </div><!-- #body-core -->
 <script type="text/javascript" src="{{asset('front_assets/js/bootstrap.js')}}" id="thinkup-bootstrap-js"></script>
 <script type="text/javascript" src="{{asset('front_assets/js/main-frontend.js')}}" id="thinkup-frontend-js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -58,39 +58,53 @@ class MessengerSubscriptionController extends Controller
             }
             return view('frontend.regionsForMsgLogin', $data);
         }
-    public function subscribe(Request $request)
-    {         
+        public function subscribe(Request $request)
+        {
+            // Check if the email address already exists
+            $existingUser =  DB::table('publicuser')->where('EmailAddress', $request->EmailAddress)->first();
+           
+            $errorMessage = null;
+            
             $emergencyAlerts = $request->has('EmergSub') ? 1 : 0;
             $newsReleases = $request->has('NewsSub') ? 1 : 0;
-            // $request->validate([
-            //     'EmailAddress' => 'required|email|unique:publicuser,EmailAddress',
-            // ]);
-            $data=[
-            'EmailAddress' => $request->EmailAddress,
-            'OrgID' => $request->OrgID,
-            'ResetCode' => 'abcdssdd', // 1 if checked, 0 if not
-            'ResetDate' => '',
-            'NPW' => 'test',
-            'LastLogin' => '',
-            'LastMailTest' => '',
-            'DateCreated' => now(),
-            'EmergSub' => $emergencyAlerts, // 1 if checked, 0 if not
-            'NewsSub' => $newsReleases,
+            $data = [
+                'EmailAddress' => $request->EmailAddress,
+                'OrgID' => $request->OrgID,
+                'ResetCode' => 'abcdssdd', // 1 if checked, 0 if not
+                'ResetDate' => '',
+                'NPW' => 'test',
+                'LastLogin' => '',
+                'LastMailTest' => '',
+                'DateCreated' => now(),
+                'EmergSub' => $emergencyAlerts, // 1 if checked, 0 if not
+                'NewsSub' => $newsReleases,
             ];
-            //  $lastid=  DB::table('publicuser')->insertGetId($data);
-            //  $id=['id'=>$lastid];
-            //  $data['data'] = array_merge($data,$id);
-            // dd( $data['data']);
-        //    DB::table('publicusersubscription')->insert([
-        //     'OrgID' =>$request->OrgID,
-        //     'PublicUserID' =>$lastid,
-        //     'EmergSub' => $emergencyAlerts, // 1 if checked, 0 if not
-        //     'NewsSub' => $newsReleases, // 1 if checked, 0 if not
-        // ]);
-        // Redirect or return a response as needed
-        // return redirect()->route('signup')->with(['success' => 'Subscription successful.', 'data' => $data]);
-        return view('frontend.subSignup')->with('data', $data);
-    }
+            if ($existingUser) {
+                // Email address already exists, set error message
+                $errorMessage = "This email address is already registered.";
+                
+            } else {
+                // Continue with your logic if the email address is not already registered
+                // $emergencyAlerts = $request->has('EmergSub') ? 1 : 0;
+                // $newsReleases = $request->has('NewsSub') ? 1 : 0;
+                // $data = [
+                //     'EmailAddress' => $request->EmailAddress,
+                //     'OrgID' => $request->OrgID,
+                //     'ResetCode' => 'abcdssdd', // 1 if checked, 0 if not
+                //     'ResetDate' => '',
+                //     'NPW' => 'test',
+                //     'LastLogin' => '',
+                //     'LastMailTest' => '',
+                //     'DateCreated' => now(),
+                //     'EmergSub' => $emergencyAlerts, // 1 if checked, 0 if not
+                //     'NewsSub' => $newsReleases,
+                // ];
+            }
+        
+            // Return the view with either the error message or the data
+            return view('frontend.subSignup')->with('data', $data)->with('errorMessage', $errorMessage);
+        }
+        
             public function msmanage(Request $request)
         {
             // echo"<pre>";
@@ -169,6 +183,14 @@ class MessengerSubscriptionController extends Controller
                 $data=DB::table('publicuser')->where('id',session::get('ret'))->get(); 
                 }
                 return view('frontend.msmanage',compact('data'));
+            }
+
+            public function logout()
+            {
+                if (Session::has('ret')) {
+                    Session::pull('ret');
+                }
+                return redirect()->route('messengersub.login');
             }
 
 

@@ -38,9 +38,13 @@ Route::get('/id/{org}', [MessengerSubscriptionController::class,'EmergencyMess']
 Route::get('messenger-login',[MessengerSubscriptionController::class,'loginme'])->name('messengersub.login');
 Route::match(['get', 'post'],'regions',[MessengerSubscriptionController::class,'frontend_region'])->name('frontend-region');
 Route::get('/ids/{org}', [MessengerSubscriptionController::class,'EmergencyMess1']);
+Route::get('messenger-login',[MessengerSubscriptionController::class,'loginme'])->name('messengersub.login')->middleware('alreadyLoggedIN')->middleware('prevent-back-history');
 Route::match(array('GET','POST'),'/signup', [MessengerSubscriptionController::class, 'subscribe'])->name('messSubscribe');
 Route::match(array('GET','POST'),'/create', [MessengerSubscriptionController::class, 'msmanage'])->name('messSubscribeManage');
-Route::match(array('GET','POST'),'/manage', [MessengerSubscriptionController::class,'subdashboard'])->name('sub-dashboard');
+Route::middleware(['subuser'])->group(function () {
+    Route::match(array('GET','POST'),'/manage', [MessengerSubscriptionController::class,'subdashboard'])->name('sub-dashboard');
+    });
+    Route::get('/msgsublogout', [MessengerSubscriptionController::class,'logout'])->name('msgsublogout');
 
 
 Route::post('sub-login', [MessengerSubscriptionController::class, 'mesSubLogin'])->name('mesSubLogin');

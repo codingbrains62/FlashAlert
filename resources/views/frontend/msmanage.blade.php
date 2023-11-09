@@ -1,2 +1,269 @@
-<p> Test</p>
-pphgj fgh fg hfg hfg hgfh 
+@extends('frontend.layouts.app')
+@section('content')
+    <style>
+        .my-email-add table tr td {
+            border: 1px solid #ddd;
+        }
+
+        .msgr-subs-tabs li .nav-link {
+            padding: 8px 20px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #666;
+        }
+
+        .msgr-subs-tabs li .nav-link:hover {
+            background: #bbdae5;
+            opacity: 1;
+        }
+
+        .msgr-subs-tabs li .nav-link.active {
+            background: #bbdae5;
+            color: #2e2e2e;
+            border-bottom: 2px solid #097397;
+        }
+
+        .bg-e3 {
+            background: #eee;
+        }
+
+        .msngr-tab-cont .tab-pane.active {
+            min-height: 45vh;
+        }
+    </style>
+    <section>
+        <div style="background: #c5e3ed">
+            <div class="container d-flex justify-content-center align-items-center">
+                <div class="intro-box ">
+                    <div class="intro-text d-flex justify-content-center align-items-center">
+                        <h1>MANAGE YOUR MESSENGER SUBSCRIPTION</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="content">
+            <div id="content-core">
+                <div class="acount-info row align-items-center mb-3">
+                    <h4 class="col-lg-8">Welcome, Codingbrian2@gmail.gone</h4>
+                <a href={{route('msgsublogout')}} class="col-lg-4 text-end">
+                        <i class="fa fa-power-off mx-1" aria-hidden="true"></i> Logout
+                    </a>
+
+                </div>
+                <ul class="msgr-subs-tabs nav nav-tabs ml-0 justify-content-between bg-e3" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-msg"
+                            type="button" role="tab" aria-controls="home" aria-selected="true">My Email Address
+                            <span>2</span></button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
+                            type="button" role="tab" aria-controls="profile" aria-selected="false">My Linked Phone
+                            Apps</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact"
+                            type="button" role="tab" aria-controls="contact" aria-selected="false">My Subscriptions
+                            <span>2</span></button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="add-subscriber" data-bs-toggle="tab" data-bs-target="#addSubs"
+                            type="button" role="tab" aria-controls="contact" aria-selected="false">add Subscriptions
+                            <span>2</span></button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="acc-setting" data-bs-toggle="tab" data-bs-target="#accSet"
+                            type="button" role="tab" aria-controls="contact" aria-selected="false">add Subscriptions
+                            <span>2</span></button>
+                    </li>
+                </ul>
+                <div class="tab-content msngr-tab-cont" id="myTabContent">
+                    <div class="tab-pane fade show active p-4 border" id="home-msg" role="tabpanel"
+                        aria-labelledby="home-tab">
+                        <div class="my-email-add table-responsive">
+                            <table class="table table-bordered fw-6">
+                                <tbody>
+                                    <tr>
+                                        <td>Primary Email</td>
+                                        <td>
+                                            <div class="tbl-input-email">
+                                                <input class="form-control border-0" type="text"
+                                                    value="codingbrains62@gmail.com">
+                                            </div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div class="tbl-btns">
+                                                <button type="button" class="btn btn-outline-warning">Update</button>
+                                                <button type="button" class="btn btn-outline-primary">Send Test</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Email #2</td>
+                                        <td>
+                                            <div class="tbl-input-email">
+                                                <input class="form-control border-0" type="text"
+                                                    value="codingbrains62@gmail.com">
+                                            </div>
+                                            <div>
+                                                <span class="text-danger">Enter validation code and press Update to
+                                                    submit.</span><br>
+                                                <label for="" class="form-label">Enter code from validation
+                                                    message</label>
+                                                <input class="form-control border" type="text" value="">
+                                                <span>Alerts are not sent to non-validated addresses.</span>
+                                            </div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div class="tbl-btns">
+                                                <button type="button" class="btn btn-outline-warning">Update</button>
+                                                <button type="button" class="btn btn-outline-primary">Send Test</button>
+                                                <button type="button" class="btn btn-outline-danger">Delete</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Email #3</td>
+                                        <td>
+                                            <div class="tbl-input-email">
+                                                <input class="form-control border-0" type="text" value="">
+                                            </div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div class="tbl-btns">
+                                                <button type="button" class="btn btn-outline-success">Add</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="tbl-cautions mt-5">
+                                <ul style="font-size:10pt;">
+                                    <li><span class="fw-6">Be aware that with the explosion of spam and the resulting
+                                            spam filters, it is impossible to guarantee message delivery, since different
+                                            filters block different messages. FlashAlert dispatches all messages within five
+                                            minutes of being posting. Your email server and/or cell company may delay
+                                            messages. Remember that text messages truncate after 150 characters.</span></li>
+                                    <li><span class="fw-6"><em>Due to cell phone companies delaying or shortening text
+                                                messages, we strongly discourage the use of cell text
+                                                numbers.</em></span><br>We encourage you to download the free Android/iOS
+                                        phone/tablet app, FlashAlert Messenger, which uses push notification, a method
+                                        <strong class="fw-6">much faster and more reliable</strong> than text messages
+                                        (go to "My Linked Phone Apps" tab above).</li>
+                                    <li>If you absolutely must get a text (i.e. no smartphone) and understand that support
+                                        is not available for text addresses, you may enter it in the form of an email
+                                        address. Click <a href="" target="_blank">here</a> for a list of formats by
+                                        cell company.</li>
+                                    <li>Note that if you register for news releases, they are sent to email addresses only,
+                                        but can be viewed in the phone app.</li>
+                                    <li>All addresses registered on FlashAlert will remain confidential. Each summer, you
+                                        will receive a message at your primary email address asking if you wish to continue
+                                        your subscription and to confirm your address(es).</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade p-4 border" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class=""><strong class="fw-6">Your iOS and Android devices that have the FlashAlert
+                                Messenger app linked to this account:</strong><br><br><span
+                                style="font-weight:bold;color:#C40F29;">No mobile apps connected.</span><br>
+                            <p style="font-size:10pt;">The FlashAlert Messenger app allows you receive and view push
+                                notifications on your tablet or smart phone. Push notifications are faster and more reliable
+                                than text messaging. <strong class="fw-6">If you get a new phone, you must delete the old
+                                    one and add the new one (the notifications are sent based on the phone ID token, not the
+                                    phone number).</strong> <a href="" target="_blank">Click here to learn more
+                                    about the Messenger app or if you are having connection issues</a>.</p>
+                            <p style="font-size:10pt;">The free FlashAlert Messenger app is available on <a href=""
+                                    target="_blank"> iTunes app store.</a></p>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade p-4 border" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                        <p class="fw-6">Organizations that you are subscribed to</p>
+
+                        <div class="">
+                            <form method="post" class="">
+                                <div class="row">
+                                    <div class="four columns"><span class="fw-6">suraj test 320</span></div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value=""
+                                            id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Emergency Alerts
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value=""
+                                            id="flexCheckChecked" checked>
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            News Releases
+                                        </label>
+                                    </div>
+                                    <div class="text-end">
+                                        <input type="Submit" class="py-2 px-4 " value="Update">
+                                        <input type="Submit" class="py-2 px-4 " value="Delete">
+                                    </div>
+                                </div>
+                            </form>
+                            <div style="clear:both;"></div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade p-4 border" id="addSubs" role="tabpanel"
+                        aria-labelledby="add-subscriber">
+                        <p class="fw-bold">Subscribe to an Organization</p>
+                        <p class="">Please note that all schools & orgs use FlashAlert for media notifications, but
+                            not all offer a subscription option for the public.</p>
+
+                        <strong class="fw-6">Find your org by <span class="text-danger">searching</span> by Region or
+                            <span class="text-danger">Search all Orgs</span></strong>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label for="" class="form-label fw-6">Region</label>
+                                <select class="form-select py-3" style="font-size: 12px;"
+                                    aria-label="Default select example">
+                                    <option selected disabled>select menu</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-6">
+                                <label for="" class="form-label fw-6">Search</label>
+                                <input class="form-control border" type="text" value="">
+                            </div>
+                            <div class="col-12 text-end mt-3">
+                                <input type="Submit" class="py-2 px-4 " value="Search">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade p-4 border" id="accSet" role="tabpanel" aria-labelledby="acc-setting">
+                        <p class="fw-6 ">Change your Account Password</p>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label for="" class="form-label fw-6">New Password</label>
+                                <input class="form-control border" type="text" value="">
+                            </div>
+                            <div class="col-lg-6">
+                                <label for="" class="form-label fw-6">Confirm Password</label>
+                                <input class="form-control border" type="text" value="">
+                            </div>
+                            <div class="col-12 mt-3 text-end">
+                                <input type="Submit" class="py-2 px-4 " value="Change password">
+                            </div>
+                        </div>
+                        <div class="del-account mt-3">
+                            <p>Delete your FlashAlert account</p>
+                            <button type="button" class="btn btn-danger p-3">Delete this Account</button>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </section>
+@endsection
