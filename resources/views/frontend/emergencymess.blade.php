@@ -232,9 +232,6 @@
                             </div>
                             <button type="submit" class="srch-btn">Subscribe</button>
                         </div>
-                        @error('EmailAddress')
-                                <div class="text-danger">{{ str_replace('The email address has already been taken.', 'This email address already is associated with an account.',$message)  }} <a href="{{ route('messengersub.login') }}">Click here to log in.</a></div>
-                            @enderror
                     </div>
                 </div>
             </form>

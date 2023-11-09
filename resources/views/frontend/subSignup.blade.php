@@ -28,11 +28,11 @@
                                     @csrf
                                     {{-- <input type="hidden" value={{ $data['id'] }} name="id" class="srch-form"> --}}
                                     <label for="EmailAddress" class="mb-2"><b>Email Address</b></label>
-                                    <input type="text" value={{ $data['EmailAddress'] }} name="EmailAddress"
+                                    <input type="text" value="{{ $data['EmailAddress'] }}{{old('EmailAddress')}}" name="EmailAddress"
                                         class="srch-form" readonly>
                                         @error('EmailAddress')
-                                <div class="text-danger">{{ str_replace('The email address has already been taken.', 'This email address already is associated with an account.',$message)  }} <a href="{{ route('messengersub.login') }}">Click here to log in.</a></div>
-                            @enderror
+                                          <div class="text-danger">{{ str_replace('The email address has already been taken.', 'This email address already is associated with an account.',$message)  }} <a href="{{ route('messengersub.login') }}">Click here to log in.</a></div>
+                                       @enderror
                                     <label for="EmailAddress" class="mb-2"><b>Confirm Email Address</b></label>
                                     <input type="text" name="ConfirmEmailAddress" class="srch-form">
                                     @error('ConfirmEmailAddress')
@@ -47,11 +47,11 @@
                                     <label for="PW" class="mb-2"><b>Confirm Password</b></label>
                                     <input type="password" name="confirm_password" class="srch-form">
                                     @error('confirm_password')
-                                        <div class="text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ str_replace('The confirm password and n p w must match','The confirm password and password must be same',$message )}}</div>
                                     @enderror
-                                    <input type="hidden" value={{ $data['OrgID'] }} name="OrgID">
-                                    <input type="hidden" value={{ $data['NewsSub'] }} name="NewsSub">
-                                    <input type="hidden" value={{ $data['EmergSub'] }} name="EmergSub">
+                                    <input type="hidden" value="{{ $data['OrgID'] }}" name="OrgID">
+                                    <input type="hidden" value="{{ $data['NewsSub'] }}" name="NewsSub">
+                                    <input type="hidden" value="{{ $data['EmergSub'] }}" name="EmergSub">
                                     {{-- <input type="hidden" value="" name="OrgID"> --}}
                                     <input type="submit" name="Submit" value="Create your Account">
                                 </form>
