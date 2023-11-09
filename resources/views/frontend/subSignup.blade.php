@@ -20,15 +20,18 @@
                 <div id="content-core">
                     <div id="main">
                         <div id="main-core">
-                            <div class="ErrorMessage">This email address already is associated with an account. <a
+                            @if ($errorMessage)
+                                <div class="alert alert-danger">
+                                    {{ $errorMessage }} <a
                                     href="{{ route('messengersub.login') }}">Click here to log in</a>.<br>
-                            </div>
+                                </div>
+                            @endif
                             <div class="SubscribeEmail">
                                 <form action="{{ route('messSubscribeManage') }}" method="post">
                                     @csrf
                                     <label for="EmailAddress" class="mb-2"><b>Email Address</b></label>
-                                    <input type="text" value="{{ $data['EmailAddress'] }}{{ old('EmailAddress') }}"
-                                        name="EmailAddress" class="srch-form" readonly>
+                                    <input type="text" value="{{ optional($data)['EmailAddress'] ?? old('EmailAddress') }}"
+                                        name="EmailAddress" class="srch-form">
                                     @error('EmailAddress')
                                         <div class="text-danger">
                                             {{ str_replace('The email address has already been taken.', 'This email address already is associated with an account.', $message) }}
@@ -53,9 +56,11 @@
                                             {{ str_replace('The confirm password and n p w must match', 'The confirm password and password must be same', $message) }}
                                         </div>
                                     @enderror
-                                    <input type="hidden" value="{{ $data['OrgID'] }} {{ old('OrgID') }}" name="OrgID">
-                                    <input type="hidden" value="{{ $data['NewsSub'] }} {{ old('NewsSub') }}" name="NewsSub">
-                                    <input type="hidden" value="{{ $data['EmergSub'] }} {{ old('EmergSub') }}" name="EmergSub">
+                                    <input type="hidden" value="{{ optional($data)['OrgID'] ?? old('OrgID') }}" name="OrgID">
+                                    <input type="hidden" value="{{ optional($data)['NewsSub'] ?? old('NewsSub') }}"
+                                        name="NewsSub">
+                                    <input type="hidden" value="{{ optional($data)['EmergSub'] ?? old('EmergSub') }}"
+                                        name="EmergSub">
                                     {{-- <input type="hidden" value="" name="OrgID"> --}}
                                     <input type="submit" name="Submit" value="Create your Account">
                                 </form>
