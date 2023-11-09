@@ -79,4 +79,9 @@
         </div>
     </section>
 @endsection
+<<<<<<< HEAD
 sddsfsd
+=======
+
+tgis s kj
+>>>>>>> parent of 3e732dc... revert
