@@ -1,10 +1,10 @@
 @extends('frontend.layouts.app')
 @section('content')
-{{-- <?php
+<?php
    //echo"<pre>";
    // print_r($data);
     //die;
-?> --}}
+?>
     <section>
         <div style="background: #c5e3ed">
             <div class="container d-flex justify-content-center align-items-center">
@@ -49,9 +49,9 @@
                                     @error('confirm_password')
                                         <div class="text-danger">{{ str_replace('The confirm password and n p w must match','The confirm password and password must be same',$message )}}</div>
                                     @enderror
-                                    <input type="hidden" value="{{ $data['OrgID'] }}" name="OrgID">
-                                    <input type="hidden" value="{{ $data['NewsSub'] }}" name="NewsSub">
-                                    <input type="hidden" value="{{ $data['EmergSub'] }}" name="EmergSub">
+                                    <input type="hidden" value="{{ $data['OrgID'] }} {{ old('OrgID') }}" name="OrgID">
+                                    <input type="hidden" value="{{ $data['NewsSub'] }} {{ old('NewsSub') }}" name="NewsSub">
+                                    <input type="hidden" value="{{ $data['EmergSub'] }} {{ old('EmergSub') }}" name="EmergSub">
                                     {{-- <input type="hidden" value="" name="OrgID"> --}}
                                     <input type="submit" name="Submit" value="Create your Account">
                                 </form>

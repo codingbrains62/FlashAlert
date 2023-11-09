@@ -101,7 +101,7 @@ class MessengerSubscriptionController extends Controller
             $data=[
                 'EmailAddress' => $request->input('EmailAddress'),
                 'ResetCode' => 'abcdssdd', // 1 if checked, 0 if not
-                'ResetDate' => '2023-10-10 11:55:55',
+                'ResetDate' => now(),
                 'NPW' => $decrypted,
                 'LastLogin' => now(),
                 'LastMailTest' => now(),
