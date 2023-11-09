@@ -26,7 +26,7 @@
                             <div class="SubscribeEmail">
                                 <form action="{{ route('messSubscribeManage') }}" method="post">
                                     @csrf
-                                    {{-- <input type="hidden" value={{ $data['id'] }} name="id" class="srch-form"> --}}
+                                    {{-- <input type="hidden" value="{{ $data['id'] }}" name="id" class="srch-form"> --}}
                                     <label for="EmailAddress" class="mb-2"><b>Email Address</b></label>
                                     <input type="text" value="{{ $data['EmailAddress'] }}{{old('EmailAddress')}}" name="EmailAddress"
                                         class="srch-form" readonly>
