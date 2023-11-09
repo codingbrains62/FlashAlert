@@ -111,7 +111,7 @@ class MessengerSubscriptionController extends Controller
                 $request->validate([
                     'EmailAddress' => 'required|email|unique:publicuser,EmailAddress',
                     'ConfirmEmailAddress' => 'required_with:EmailAddress|email|same:EmailAddress',
-                    'NPW' => 'required',
+                    'NPW' => 'required|min:4',
                     'confirm_password' => 'required_with:NPW|same:NPW',
                 ]);
                 $lastid=  DB::table('publicuser')->insertGetId($data);
