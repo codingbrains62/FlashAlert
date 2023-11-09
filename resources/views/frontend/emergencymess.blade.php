@@ -216,7 +216,7 @@
                         <label class="form-label">Primary email address for a new account</label>
                         <div class="d-flex flex-wrap">
                             <input type="hidden" name="OrgID" value="{{ $data[0]->id }}">
-                            <input class="srch-form" type="text" name="EmailAddress" id="searchInput"
+                            <input class="srch-form form-control" style="width:30%" type="text" name="EmailAddress" id="searchInput"
                                 placeholder="Enter Email..." autocomplete="off">
                             <div class="d-flex align-items-center emg-mail-check">
                                 <div class="form-check form-check-inline mx-2">
