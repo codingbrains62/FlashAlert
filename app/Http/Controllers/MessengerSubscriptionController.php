@@ -171,5 +171,13 @@ class MessengerSubscriptionController extends Controller
                 return view('frontend.msmanage',compact('data'));
             }
 
+            public function logout()
+            {
+                if (Session::has('ret')) {
+                    Session::pull('ret');
+                }
+                return redirect()->route('messengersub.login');
+            }
+
 
 }
