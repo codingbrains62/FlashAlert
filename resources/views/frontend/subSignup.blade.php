@@ -25,6 +25,11 @@
                                     {{ $errorMessage }} <a
                                     href="{{ route('messengersub.login') }}">Click here to log in</a>.<br>
                                 </div>
+                                @else
+                                <div class="alert alert-success">
+                                    "Please check that the email addresses you entered match.<br>
+                                    Set a password of four or more letters/numbers, not case sensitive."
+                                </div>
                             @endif
                             <div class="SubscribeEmail">
                                 <form action="{{ route('messSubscribeManage') }}" method="post">

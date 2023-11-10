@@ -64,9 +64,10 @@ class MessengerSubscriptionController extends Controller
             $existingUser =  DB::table('publicuser')->where('EmailAddress', $request->EmailAddress)->first();
            
             $errorMessage = null;
-            
+            //dd($request->all());
             $emergencyAlerts = $request->has('EmergSub') ? 1 : 0;
             $newsReleases = $request->has('NewsSub') ? 1 : 0;
+            // dd($emergencyAlerts);
             $data = [
                 'EmailAddress' => $request->EmailAddress,
                 'OrgID' => $request->OrgID,
@@ -110,7 +111,9 @@ class MessengerSubscriptionController extends Controller
             // echo"<pre>";
             // print_r($request->all());
             // die;
-            $decrypted = Hash::make($request->input('NPW'));
+            // $decrypted = Hash::make($request->input('NPW'));
+           
+            $decrypted = md5($request->input('NPW'));
             //dd($decrypted);
             $data=[
                 'EmailAddress' => $request->input('EmailAddress'),
@@ -131,12 +134,12 @@ class MessengerSubscriptionController extends Controller
                 $lastid=  DB::table('publicuser')->insertGetId($data);
                 $id=['id'=>$lastid];
                 $data['data'] = array_merge($data,$id);
-
+//dd($request->EmergSub);
              DB::table('publicusersubscription')->insert([
             'OrgID' =>$request->OrgID,
             'PublicUserID' =>$lastid,
-            'EmergSub' => $request->EmergSub, // 1 if checked, 0 if not
-            'NewsSub' => $request->NewsSub, // 1 if checked, 0 if not
+            'EmergSub' => $request->EmergSub,
+            'NewsSub' => $request->NewsSub,
              ]);
                 //dd($request->id );
             //     if ($request->id != '') {
@@ -165,7 +168,8 @@ class MessengerSubscriptionController extends Controller
             $user = DB::table('publicuser')->where('EmailAddress', $request->EmailAddress)->first();
             // dd($request->NPW);
             if ($user) {
-                if (Hash::check($request->NPW, $user->NPW)) {
+                // if (Hash::check($request->NPW, $user->NPW)) {
+                    if (md5($request->NPW) === $user->NPW) {
                     $request->session()->put('ret', $user->id);
                     return redirect()->route('sub-dashboard');
                 } else {
