@@ -187,7 +187,7 @@
                                 new google.translate.TranslateElement({
                                     pageLanguage: 'en',
                                     includedLanguages: 'zh-CN,fr,de,ja,ko,ru,es,vi',
-                                    //layout: google.translate.TranslateElement.InlineLayout.SIMPLE, 
+                                    //layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
                                     autoDisplay: false,
                                 }, 'translate');
                             }
@@ -208,7 +208,7 @@
             <div class="box-padding bg-head">
                 <p class="mb-0">Subscribe to receive FlashAlert messages from {{ $data[0]->Name }}.</p>
             </div>
-            
+
             <form action="{{ route('messSubscribe') }}" method="post">
                 @csrf
                 <div class="box-padding">
@@ -311,5 +311,4 @@
     integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous">
 </script>
 <script src="{{ url('public/js/custom.js') }}"></script>
-
 </html>

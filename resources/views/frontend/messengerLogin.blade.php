@@ -28,7 +28,7 @@
                             <div class="text-danger">
                                 {{ session('failed') }}
                             </div>
-                            @endif                        
+                            @endif
                             <!-- <br> -->
                             <label for="PW" class="mb-2"><b>Password (Min. 4 characters, not case
                                     sensitive)</b></label>

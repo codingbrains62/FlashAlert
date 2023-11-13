@@ -42,11 +42,19 @@
             </div>
         </div>
 
+        {{-- <?php
+        //echo"<pre>";
+        // print_r($data);
+        // die;
+        ?> --}}
+
         <div id="content">
             <div id="content-core">
                 <div class="acount-info row align-items-center mb-3">
-                    <h4 class="col-lg-8">Welcome, Codingbrian2@gmail.gone</h4>
-                <a href={{route('msgsublogout')}} class="col-lg-4 text-end">
+                    @foreach ($data as $item)
+                        <h4 class="col-lg-8">Welcome, {{ $item->EmailAddress }}</h4>
+                    @endforeach
+                    <a href={{ route('msgsublogout') }} class="col-lg-4 text-end">
                         <i class="fa fa-power-off mx-1" aria-hidden="true"></i> Logout
                     </a>
 
@@ -153,7 +161,8 @@
                                                 numbers.</em></span><br>We encourage you to download the free Android/iOS
                                         phone/tablet app, FlashAlert Messenger, which uses push notification, a method
                                         <strong class="fw-6">much faster and more reliable</strong> than text messages
-                                        (go to "My Linked Phone Apps" tab above).</li>
+                                        (go to "My Linked Phone Apps" tab above).
+                                    </li>
                                     <li>If you absolutely must get a text (i.e. no smartphone) and understand that support
                                         is not available for text addresses, you may enter it in the form of an email
                                         address. Click <a href="" target="_blank">here</a> for a list of formats by

@@ -113,7 +113,9 @@ class MessengerSubscriptionController extends Controller
             // die;
             // $decrypted = Hash::make($request->input('NPW'));
            
-            $decrypted = md5($request->input('NPW'));
+            // $decrypted = md5($request->input('NPW'));
+            $plainPassword = $request->input('NPW');
+            $decrypted = password_hash($plainPassword, PASSWORD_DEFAULT);
             //dd($decrypted);
             $data=[
                 'EmailAddress' => $request->input('EmailAddress'),
@@ -165,16 +167,20 @@ class MessengerSubscriptionController extends Controller
                 'EmailAddress'=>'required|email',
                 'NPW'=>'required',
             ]);
-            $user = DB::table('publicuser')->where('EmailAddress', $request->EmailAddress)->first();
-            // dd($request->NPW);
-            if ($user) {
-                // if (Hash::check($request->NPW, $user->NPW)) {
-                    if (md5($request->NPW) === $user->NPW) {
-                    $request->session()->put('ret', $user->id);
-                    return redirect()->route('sub-dashboard');
-                } else {
-                    return back()->with('failed', 'Failed! Invalid password');
-                }
+                $user = DB::table('publicuser')->where('EmailAddress', $request->EmailAddress)->first();
+                // dd($request->NPW);
+                if ($user) {
+                    $storedHashedPassword = $user->NPW;
+                    $enteredPassword = $request->NPW;
+
+                   if (password_verify($enteredPassword, $storedHashedPassword)) {
+                    // if (Hash::check($request->NPW, $user->NPW)) {
+                        //if (md5($request->NPW) === $user->NPW) {
+                        $request->session()->put('ret', $user->id);
+                        return redirect()->route('sub-dashboard');
+                    } else {
+                        return back()->with('failed', 'Failed! Invalid password');
+                    }
             } else {
                 return back()->with('failed', 'Failed! Invalid email');
             }
