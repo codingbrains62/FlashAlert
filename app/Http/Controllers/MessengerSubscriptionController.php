@@ -106,7 +106,14 @@ class MessengerSubscriptionController extends Controller
             return view('frontend.subSignup')->with('data', $data)->with('errorMessage', $errorMessage);
         }
         
-            public function msmanage(Request $request)
+        function crypt_email($Email) {
+            $Email = strtolower($Email);
+            return md5($Email.' '.ENCRYPT_STRING);
+        }
+        function crypt_password($PW) {
+            return md5($_SERVER['REMOTE_ADDR']." ".$PW." ".$_SERVER['REMOTE_ADDR']." ".ENCRYPT_STRING);
+        }
+        public function msmanage(Request $request)
         {
             // echo"<pre>";
             // print_r($request->all());

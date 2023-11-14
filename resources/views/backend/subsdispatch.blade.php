@@ -61,30 +61,12 @@
                                       <tr>
                                         <th colspan="8"><h3 class="m-0"><legend class="patch-status">Scripts - Last Completed</legend></h3></th>
                                       </tr>
+                                      @foreach($mtr as $mtr)
                                       <tr>
-                                        <th colspan="2">email-emergency</th>
-                                        <td colspan="6">2023-08-01 02:23:01</td>
+                                        <th colspan="2">{{$mtr->Page}}</th>
+                                        <td colspan="6">{{$mtr->Data}}</td>
                                       </tr>
-                                      <tr>
-                                        <th colspan="2">email-press</th>
-                                        <td colspan="6">2023-08-01 02:23:01</td>
-                                      </tr>
-                                      <tr>
-                                        <th colspan="2">email-sports</th>
-                                        <td colspan="6">2018-11-19 17:15:01</td>
-                                      </tr>
-                                      <tr>
-                                        <th colspan="2">email-emerg-subs</th>
-                                        <td colspan="6">2023-08-01 02:23:01</td>
-                                      </tr>
-                                      <tr>
-                                        <th colspan="2">email-news-subs</th>
-                                        <td colspan="6">2023-08-01 02:23:01</td>
-                                      </tr>
-                                      <tr>
-                                        <th colspan="2">traffic-subs</th>
-                                        <td colspan="6">2023-08-01 02:23:01</td>
-                                      </tr>
+                                      @endforeach
                                 <tr>
                                     <td colspan="8"><h3><legend style="width:100px;">Reports</legend></h3></td>
                                 </tr>
