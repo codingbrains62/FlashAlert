@@ -83,7 +83,8 @@ public function subsdispatch(){
     ->limit(100)->orderBy('r.id','desc')
     ->get();
      $subscription=DB::table('publicusersubscription')->where('OrgID',$user[0]->OrgID)->limit(200)->get();
-  return view('backend.subsdispatch',compact('user','subscription'));
+     $mtr = DB::table('Monitor')->get();
+  return view('backend.subsdispatch',compact('user','subscription','mtr'));
    
 }
 

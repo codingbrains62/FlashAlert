@@ -115,62 +115,60 @@
                 <div class="box">
                     <div class="box-body table-responsive">
                     <table id="example2" class="table table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">URL</th>
-                                    <th scope="col">Counts</th>
-                                </tr>
-                            </thead>
-                            <tbody class="fw-6 v-align-mid">
-                                @php 
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">URL</th>
+                                <th scope="col">Counts</th>
+                            </tr>
+                        </thead>
+                        <tbody class="fw-6 v-align-mid">
+                            @php 
                                 $current_state = null;
-                                @endphp
-                                @foreach($data as $datas)
+                            @endphp
+                        
+                            @foreach($data as $datas)
                                 @php
-                                $data1 = explode(':', $datas->Name);
-                                if(count($data1)==3){
-                                $name = $data1[0] . ':' . $data1[1]. ':';
-                                }else{
-                                $name = $data1[0] . ':';  
-                                }
+                                    $data1 = explode(':', $datas->Name);
+                                    if (count($data1) == 3) {
+                                        $name = $data1[0] . ':' . $data1[1]. ':';
+                                    } else {
+                                        $name = $data1[0] . ':';  
+                                    }
                                 @endphp
-                                    <tr>
-                                     @php 
-                                       if($name!= $current_state) {
-                                        $current_state = $name;
-                                       @endphp
-                                        <td colspan='4' class="bg-grey-lite">
-                                      
-                                       <b>{{$name}}</b> 
-                                      
-                                        </td>
+                        
+                                <tr>
+                                    @if($name != $current_state)
                                         @php 
-                                       }
-                                       @endphp
-                                    </tr>
-                                    <tr>
-                                        <td class="fw-6">
-                                           @if(isset($data1[2]))
-                                           {{$data1[2]}}
-                                           @elseif(isset($data1[1]))
-                                           {{$data1[1]}}
-                                           @else
-                                           {{$data1[0]}}
-                                           @endif
+                                            $current_state = $name;
+                                        @endphp
+                                        <td colspan='3' class="bg-grey-lite">
+                                            <b>{{$name}}</b> 
                                         </td>
-                                        <td><a href="{{$datas->URL}}">{{$datas->URL}}</a></td>
-                                        <td class="fw-6">2</td>
-                                        <td class="d-flex">
-                                        {{-- <a href="{{url('IIN/styletempdel/' . base64_encode($datas->id))}}" class="outline-btn"><i class="fa fa-trash" aria-hidden="true"></i></a> --}}
-                                        <a href="{{url('IIN/styletempedit/' . base64_encode($datas->id))}}"class="btn btn-social-icon cst-edit" data-toggle="tooltip" title="Edit" ><i class="fa fa-fw fa-edit"></i></a>
-                                        {{-- <a href="{{url('IIN/styletempdel/' . base64_encode($datas->id))}}" class="btn btn-social-icon cst-del" data-toggle="tooltip" title="Delete" onclick="return showConfirmDialog(event)"><i class="fa fa-trash" aria-hidden="true"></i></a> --}}
+                                    @endif
+                                </tr>
+                        
+                                <tr>
+                                    <td class="fw-6">
+                                        @if(isset($data1[2]))
+                                            {{$data1[2]}}
+                                        @elseif(isset($data1[1]))
+                                            {{$data1[1]}}
+                                        @else
+                                            {{$data1[0]}}
+                                        @endif
+                                    </td>
+                                    <td><a href="{{$datas->URL}}">{{$datas->URL}}</a></td>
+                                    <td class="fw-6">{{$datas->UseCount}}</td>
+                                    <td class="d-flex">
+                                        <a href="{{url('IIN/styletempedit/' . base64_encode($datas->id))}}" class="btn btn-social-icon cst-edit" data-toggle="tooltip" title="Edit" ><i class="fa fa-fw fa-edit"></i></a>
                                         <a href="{{url('IIN/styletempdel/' . base64_encode($datas->id))}}" class="btn btn-social-icon cst-del" data-toggle="tooltip" title="Delete" onclick="return confirm('Are you sure you want to delete?')"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                     </td>
-                                    </tr>
-                                @endforeach
-                               
-                            </tbody>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                        
+                            
                         </table>
                     </div>
                 </div>
