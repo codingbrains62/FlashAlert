@@ -169,6 +169,9 @@
                                         <td>
                                             <div class="tbl-input-email">
                                                 <input class="form-control border-0" type="text" value="" name="email">
+                                                @error('email')
+                                                 <span style="color:red;" role="alert"><strong>{{ $message }}</strong></span>
+                                                @enderror
                                             </div>
                                         </td>
                                         <td class="align-middle">
@@ -188,6 +191,9 @@
                                         <td>
                                             <div class="tbl-input-email">
                                                 <input class="form-control border-0" type="text" value="" name="email">
+                                                @error('email')
+                                                 <span style="color:red;" role="alert"><strong>{{ $message }}</strong></span>
+                                                @enderror
                                             </div>
                                         </td>
                                         <td class="align-middle">

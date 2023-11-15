@@ -244,6 +244,10 @@ class MessengerSubscriptionController extends Controller
              }
 
              public function adduseremail(Request $request){
+                try{
+                    $request->validate([
+                        'email' => 'required|email|unique:publicuseremail,UserEmailAddress',
+                    ]);
                 $random_validate=$this->random_validate_code2();
                 $email=$this->crypt_email($request->input('email'));
                 $length = 2;
@@ -263,6 +267,10 @@ class MessengerSubscriptionController extends Controller
                     ]);
                     Mail::to($request->input('email'))->send(new UserRegister($request->input('email'), $validate));
                     return redirect()->route('sub-dashboard');
+                } catch (\Illuminate\Validation\ValidationException $e) {
+                    $errors = $e->validator->errors();
+                    return back()->withErrors($errors)->withInput();
+                }
              }
         public function deleteemail($id){
             DB::table('publicuseremail')->where('id',$id)->delete();
