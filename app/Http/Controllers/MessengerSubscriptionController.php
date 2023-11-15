@@ -199,9 +199,10 @@ class MessengerSubscriptionController extends Controller
             {
                 //echo Session::get('ret');
                 if (Session::has('ret')) {
-                $data=DB::table('publicuser')->where('id',session::get('ret'))->get(); 
+                $data=DB::table('publicuser')->where('id',session::get('ret'))->get();
+                $data1=DB::table('publicuseremail')->where('PublicUserID',session::get('ret'))->get();  
                 }
-                return view('frontend.msmanage',compact('data'));
+                return view('frontend.msmanage',compact('data','data1'));
             }
 
             public function logout()
@@ -223,5 +224,16 @@ class MessengerSubscriptionController extends Controller
                 }
                 return back()->with('failed_email', 'link has expired');
             }
-
+            public function validatecode(Request $request){
+                $user = DB::table('publicuseremail')->where('id',$request->hidden)->first();
+                //echo '<pre>';print_r($user); die;
+                if($user->ValidateCode==$request->validatedcode){
+                    $data=[
+                        'Validated'=>1
+                    ];
+                    DB::table('publicuseremail')->where('id',$request->hidden)->update($data); 
+                    return redirect()->route('sub-dashboard');        
+                }
+             }
+            
 }

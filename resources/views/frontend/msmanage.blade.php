@@ -1,3 +1,5 @@
+
+
 @extends('frontend.layouts.app')
 @section('content')
     <style>
@@ -63,7 +65,7 @@
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-msg"
                             type="button" role="tab" aria-controls="home" aria-selected="true">My Email Address
-                            <span>2</span></button>
+                            <span>{{count($data1)}}</span></button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
@@ -92,43 +94,81 @@
                         <div class="my-email-add table-responsive">
                             <table class="table table-bordered fw-6">
                                 <tbody>
+                                    @foreach($data1 as $datas1)
+                                    <?php $i=0; ?>
                                     <tr>
-                                        <td>Primary Email</td>
+                                        <form method="post" action="{{route('validatecode')}}">
+                                            @csrf
+                                            
+                                        @if($i==0)
+                                            <td>Primary Email</td>
+                                        @elseif($i==1)
+                                            <td>Email #2</td>
+                                        @elseif($i==2)
+                                            <td>Email #3</td>
+                                        @endif
                                         <td>
+                                        <input class="form-control border-0" type="hidden"
+                                                    value="{{$datas1->id}}" name="hidden">
                                             <div class="tbl-input-email">
                                                 <input class="form-control border-0" type="text"
-                                                    value="codingbrains62@gmail.com">
+                                                    value="{{$datas1->UserEmailAddress}}">
+                                                @if($datas1->Validated!=1)
+                                                <span class="text-danger">Enter validation code and press Update to
+                                                    submit.</span><br>
+                                                <label for="" class="form-label">Enter code from validation
+                                                    message</label>
+                                                <input class="form-control border" type="text" value="" name="validatedcode">
+                                                <span>Alerts are not sent to non-validated addresses.</span>
+                                                @endif
                                             </div>
                                         </td>
                                         <td class="align-middle">
                                             <div class="tbl-btns">
-                                                <button type="button" class="btn btn-outline-warning">Update</button>
+                                                <!-- <input type="submit" name="submit" value="UPDATE"> -->
+                                                <button type="submit" class="btn btn-outline-warning">Update</button>
                                                 <button type="button" class="btn btn-outline-primary">Send Test</button>
                                             </div>
                                         </td>
+                                        </form>
                                     </tr>
+                                    <?php $i++; ?>
+                                    @endforeach
 
-                                    <tr>
+                                    <!-- <tr>
                                         <td>Email #2</td>
                                         <td>
                                             <div class="tbl-input-email">
                                                 <input class="form-control border-0" type="text"
-                                                    value="codingbrains62@gmail.com">
+                                                    value="">
                                             </div>
-                                            <div>
+                                           <div>
                                                 <span class="text-danger">Enter validation code and press Update to
                                                     submit.</span><br>
                                                 <label for="" class="form-label">Enter code from validation
                                                     message</label>
                                                 <input class="form-control border" type="text" value="">
                                                 <span>Alerts are not sent to non-validated addresses.</span>
-                                            </div>
+                                            </div> 
                                         </td>
                                         <td class="align-middle">
                                             <div class="tbl-btns">
                                                 <button type="button" class="btn btn-outline-warning">Update</button>
                                                 <button type="button" class="btn btn-outline-primary">Send Test</button>
                                                 <button type="button" class="btn btn-outline-danger">Delete</button>
+                                            </div>
+                                        </td>
+                                    </tr> -->
+                                    <tr>
+                                        <td>Email #2</td>
+                                        <td>
+                                            <div class="tbl-input-email">
+                                                <input class="form-control border-0" type="text" value="">
+                                            </div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div class="tbl-btns">
+                                                <button type="button" class="btn btn-outline-success">Add</button>
                                             </div>
                                         </td>
                                     </tr>

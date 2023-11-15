@@ -43,6 +43,7 @@ Route::match(array('GET','POST'),'/signup', [MessengerSubscriptionController::cl
 Route::match(array('GET','POST'),'/create', [MessengerSubscriptionController::class, 'msmanage'])->name('messSubscribeManage');
 Route::middleware(['subuser'])->group(function () {
     Route::match(array('GET','POST'),'/manage', [MessengerSubscriptionController::class,'subdashboard'])->name('sub-dashboard');
+    Route::match(array('GET','POST'),'/validatecode', [MessengerSubscriptionController::class,'validatecode'])->name('validatecode');
     });
     Route::get('/msgsublogout', [MessengerSubscriptionController::class,'logout'])->name('msgsublogout');
 
