@@ -94,19 +94,17 @@
                         <div class="my-email-add table-responsive">
                             <table class="table table-bordered fw-6">
                                 <tbody>
+                                <?php $i=1; ?>
                                     @foreach($data1 as $datas1)
-                                    <?php $i=0; ?>
+                                    
                                     <tr>
                                         <form method="post" action="{{route('validatecode')}}">
                                             @csrf
-                                            
-                                        @if($i==0)
-                                            <td>Primary Email</td>
-                                        @elseif($i==1)
-                                            <td>Email #2</td>
-                                        @elseif($i==2)
-                                            <td>Email #3</td>
-                                        @endif
+                                           @if($datas1->IsPrimary ==1)
+                                           <td>Primary Email</td>
+                                           @else
+                                           <td>Email#<?php echo $i; ?></td>
+                                           @endif
                                         <td>
                                         <input class="form-control border-0" type="hidden"
                                                     value="{{$datas1->id}}" name="hidden">
@@ -128,6 +126,9 @@
                                                 <!-- <input type="submit" name="submit" value="UPDATE"> -->
                                                 <button type="submit" class="btn btn-outline-warning">Update</button>
                                                 <button type="button" class="btn btn-outline-primary">Send Test</button>
+                                                @if($datas1->IsPrimary !=1)
+                                                <a href="{{url('deleteemail/'.$datas1->id)}}" class="btn btn-outline-danger">Delete</a>
+                                                @endif
                                             </div>
                                         </td>
                                         </form>
@@ -159,33 +160,44 @@
                                             </div>
                                         </td>
                                     </tr> -->
+                                    @if(count($data1)<2)
                                     <tr>
+                                        <form method="post" action="{{route('adduseremail')}}">
+                                            @csrf
+                                            <input type="hidden" name="userid" value="{{$data[0]->id}}">
                                         <td>Email #2</td>
                                         <td>
                                             <div class="tbl-input-email">
-                                                <input class="form-control border-0" type="text" value="">
+                                                <input class="form-control border-0" type="text" value="" name="email">
                                             </div>
                                         </td>
                                         <td class="align-middle">
                                             <div class="tbl-btns">
-                                                <button type="button" class="btn btn-outline-success">Add</button>
+                                                <button type="submit" class="btn btn-outline-success">Add</button>
                                             </div>
                                         </td>
+                                        </form>
                                     </tr>
-
+                                    @endif
+                                    @if(count($data1)<3)
                                     <tr>
+                                    <form method="post" action="{{route('adduseremail')}}">
+                                        @csrf
+                                    <input type="hidden" name="userid" value="{{$data[0]->id}}">
                                         <td>Email #3</td>
                                         <td>
                                             <div class="tbl-input-email">
-                                                <input class="form-control border-0" type="text" value="">
+                                                <input class="form-control border-0" type="text" value="" name="email">
                                             </div>
                                         </td>
                                         <td class="align-middle">
                                             <div class="tbl-btns">
-                                                <button type="button" class="btn btn-outline-success">Add</button>
+                                                <button type="submit" class="btn btn-outline-success">Add</button>
                                             </div>
                                         </td>
+                                    </form>
                                     </tr>
+                                    @endif
                                 </tbody>
                             </table>
 
