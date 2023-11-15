@@ -246,7 +246,7 @@ class MessengerSubscriptionController extends Controller
              public function adduseremail(Request $request){
                 try{
                     $request->validate([
-                        'email' => 'required|email',
+                        'email' => 'required|email|unique:publicuseremail,UserEmailAddress',
                     ]);
                 $random_validate=$this->random_validate_code2();
                 $email=$this->crypt_email($request->input('email'));
