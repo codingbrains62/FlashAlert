@@ -232,8 +232,9 @@ class MessengerSubscriptionController extends Controller
                         'Validated'=>1
                     ];
                     DB::table('publicuseremail')->where('id',$request->hidden)->update($data); 
-                    return redirect()->route('sub-dashboard');        
+                           
                 }
+                return redirect()->route('sub-dashboard');
              }
             
 }
