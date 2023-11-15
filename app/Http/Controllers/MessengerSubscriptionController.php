@@ -13,6 +13,18 @@ use App\Mail\UserRegister;
 
 class MessengerSubscriptionController extends Controller
 {
+
+   
+    function crypt_email($Email) {
+        define("ENCRYPT_STRING", "MonMar1Rotc1983");
+        $Email = strtolower($Email);
+        return md5($Email." ".ENCRYPT_STRING);
+    }
+    function random_validate_code2() {
+        global $request;
+        $seed = $request->ip() . rand() . 'padraummit';
+        return sha1($seed, false);
+    }
     public function EmergencyMess($id)
         {      
                 $data1=DB::table('users')->where('URLName',$id)->get();
@@ -91,13 +103,7 @@ class MessengerSubscriptionController extends Controller
             return view('frontend.subSignup')->with('data', $data)->with('errorMessage', $errorMessage);
         }
         
-        function crypt_email($Email) {
-            $Email = strtolower($Email);
-            return md5($Email.' '.ENCRYPT_STRING);
-        }
-        function crypt_password($PW) {
-            return md5($_SERVER['REMOTE_ADDR']." ".$PW." ".$_SERVER['REMOTE_ADDR']." ".ENCRYPT_STRING);
-        }
+        
         public function msmanage(Request $request)
         {
             $plainPassword = $request->input('NPW');
@@ -127,16 +133,16 @@ class MessengerSubscriptionController extends Controller
                 'EmergSub' => $request->EmergSub,
                 'NewsSub' => $request->NewsSub,
                 ]);
-                define("ENCRYPT_STRING", "MonMar1Rotc1983");
-                function crypt_email($Email) {
-                    $Email = strtolower($Email);
-                    return md5($Email." ".ENCRYPT_STRING);
-                }
-                function random_validate_code2() {
-                    global $request;
-                    $seed = $request->ip() . rand() . 'padraummit';
-                    return sha1($seed, false);
-                }
+                // define("ENCRYPT_STRING", "MonMar1Rotc1983");
+                // function crypt_email($Email) {
+                //     $Email = strtolower($Email);
+                //     return md5($Email." ".ENCRYPT_STRING);
+                // }
+                // function random_validate_code2() {
+                //     global $request;
+                //     $seed = $request->ip() . rand() . 'padraummit';
+                //     return sha1($seed, false);
+                // }
                 $random_validate=random_validate_code2();
                 $email=crypt_email($request->input('EmailAddress'));
                 $length = 2;
@@ -236,5 +242,30 @@ class MessengerSubscriptionController extends Controller
                 }
                 return redirect()->route('sub-dashboard');
              }
+
+             public function adduseremail(Request $request){
+                $random_validate=$this->random_validate_code2();
+                $email=$this->crypt_email($request->input('email'));
+                $length = 2;
+                $letters = str_split('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+                shuffle($letters);
+                $validate = strtoupper(implode('', array_slice($letters, 0, $length)));
+                DB::table('publicuseremail')->insert([
+                    'PublicUserID' =>$request->userid,
+                    'UserEmailAddress' => $request->input('email'), 
+                    'CryptEmail' =>  $email,
+                    'ValidateCode'=> $validate,
+                    'ValidateCode2' =>$random_validate,
+                    'CreateDate' => now(),
+                    'ValidateTime' => now(),
+                    'IsPrimary'=>0,
+                    'CreatedIP' => $request->ip(),
+                    ]);
+                    return redirect()->route('sub-dashboard');
+             }
+        public function deleteemail($id){
+            DB::table('publicuseremail')->where('id',$id)->delete();
+            return redirect()->route('sub-dashboard');
+        }
             
 }
