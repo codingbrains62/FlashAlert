@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\UserRegister;
 
 class MessengerSubscriptionController extends Controller
 {
@@ -84,25 +87,7 @@ class MessengerSubscriptionController extends Controller
                 // Email address already exists, set error message
                 $errorMessage = "This email address is already registered.";
                 
-            } else {
-                // Continue with your logic if the email address is not already registered
-                // $emergencyAlerts = $request->has('EmergSub') ? 1 : 0;
-                // $newsReleases = $request->has('NewsSub') ? 1 : 0;
-                // $data = [
-                //     'EmailAddress' => $request->EmailAddress,
-                //     'OrgID' => $request->OrgID,
-                //     'ResetCode' => 'abcdssdd', // 1 if checked, 0 if not
-                //     'ResetDate' => '',
-                //     'NPW' => 'test',
-                //     'LastLogin' => '',
-                //     'LastMailTest' => '',
-                //     'DateCreated' => now(),
-                //     'EmergSub' => $emergencyAlerts, // 1 if checked, 0 if not
-                //     'NewsSub' => $newsReleases,
-                // ];
-            }
-        
-            // Return the view with either the error message or the data
+            } 
             return view('frontend.subSignup')->with('data', $data)->with('errorMessage', $errorMessage);
         }
         
@@ -115,18 +100,11 @@ class MessengerSubscriptionController extends Controller
         }
         public function msmanage(Request $request)
         {
-            // echo"<pre>";
-            // print_r($request->all());
-            // die;
-            // $decrypted = Hash::make($request->input('NPW'));
-           
-            // $decrypted = md5($request->input('NPW'));
             $plainPassword = $request->input('NPW');
             $decrypted = password_hash($plainPassword, PASSWORD_DEFAULT);
-            //dd($decrypted);
             $data=[
                 'EmailAddress' => $request->input('EmailAddress'),
-                'ResetCode' => 'abcdssdd', // 1 if checked, 0 if not
+                'ResetCode' => 'abcdssdd',
                 'ResetDate' => now(),
                 'NPW' => $decrypted,
                 'LastLogin' => now(),
@@ -143,22 +121,46 @@ class MessengerSubscriptionController extends Controller
                 $lastid=  DB::table('publicuser')->insertGetId($data);
                 $id=['id'=>$lastid];
                 $data['data'] = array_merge($data,$id);
-//dd($request->EmergSub);
-             DB::table('publicusersubscription')->insert([
-            'OrgID' =>$request->OrgID,
-            'PublicUserID' =>$lastid,
-            'EmergSub' => $request->EmergSub,
-            'NewsSub' => $request->NewsSub,
-             ]);
-                //dd($request->id );
-            //     if ($request->id != '') {
-            //        // dd($data);
-            //         $user = DB::table('publicuser')->where('id',$request->id)->update($data);
-            //         //dd($data);
-            //    }
-               $request->session()->put('ret',$lastid);
-                    session(['ret' => $lastid]);
-              return redirect()->route('sub-dashboard');
+                DB::table('publicusersubscription')->insert([
+                'OrgID' =>$request->OrgID,
+                'PublicUserID' =>$lastid,
+                'EmergSub' => $request->EmergSub,
+                'NewsSub' => $request->NewsSub,
+                ]);
+                define("ENCRYPT_STRING", "MonMar1Rotc1983");
+                function crypt_email($Email) {
+                    $Email = strtolower($Email);
+                    return md5($Email." ".ENCRYPT_STRING);
+                }
+                function random_validate_code2() {
+                    global $request;
+                    $seed = $request->ip() . rand() . 'padraummit';
+                    return sha1($seed, false);
+                }
+                $random_validate=random_validate_code2();
+                $email=crypt_email($request->input('EmailAddress'));
+                $length = 2;
+                $letters = str_split('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+                shuffle($letters);
+                $validate = strtoupper(implode('', array_slice($letters, 0, $length)));
+                DB::table('publicuseremail')->insert([
+                    'PublicUserID' =>$lastid,
+                    'UserEmailAddress' => $request->input('EmailAddress'), 
+                    'CryptEmail' =>  $email,
+                    'ValidateCode'=> $validate,
+                    'ValidateCode2' =>$random_validate,
+                    'CreateDate' => now(),
+                    'ValidateTime' => now(),
+                    'IsPrimary'=>1,
+                    'CreatedIP' => $request->ip(),
+                    ]);
+
+
+                Mail::to($request->input('EmailAddress'))->send(new UserRegister($request->input('EmailAddress'), $validate));
+                $request->session()->put('ret',$lastid);
+                        session(['ret' => $lastid]);
+
+                return redirect()->route('sub-dashboard');
             }
             catch (\Illuminate\Validation\ValidationException $e) {
                 $errors = $e->validator->errors();
@@ -209,6 +211,17 @@ class MessengerSubscriptionController extends Controller
                 }
                 return redirect()->route('messengersub.login');
             }
-
+            public function UserLoginLinkValidate(Request $request,$token,$email){
+               $user = DB::table('publicuseremail')->where('UserEmailAddress',$email)->first();
+                if ($user) {
+                            $request->session()->put('ret',$user->PublicUserID);
+                            $data=[
+                                'Validated'=>1
+                            ];
+                            DB::table('publicuseremail')->where('UserEmailAddress',$email)->update($data);
+                            return redirect()->route('sub-dashboard');
+                }
+                return back()->with('failed_email', 'link has expired');
+            }
 
 }

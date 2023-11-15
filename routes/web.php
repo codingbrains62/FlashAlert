@@ -46,6 +46,7 @@ Route::middleware(['subuser'])->group(function () {
     });
     Route::get('/msgsublogout', [MessengerSubscriptionController::class,'logout'])->name('msgsublogout');
 
+Route::get('user-login-link/{token}/{email}', [MessengerSubscriptionController::class, 'UserLoginLinkValidate']);
 
 Route::post('sub-login', [MessengerSubscriptionController::class, 'mesSubLogin'])->name('mesSubLogin');
 Route::get('forgetPass',[MessengerSubscriptionController::class,'lostpass'])->name('frontend-lostpass');
@@ -278,7 +279,6 @@ Route::prefix('IIN')->group(function () {
         Route::match(array('GET','POST'),'emailaddress', [AutoConfirEmailController::class,'emailaddress'])->name('email.address'); 
         Route::match(array('GET','POST'),'subsdisstatus', [CommonController::class,'subsdispatch'])->name('subs.dis.status'); 
         Route::match(array('GET','POST'),'emrreportarch', [CommonController::class,'emrreportarch'])->name('emr.report.arch');
-
         });
 });
     //   Edit the Auto-Confirmation Email Template
