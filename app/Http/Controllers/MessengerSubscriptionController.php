@@ -261,6 +261,7 @@ class MessengerSubscriptionController extends Controller
                     'IsPrimary'=>0,
                     'CreatedIP' => $request->ip(),
                     ]);
+                    Mail::to($request->input('email'))->send(new UserRegister($request->input('email'), $validate));
                     return redirect()->route('sub-dashboard');
              }
         public function deleteemail($id){
