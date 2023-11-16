@@ -113,7 +113,16 @@
                                                     value="{{$datas1->UserEmailAddress}}">
                                                 @if($datas1->Validated!=1)
                                                 <span class="text-danger">Validation email sent. <a href="{{url('resendcode/'.$datas1->id)}}">Click here to send validation email again.</a> 
-                                                 </span><span  class="text-danger timer"></span> <br>
+                                                 </span>
+                                                @php
+                                                    $dateTimeFromDatabase = $datas1->CreateDate;
+                                                    $currenttime = \Carbon\Carbon::now();
+                                                    $timeDifferenceInMinutes = $currenttime->diffInMinutes($dateTimeFromDatabase);
+                                                @endphp
+                                                @if($timeDifferenceInMinutes < 2)
+                                                 <span  class="text-danger timer"></span> 
+                                                @endif
+                                                 <br>
                                                  @if (Session::has('msg'))
                                                     <script>
                                                         swal({
