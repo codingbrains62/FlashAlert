@@ -26,7 +26,8 @@
 <link rel="stylesheet" id="su-shortcodes-css" href="{{asset('front_assets/css/shortcodes.css')}}" type="text/css" media="all">
 <script type="text/javascript" src="{{asset('front_assets/js/jquery.min.js')}}" id="jquery-core-js"></script>
 <style>#body-core {background: #FFFFFF;}#introaction-core h1, #introaction-core h2, #introaction-core h3, #introaction-core h4, #introaction-core h5, #introaction-core h6,#outroaction-core h1, #outroaction-core h2, #outroaction-core h3, #outroaction-core h4, #outroaction-core h5, #outroaction-core h6,#content h1, #content h2, #content h3, #content h4, #content h5, #content h6 {color: #FFFFFF;}body,button,input,select,textarea,.action-teaser {color: #000000;}#content a {color: #FFFFFF;}#content a:hover {color: #FFFFFF;}</style><link rel="icon" href="images/cropped-FlashAlert-app-logo-32x32.png" sizes="32x32">
-<link rel="stylesheet"  href="{{asset('front_assets/css/my.css')}}" type="text/css" media="all">		
+<link rel="stylesheet"  href="{{asset('front_assets/css/my.css')}}" type="text/css" media="all">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>		
 </head>
 <body class="home page-template-default page page-id-17 wp-custom-logo layout-sidebar-none layout-responsive layout-wide pre-header-style2 header-style1">
 <div id="body-core" class="hfeed site">
