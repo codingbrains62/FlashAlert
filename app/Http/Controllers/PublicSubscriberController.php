@@ -58,6 +58,10 @@ class PublicSubscriberController extends Controller
         return view('backend.P_SubscriberList', compact('data','response','category','selectedRegion','selectedorgcat','firstIdCounts'));
     }
 
+    public function deleteUsers(Request $request){
+        
+    }
+
         public function SubscriberEmailList($id)
             {
             // Retrieve the user IDs from the PublicUserSubscription table

@@ -220,6 +220,7 @@ Route::prefix('IIN')->group(function () {
 
         //---------------------------Public Subscriber-----------------------//
         Route::match(array('GET','POST'),'sublist',[PublicSubscriberController::class,'SubscriberList'])->name('psub_list');
+        Route::post('delete-users', [PublicSubscriberController::class, 'deleteUsers'])->name('del.user');
         Route::get('sublist-{id}',[PublicSubscriberController::class,'SubscriberEmailList'])->name('psub_Emaillist');
         Route::get('unsubscribe-all/{id}', [PublicSubscriberController::class, 'unsubscribeAll']);
         Route::get('psubCReport',[PublicSubscriberController::class,'PSubCR'])->name('psub_subCR');
