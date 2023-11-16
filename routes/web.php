@@ -46,6 +46,9 @@ Route::middleware(['subuser'])->group(function () {
     Route::match(array('GET','POST'),'/validatecode', [MessengerSubscriptionController::class,'validatecode'])->name('validatecode');
     Route::match(array('GET','POST'),'/adduseremail', [MessengerSubscriptionController::class,'adduseremail'])->name('adduseremail');
     Route::match(array('GET','POST'),'/deleteemail/{id}', [MessengerSubscriptionController::class,'deleteemail']);
+    Route::match(array('GET','POST'),'/resendcode/{id}', [MessengerSubscriptionController::class,'resendcode']);
+
+    
     });
     Route::get('/msgsublogout', [MessengerSubscriptionController::class,'logout'])->name('msgsublogout');
 

@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\UserRegister;
-
+use Carbon\Carbon;
 class MessengerSubscriptionController extends Controller
 {
 
@@ -143,8 +143,8 @@ class MessengerSubscriptionController extends Controller
                 //     $seed = $request->ip() . rand() . 'padraummit';
                 //     return sha1($seed, false);
                 // }
-                $random_validate=random_validate_code2();
-                $email=crypt_email($request->input('EmailAddress'));
+                $random_validate=$this->random_validate_code2();
+                $email=$this->crypt_email($request->input('EmailAddress'));
                 $length = 2;
                 $letters = str_split('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
                 shuffle($letters);
@@ -276,5 +276,58 @@ class MessengerSubscriptionController extends Controller
             DB::table('publicuseremail')->where('id',$id)->delete();
             return redirect()->route('sub-dashboard');
         }
+        // public function resendcode($id){
+        //    $user= DB::table('publicuseremail')->where('id',$id)->first();
+        //    //echo '<pre>';print_r($user); die;
+        //     // $currentDateTime = Carbon::now();
+        //     // $carbonDate1 = Carbon::parse($currentDateTime);
+        //     // $timeOnly1 = $carbonDate1->format('H:i:s');
+        //     // $dateTimeFromDatabase = $user->CreateDate;
+        //     // $carbonDate = Carbon::parse($dateTimeFromDatabase);
+        //     // $timeOnly = $carbonDate->format('H:i:s');
+
+        //     // echo $timeOnly;
+        //     // echo $timeOnly1;
+        //      $dateTimeFromDatabase = $user->CreateDate;
+        //      $carbonDate = Carbon::parse($dateTimeFromDatabase);
+        //      $timeOnly = $carbonDate->format('H:i:s');
+
+        //      $compareTimePlus2Minutes = $timeOnly->addMinutes(2);
+        //       echo $timeOnly.'<br>';
+        //       echo $compareTimePlus2Minutes;
+        // }
+
+        // public function resendcode($id){
+        //     $user = DB::table('publicuseremail')->where('id', $id)->first();
+
+        //     $dateTimeFromDatabase = $user->CreateDate;
+        //     $carbonDate = Carbon::parse($dateTimeFromDatabase);
+        //     $compareTimePlus2Minutes = $carbonDate->copy()->addMinutes(2);
+        //     echo $carbonDate->format('H:i:s') . '<br>';
+        //     echo $compareTimePlus2Minutes->format('H:i:s');
+        // }
+
+        public function resendcode($id)
+        {
+
+            
+            $user = DB::table('publicuseremail')->where('id', $id)->first();
+            
+            $dateTimeFromDatabase = $user->CreateDate;
+            $currenttime = Carbon::now();
+            $timeDifferenceInMinutes = $currenttime->diffInMinutes($dateTimeFromDatabase);
+            if ($timeDifferenceInMinutes > 2) {
+                $length = 2;
+                $letters = str_split('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+                shuffle($letters);
+                $validate = strtoupper(implode('', array_slice($letters, 0, $length)));
+                DB::table('publicuseremail')->where('id', $id)->update(['CreateDate' => $currenttime,'ValidateCode'=> $validate]);
+                Mail::to($user->UserEmailAddress)->send(new UserRegister($user->UserEmailAddress, $validate));
+                return redirect()->route('sub-dashboard');
+            }else{
+                return back()->with('msg','You Can Resend Code After 2 Minutes');
+            }
+        }
+
             
 }

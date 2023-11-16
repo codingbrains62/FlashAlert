@@ -112,8 +112,18 @@
                                                 <input class="form-control border-0" type="text"
                                                     value="{{$datas1->UserEmailAddress}}">
                                                 @if($datas1->Validated!=1)
-                                                <span class="text-danger">Enter validation code and press Update to
-                                                    submit.</span><br>
+                                                <span class="text-danger">Validation email sent. <a href="{{url('resendcode/'.$datas1->id)}}">Click here to send validation email again.</a> 
+                                                 </span><span  class="text-danger timer"></span> <br>
+                                                 @if (Session::has('msg'))
+                                                    <script>
+                                                        swal({
+                                                            title: "Opps!",
+                                                            text: "{{ Session::get('msg') }}",
+                                                            icon: "error",
+                                                            timer: 3000
+                                                            });
+                                                    </script>
+                                                @endif                                         
                                                 <label for="" class="form-label">Enter code from validation
                                                     message</label>
                                                 <input class="form-control border" type="text" value="" name="validatedcode">
@@ -333,4 +343,38 @@
 
         </div>
     </section>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+
+<script>
+    // Set the initial time in seconds (2 minutes = 120 seconds)
+    var timerSeconds = 120;
+
+    // Function to update the timer
+    function updateTimer() {
+        // Calculate minutes and seconds
+        var minutes = Math.floor(timerSeconds / 60);
+        var seconds = timerSeconds % 60;
+
+        // Display the timer in the specified element
+        $('.timer').text(minutes + ':' + (seconds < 10 ? '0' : '') + seconds);
+
+        // Check if the timer has reached 0
+        if (timerSeconds === 0) {
+            // Timer has reached 0, display "Test Resend"
+            $('.timer').text('Resend Code');
+        } else {
+            // Decrease the timer by 1 second
+            timerSeconds--;
+        }
+    }
+
+    // Call the updateTimer function every second
+    setInterval(updateTimer, 1000);
+</script>
+
+
+
+
+
 @endsection
