@@ -47,6 +47,13 @@ Route::middleware(['subuser'])->group(function () {
     Route::match(array('GET','POST'),'/adduseremail', [MessengerSubscriptionController::class,'adduseremail'])->name('adduseremail');
     Route::match(array('GET','POST'),'/deleteemail/{id}', [MessengerSubscriptionController::class,'deleteemail']);
     Route::match(array('GET','POST'),'/resendcode/{id}', [MessengerSubscriptionController::class,'resendcode']);
+    Route::match(array('GET','POST'),'/showorganization', [MessengerSubscriptionController::class,'showorganization'])->name('showorganization');
+    Route::match(array('GET','POST'),'/showorganizationbyserch', [MessengerSubscriptionController::class,'showorganizationbyserch'])->name('showorganizationbyserch');
+    Route::match(array('GET','POST'),'/addsubscription', [MessengerSubscriptionController::class,'addsubscription'])->name('addsubscription');
+    Route::match(array('GET','POST'),'/updatenewssubs', [MessengerSubscriptionController::class,'updatenewssubs'])->name('updatenewssubs');
+
+
+    
 
     
     });

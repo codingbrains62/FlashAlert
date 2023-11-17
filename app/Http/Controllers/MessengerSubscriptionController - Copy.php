@@ -302,9 +302,7 @@ class MessengerSubscriptionController extends Controller
         public function showorganization(Request $request){
             $id= $request->id;
             $response=DB::table('orgcats as oc')
-            ->join('orgs as o', 'oc.id', '=', 'o.OrgCatID')
-            ->where('oc.RegionID', $id)
-            ->get(); 
+            ->join('orgs as o', 'oc.id', '=', 'o.OrgCatID')->where('oc.RegionID', $id)->get(); 
             if(count($response)>0){
             $current_state = null;
             $html = '';
@@ -326,30 +324,16 @@ class MessengerSubscriptionController extends Controller
         public function showorganizationbyserch(Request $request){
             $id= $request->id;
             $searchText=$request->searchvalue;
-            // $response = DB::table('orgcats as oc')
-            // ->join('orgs as o', 'oc.id', '=', 'o.OrgCatID')
-            // ->where('oc.RegionID', $id)
-            // ->where(function ($query) use ($searchText) {
-            //     $query->where('o.Name', 'like', '%'.$searchText.'%');
-            // })
-            // ->get();
-
-
             $response = DB::table('orgcats as oc')
-            ->join('orgs as o', 'oc.id', '=', 'o.OrgCatID');
-            if (!empty($id)) {
-                $response->where('oc.RegionID', $id);    
-               
-            }
-            if (!empty($searchText)) {
-                $response->where('o.Name', 'like', '%' . $searchText . '%');    
-               
-            }
-            $html = '';
-            $response= $response->get();
+            ->join('orgs as o', 'oc.id', '=', 'o.OrgCatID')
+            ->where('oc.RegionID', $id)
+            ->where(function ($query) use ($searchText) {
+                $query->where('o.Name', 'like', '%'.$searchText.'%');
+            })
+            ->get();
             if(count($response)>0){
                 $current_state = null;
-                
+                $html = '';
                 foreach ($response as $datas){
                 $state_name =  $datas->CatagoryName;
                 if($state_name != $current_state) {
@@ -362,13 +346,8 @@ class MessengerSubscriptionController extends Controller
                 }  
                 echo $html; 
                 }else{
-                    $html .= '<optgroup label="Opps">
-                    <option value="">No Matches</option>';
-                    echo $html;
+                    echo '';
                 }        
         }
-        public function addsubscription(Request $request){
-         echo '<pre>';
-         print_r($request->all());
-        }   
+            
 }

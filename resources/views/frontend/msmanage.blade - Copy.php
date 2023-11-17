@@ -1,7 +1,7 @@
 <?php 
-// echo '<pre>';
-// print_r($data);
-// die;
+//echo '<pre>';
+//print_r($data);
+//die;
 ?>
 
 @extends('frontend.layouts.app')
@@ -286,7 +286,8 @@
                     <p class="fw-6">Organizations that you are subscribed to</p>
 
                     <div class="">
-                        <form method="post" action="{{route('updatenewssubs')}}">
+                        <form method="post" class="">
+                            
                             @foreach($org as $orgs)
                             <div class="row">
                                 <input type="hidden" name="hidden" value="{{@$orgs->id}}">
@@ -299,14 +300,14 @@
                                         @endforeach
                                     </span></div>
                                 <div class="form-check">
-                                    <input class="form-check-input" name="Ealertup" type="checkbox" value="1" id="flexCheckDefault"
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
                                         @if($orgs->EmergSub == 1) checked @endif>
                                     <label class="form-check-label" for="flexCheckDefault">
                                         Emergency Alerts
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" name="Nreleaseup" type="checkbox" value="1" id="flexCheckChecked"
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked"
                                         @if($orgs->NewsSub == 1) checked @endif>
                                     <label class="form-check-label" for="flexCheckChecked">
                                         News Releases
@@ -352,55 +353,18 @@
                                 <label for="" class="form-label fw-6">Search</label>
                                 <input class="form-control border" type="text" value="" id="serchtext">
                             </div>
-                           
-                            <div class="col-12 text-end mt-3">
-                                <button type="submit" class="py-2 px-4 text-white" style="display:none;" id="reset">Reset</button>
-                                <input type="Submit" class="py-2 px-4" value="Search">
-                            </div>
-                            </form>
                             <div class="col-lg-12 mt-3" id="showorg" style="display:none;">
                             <p>Organization:</p>
                                 <select name="cars" size="10" id="cars" style="width:100%;">
                                     
                                 </select>
                             </div>
-                           
-                            <div class="col-lg-6 mt-3" id="showsubscriber" style="display:none;">
-                            <h4>Check the types of messages you would like to receive :</h4>
-                              <div class="ml-4">
-                                <h4 id="orgname"></h4>
-                                <form method="post" action="{{route('addsubscription')}}">
-                                    @csrf
-                                <input type="hidden" name="userid" value="{{@$data[0]->id}}">
-                                <input type="hidden" name="orgid" value="" id="orgid">
-                                <div class="form-check">
-                                    <input class="form-check-input" name="Ealert" type="checkbox" value="1" id="flexCheckDefault"
-                                      checked >
-                                    <label class="form-check-label" for="flexCheckDefault">
-                                        Emergency Alerts
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" name="Nrelease" type="checkbox" value="1" id="flexCheckChecked"
-                                      checked >
-                                    <label class="form-check-label" for="flexCheckChecked">
-                                        News Releases
-                                    </label>
-                                </div>
-                                <div class="mt-3">
-                                    <input type="Submit" class="py-2 px-4 " value="SUBSCRIBE">
-                                    <!-- <input type="Submit" class="py-2 px-4 " value="CANCEL"> -->
-                                </div>
-                                </form>
-                                <div class="mt-3">
-                                Also available on :  <a here="">Twitter</a> | <a here="">Facebook</a>
-                                    
-                                </div>
-                              </div> 
+                            <div class="col-12 text-end mt-3">
+                                <button type="submit" class="py-2 px-4 text-white" style="display:none;" id="reset">Reset</button>
+                                <input type="Submit" class="py-2 px-4" value="Search">
                             </div>
-                            
                         </div>
-                    
+                    </form>
                 </div>
                 <div class="tab-pane fade p-4 border" id="accSet" role="tabpanel" aria-labelledby="acc-setting">
                     <p class="fw-6 ">Change your Account Password</p>
@@ -471,7 +435,7 @@ $(document).ready(function() {
                 }else{
                 $('#showorg').hide();  
                 }
-                console.log(response);
+                //console.log(response);
             },
             error: function(error) {
                 console.error(error);
@@ -482,12 +446,10 @@ $(document).ready(function() {
 
 
     $('#formSearch').submit(function(e){
-     $("#showsubscriber").show();
      $('#cars').html('');
       e.preventDefault();
       var serchtext= $('#serchtext').val();
       var selectedvalue= $('#regionSelect').val();
-      $("#orgname").text(serchtext+' :');
       var url ="{{route('showorganizationbyserch')}}"
         $.ajax({
             type: 'POST', 
@@ -510,8 +472,6 @@ $(document).ready(function() {
 
     });
     $("#reset").click(function(e){
-        $('#cars').html('');
-        $("#reset").hide();
       e.preventDefault();
       var selectedValue= $('#regionSelect').val();
       $('#serchtext').val('');
@@ -525,7 +485,6 @@ $(document).ready(function() {
                 $('#showorg').show();
                 $('#cars').append(response);
                 $("#reset").hide();
-                $("#showsubscriber").hide();
                 }else{
                 $('#showorg').hide();  
                 }
@@ -537,11 +496,8 @@ $(document).ready(function() {
         });
     })
     $('#cars').on('change', function() {
-        $("#showsubscriber").show();
-        
-
         var selectedValue = $(this).val();
-        $("#orgid").val(selectedValue);
+        alert(selectedValue);
 
 
     })
