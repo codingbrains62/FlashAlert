@@ -358,7 +358,7 @@ class MessengerSubscriptionController extends Controller
                 $html .= '<optgroup label="'.$state_name.'('.$nameCount.')">';
                 }
                 $html.='<option value="'.$datas->id.'">'.$datas->Name.'</option>
-                </optgroup>';
+                </optgroup><input type="hidden" id="optgroupid" value="'.$datas->id.'">';
                 }  
                 echo $html; 
                 }else{
@@ -368,7 +368,58 @@ class MessengerSubscriptionController extends Controller
                 }        
         }
         public function addsubscription(Request $request){
-         echo '<pre>';
-         print_r($request->all());
-        }   
+          //echo '<pre>'; print_r($request->all()); die;
+        $data=[
+            'OrgID'=>$request->orgid,
+            'PublicUserID'=>$request->userid,
+            'EmergSub' => $request->Ealert,
+            'NewsSub' => $request->Nrelease,
+        ];
+
+        DB::table('publicusersubscription')->insert($data);
+        return redirect()->route('sub-dashboard')->with('success','You Subscription Added SuccesfullY!');
+        } 
+        
+        
+        public function updatenewssubs(Request $request){
+            //echo '<pre>'; print_r($request->all()); die;
+            $data=[
+                'EmergSub' => $request->Ealertup,
+                'NewsSub' => $request->Nreleaseup,
+            ];
+
+            DB::table('publicusersubscription')->where('id',$request->hidden)->update($data);
+            return redirect()->route('sub-dashboard')->with('success','You Subscription Updated SuccesfullY!');
+        }
+        public function deletesubscription($id){
+            DB::table('publicusersubscription')->where('id',$id)->delete();
+            return redirect()->route('sub-dashboard')->with('success','You Subscription Deleted SuccesfullY!');
+
+        }
+        public function changePasswrd(Request $request){
+          //echo '<pre>'; print_r($request->all()); die;
+          try{
+            $request->validate([
+                'newpassword' => 'required|min:8', 
+                'confirm_new_password' => 'required|same:newpassword',
+            ]);
+              
+            $plainPassword = $request->input('newpassword');
+            $decrypted = password_hash($plainPassword, PASSWORD_DEFAULT);
+            $data=[
+                'NPW' => $decrypted,
+            ];
+            DB::table('publicuser')->where('id',$request->reset_pass_id)->update($data);
+            return redirect()->route('sub-dashboard')->with('success','Password Changed Succesfully!');
+
+          }catch (\Illuminate\Validation\ValidationException $e) {
+            $errors = $e->validator->errors();
+            return back()->withErrors($errors)->withInput();
+          }
+        }
+        public function deletesubscriptionaccount($id){
+           // DB::table('publicuser')->where('id',$id)->delete();
+            Session::pull('ret');
+            return redirect()->route('messengersub.login')->with('success','Your Account Deleted SuccesfullY!');
+        }
 }

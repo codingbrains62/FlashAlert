@@ -6,6 +6,7 @@
 
 @extends('frontend.layouts.app')
 @section('content')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <style>
 .my-email-add table tr td {
     border: 1px solid #ddd;
@@ -37,6 +38,30 @@
     min-height: 45vh;
 }
 </style>
+<!-- @if (Session::has('success'))
+    <script>
+        toastr.success('{{ Session::get("success") }}', 'Success', { timeOut: 4000 });
+        setTimeout(function () {
+            window.location.href = '{{ route("sub-dashboard") }}';
+        }, 4000);
+    </script>
+@endif -->
+@if (Session::has('success'))
+    <script>
+        swal({
+                    title: "Done!",
+                    text: "{{ Session::get('success') }}",
+                    icon: "success",
+                    timer: 3000
+                });
+    </script>
+@endif
+
+
+
+
+
+
 <section>
     <div style="background: #c5e3ed">
         <div class="container d-flex justify-content-center align-items-center">
@@ -287,7 +312,10 @@
 
                     <div class="">
                         <form method="post" action="{{route('updatenewssubs')}}">
+                       
+                            @csrf
                             @foreach($org as $orgs)
+                           
                             <div class="row">
                                 <input type="hidden" name="hidden" value="{{@$orgs->id}}">
                                 <div class="four columns"><span class="fw-6">
@@ -299,6 +327,7 @@
                                         @endforeach
                                     </span></div>
                                 <div class="form-check">
+                                <input type="hidden" name="Ealertup" value="0">
                                     <input class="form-check-input" name="Ealertup" type="checkbox" value="1" id="flexCheckDefault"
                                         @if($orgs->EmergSub == 1) checked @endif>
                                     <label class="form-check-label" for="flexCheckDefault">
@@ -306,6 +335,7 @@
                                     </label>
                                 </div>
                                 <div class="form-check">
+                                <input type="hidden" name="Nreleaseup" value="0">
                                     <input class="form-check-input" name="Nreleaseup" type="checkbox" value="1" id="flexCheckChecked"
                                         @if($orgs->NewsSub == 1) checked @endif>
                                     <label class="form-check-label" for="flexCheckChecked">
@@ -315,9 +345,10 @@
 
                                 <div class="text-end">
                                     <input type="Submit" class="py-2 px-4 " value="Update">
-                                    <input type="Submit" class="py-2 px-4 " value="Delete">
+                                    <a href="{{url('deletesubscription/'.$orgs->id)}}"  class="py-2 px-4" onclick="return confirm('Are You Sure You Want To Delete?')">Delete</a>
                                 </div>
                             </div>
+                           
                             @endforeach
                         </form>
                         <div style="clear:both;"></div>
@@ -374,6 +405,7 @@
                                 <input type="hidden" name="userid" value="{{@$data[0]->id}}">
                                 <input type="hidden" name="orgid" value="" id="orgid">
                                 <div class="form-check">
+                                <input type="hidden" name="Ealert" value="0">
                                     <input class="form-check-input" name="Ealert" type="checkbox" value="1" id="flexCheckDefault"
                                       checked >
                                     <label class="form-check-label" for="flexCheckDefault">
@@ -381,6 +413,7 @@
                                     </label>
                                 </div>
                                 <div class="form-check">
+                                <input type="hidden" name="Nrelease" value="0">
                                     <input class="form-check-input" name="Nrelease" type="checkbox" value="1" id="flexCheckChecked"
                                       checked >
                                     <label class="form-check-label" for="flexCheckChecked">
@@ -404,14 +437,23 @@
                 </div>
                 <div class="tab-pane fade p-4 border" id="accSet" role="tabpanel" aria-labelledby="acc-setting">
                     <p class="fw-6 ">Change your Account Password</p>
+                    <form method="post" action="{{route('changePasswrd')}}">
+                        @csrf
                     <div class="row">
                         <div class="col-lg-6">
+                            <input type="hidden" name="reset_pass_id" value="{{session::get('ret')}}">
                             <label for="" class="form-label fw-6">New Password</label>
-                            <input class="form-control border" type="text" value="">
+                            <input class="form-control border" type="password" value="" name="newpassword">
+                            @error('newpassword')
+                                <span style="color:red;" role="alert"><strong>{{ $message }}</strong></span>
+                            @enderror
                         </div>
                         <div class="col-lg-6">
                             <label for="" class="form-label fw-6">Confirm Password</label>
-                            <input class="form-control border" type="text" value="">
+                            <input class="form-control border" type="password" value="" name="confirm_new_password">
+                            @error('confirm_new_password')
+                                <span style="color:red;" role="alert"><strong>{{ $message }}</strong></span>
+                            @enderror
                         </div>
                         <div class="col-12 mt-3 text-end">
                             <input type="Submit" class="py-2 px-4 " value="Change password">
@@ -419,8 +461,9 @@
                     </div>
                     <div class="del-account mt-3">
                         <p>Delete your FlashAlert account</p>
-                        <button type="button" class="btn btn-danger p-3">Delete this Account</button>
+                        <a href="{{url('deletesubscriptionaccount/'.session::get('ret'))}}" class="btn btn-danger p-3 text-white" onclick="return confirm('Are You Sure You want to Delete Account?')">Delete this Account</a>
                     </div>
+                    </form>
                 </div>
             </div>
 
@@ -456,6 +499,7 @@ $(document).ready(function() {
         }
     });
     $('#regionSelect').on('change', function() {
+        
         $('#serchtext').val('');
         $('#cars').html('');
         var selectedValue = $(this).val();
@@ -482,11 +526,13 @@ $(document).ready(function() {
 
 
     $('#formSearch').submit(function(e){
+
      $("#showsubscriber").show();
      $('#cars').html('');
       e.preventDefault();
       var serchtext= $('#serchtext').val();
       var selectedvalue= $('#regionSelect').val();
+      
       $("#orgname").text(serchtext+' :');
       var url ="{{route('showorganizationbyserch')}}"
         $.ajax({
@@ -498,6 +544,8 @@ $(document).ready(function() {
                 $('#showorg').show();
                 $('#cars').append(response);
                 $("#reset").show();
+                var orgid=$('#optgroupid').val();
+                $('#orgid').val(orgid);
                 }else{
                 $('#showorg').hide();  
                 }
@@ -544,8 +592,8 @@ $(document).ready(function() {
         $("#orgid").val(selectedValue);
 
 
-    })
+    });
+   
 });
-
 </script>
 @endsection
