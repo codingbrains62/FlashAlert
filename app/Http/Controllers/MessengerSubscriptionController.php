@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\UserRegister;
+use App\Mail\SendTest;
 use Carbon\Carbon;
 class MessengerSubscriptionController extends Controller
 {
@@ -421,5 +422,13 @@ class MessengerSubscriptionController extends Controller
            // DB::table('publicuser')->where('id',$id)->delete();
             Session::pull('ret');
             return redirect()->route('messengersub.login')->with('success','Your Account Deleted SuccesfullY!');
+        }
+        public function sendtest($id){
+           $user=DB::table('publicuseremail')->where('id',$id)->get();
+           if($user[0]->Validated==1){
+           Mail::to($user[0]->UserEmailAddress)->send(new SendTest());
+           }
+           return redirect()->route('sub-dashboard')->with('success','Send Test Succesfully!');
+
         }
 }

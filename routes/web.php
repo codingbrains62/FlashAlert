@@ -54,6 +54,7 @@ Route::middleware(['subuser'])->group(function () {
     Route::get('/deletesubscription/{id}', [MessengerSubscriptionController::class,'deletesubscription']);
     Route::match(array('GET','POST'),'/changePasswrd', [MessengerSubscriptionController::class,'changePasswrd'])->name('changePasswrd');
     Route::get('/deletesubscriptionaccount/{id}', [MessengerSubscriptionController::class,'deletesubscriptionaccount']);
+    Route::get('/sendtest/{id}', [MessengerSubscriptionController::class,'sendtest']);
 
     
 
