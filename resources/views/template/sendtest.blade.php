@@ -65,7 +65,8 @@
                                         </p>
                                         <p
                                         style="margin:50px 0 12px 0;font-size:16px;font-family:Arial,sans-serif;font-weight:600;text-align:end;color:#606060">
-                                        Thank you</p>
+                                        Thank you
+                                        </p>
                                     </td>
                                 </tr>
                             </table>
@@ -74,7 +75,8 @@
                     <tr style="text-align:center;background: #e4e5eb;">
                         <p
                             style="letter-spacing: 0.8px;font-weight: bold;font-family: 'Roboto';color: #9b381b;font-size: 16px;margin: 8px 0;">
-                            © Flash Alert </p>
+                            © Flash Alert 
+                        </p>
                     </tr>
                 </table>
             </td>

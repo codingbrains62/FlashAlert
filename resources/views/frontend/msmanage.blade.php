@@ -49,14 +49,23 @@
 @if (Session::has('success'))
     <script>
         swal({
-                    title: "Done!",
-                    text: "{{ Session::get('success') }}",
-                    icon: "success",
-                    timer: 3000
-                });
+            title: "Done!",
+            text: "{{ Session::get('success') }}",
+            icon: "success",
+            timer: 3000
+        });
     </script>
 @endif
-
+@if (Session::has('error'))
+    <script>
+        swal({
+            title: "Opps!",
+            text: "{{ Session::get('error') }}",
+            icon: "error",
+            timer: 3000
+        });
+    </script>
+@endif
 
 
 
@@ -313,12 +322,10 @@
 
                     <div class="">
                         <form method="post" action="{{route('updatenewssubs')}}">
-                       
                             @csrf
                             @foreach($org as $orgs)
-                           
                             <div class="row">
-                                <input type="hidden" name="hidden" value="{{@$orgs->id}}">
+                                <input type="hidden" name="hidden_{{ $orgs->id }}" value="{{@$orgs->id}}">
                                 <div class="four columns"><span class="fw-6">
                                         @php
                                         $orgname=Helper::getDataID1('orgs',$orgs->OrgID ,'id');
@@ -328,16 +335,16 @@
                                         @endforeach
                                     </span></div>
                                 <div class="form-check">
-                                <input type="hidden" name="Ealertup" value="0">
-                                    <input class="form-check-input" name="Ealertup" type="checkbox" value="1" id="flexCheckDefault_{{$orgs->id}}"
+                                <input type="hidden" name="Ealertup_{{$orgs->id}}" value="0">
+                                    <input class="form-check-input" name="Ealertup_{{$orgs->id}}" type="checkbox" value="1" id="flexCheckDefault_{{$orgs->id}}"
                                         @if($orgs->EmergSub == 1) checked @endif>
                                     <label class="form-check-label" for="flexCheckDefault_{{$orgs->id}}">
                                         Emergency Alerts
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                <input type="hidden" name="Nreleaseup" value="0">
-                                    <input class="form-check-input" name="Nreleaseup" type="checkbox" value="1" id="flexCheckChecked_{{$orgs->id}}"
+                                <input type="hidden" name="Nreleaseup_{{$orgs->id}}" value="0">
+                                    <input class="form-check-input" name="Nreleaseup_{{$orgs->id}}" type="checkbox" value="1" id="flexCheckChecked_{{$orgs->id}}"
                                         @if($orgs->NewsSub == 1) checked @endif>
                                     <label class="form-check-label" for="flexCheckChecked_{{$orgs->id}}">
                                         News Releases
@@ -349,9 +356,9 @@
                                     <a href="{{url('deletesubscription/'.$orgs->id)}}"  class="py-2 px-4" onclick="return confirm('Are You Sure You Want To Delete?')">Delete</a>
                                 </div>
                             </div>
-                           
                             @endforeach
                         </form>
+      
                         <div style="clear:both;"></div>
                     </div>
                 </div>
@@ -382,7 +389,8 @@
                             </div>
                             <div class="col-lg-6">
                                 <label for="" class="form-label fw-6">Search</label>
-                                <input class="form-control border" type="text" value="" id="serchtext">
+                                <input class="form-control border" type="text" value="" id="serchtext"><br>
+                                <span id='msgserch' class="text-danger"></span>
                             </div>
                            
                             <div class="col-12 text-end mt-3">
@@ -527,13 +535,18 @@ $(document).ready(function() {
 
 
     $('#formSearch').submit(function(e){
-
-     $("#showsubscriber").show();
+        e.preventDefault();
+        $('#msgserch').text('');
+     //$("#showsubscriber").show();
      $('#cars').html('');
-      e.preventDefault();
+      
       var serchtext= $('#serchtext').val();
       var selectedvalue= $('#regionSelect').val();
-      
+      if(serchtext==''){
+        $('#msgserch').text('Plz Enter Organization');
+        
+      }else{
+     $("#showsubscriber").show();
       $("#orgname").text(serchtext+' :');
       var url ="{{route('showorganizationbyserch')}}"
         $.ajax({
@@ -556,7 +569,7 @@ $(document).ready(function() {
                 console.error(error);
             }
         });
-
+        }
     });
     $("#reset").click(function(e){
         $('#cars').html('');

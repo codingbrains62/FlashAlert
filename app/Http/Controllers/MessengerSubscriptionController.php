@@ -368,30 +368,72 @@ class MessengerSubscriptionController extends Controller
                     echo $html;
                 }        
         }
-        public function addsubscription(Request $request){
-          //echo '<pre>'; print_r($request->all()); die;
-        $data=[
-            'OrgID'=>$request->orgid,
-            'PublicUserID'=>$request->userid,
-            'EmergSub' => $request->Ealert,
-            'NewsSub' => $request->Nrelease,
-        ];
+        // public function addsubscription(Request $request){
+        //   //echo '<pre>'; print_r($request->all()); die;
+        // $data=[
+        //     'OrgID'=>$request->orgid,
+        //     'PublicUserID'=>$request->userid,
+        //     'EmergSub' => $request->Ealert,
+        //     'NewsSub' => $request->Nrelease,
+        // ];
 
-        DB::table('publicusersubscription')->insert($data);
-        return redirect()->route('sub-dashboard')->with('success','You Subscription Added SuccesfullY!');
-        } 
-        
-        
-        public function updatenewssubs(Request $request){
-            //echo '<pre>'; print_r($request->all()); die;
-            $data=[
-                'EmergSub' => $request->Ealertup,
-                'NewsSub' => $request->Nreleaseup,
-            ];
+        // DB::table('publicusersubscription')->insert($data);
+        // return redirect()->route('sub-dashboard')->with('success','You Subscription Added SuccesfullY!');
+        // } 
 
-            DB::table('publicusersubscription')->where('id',$request->hidden)->update($data);
-            return redirect()->route('sub-dashboard')->with('success','You Subscription Updated SuccesfullY!');
+
+        public function addsubscription(Request $request)
+        {
+            try {
+                $data = [
+                    'OrgID' => $request->orgid,
+                    'PublicUserID' => $request->userid,
+                    'EmergSub' => $request->Ealert,
+                    'NewsSub' => $request->Nrelease,
+                ];
+
+                DB::table('publicusersubscription')->insert($data);
+
+                return redirect()->route('sub-dashboard')->with('success', 'Your Subscription Added Successfully!');
+            } catch (\Illuminate\Database\QueryException $e) {
+                if ($e->errorInfo[1] == 1062) {
+                    return redirect()->route('sub-dashboard')->with('error', 'You Already Subscribe with this Organization.');
+                }
+                \Log::error($e);
+
+                return redirect()->route('sub-dashboard')->with('error', 'An error occurred while processing your request.');
+            }
         }
+
+        
+        
+        // public function updatenewssubs(Request $request){
+        //     echo '<pre>'; print_r($request->all()); die;
+        //     $data=[
+        //         'EmergSub' => $request->Ealertup,
+        //         'NewsSub' => $request->Nreleaseup,
+        //     ];
+
+        //     DB::table('publicusersubscription')->where('id',$request->hidden)->update($data);
+        //     return redirect()->route('sub-dashboard')->with('success','You Subscription Updated SuccesfullY!');
+        // }
+        public function updatenewssubs(Request $request){
+            foreach ($request->all() as $key => $value) {
+                if (Str::startsWith($key, ['Ealertup_', 'Nreleaseup_'])) {
+                    $orgId = explode('_', $key)[1];
+                    $data = [
+                        'EmergSub' => $request->input("Ealertup_{$orgId}"),
+                        'NewsSub' => $request->input("Nreleaseup_{$orgId}"),
+                    ];
+                    DB::table('publicusersubscription')->where('id', $orgId)->update($data);
+                }
+            }
+            return redirect()->route('sub-dashboard')->with('success', 'Your Subscription Updated Successfully!');
+        }
+        
+       
+        
+        
         public function deletesubscription($id){
             DB::table('publicusersubscription')->where('id',$id)->delete();
             return redirect()->route('sub-dashboard')->with('success','You Subscription Deleted SuccesfullY!');
