@@ -212,8 +212,24 @@
     select option {
         font-size: 14px;
     }
-
+    #getorgdiv select{
+        width: 100% !important;
+    }
+    @media screen and (max-width: 480px) {
+        .top-btn-a{
+            display: grid;
+        }
+        .top-btn-a a{
+            width: 100%;
+            margin-bottom: 6px;
+        }
+        .rgn-sent-bnts button{
+            width: 100%;
+            margin-bottom: 6px !important;
+        }
+    }
 </style>
+
 <body>
     <div class="container">
         <section>
@@ -247,19 +263,19 @@
                         @else
                         <form method="post" action="{{route('sendlogindetail')}}">
                             @csrf
-                            <div class="box-padding login-items d-flex align-items-end justify-content-start" style="border-right: 2px solid #ccc;">
-                                <div class="py-3" id="getorgdiv">
+                            <div class="box-padding login-items d-flex align-items-end justify-content-start flex-wrap" style="border-right: 2px solid #ccc;">
+                                <div class="col-lg-8 col-md-12" id="getorgdiv">
                                     <label class="form-label">Region:</label>
-                                    <select class="form-select" aria-label="Default select example" style="width:500px;" id="getorg">
+                                    <select class="form-select" aria-label="Default select example " id="getorg">
                                         <option selected value="">select your Region</option>
                                         @foreach($user as $users)
                                         <option value="{{$users->id}}">{{$users->Description}}</option>
                                         @endforeach
                                     </select>
                                 </div>
-                                <div>
-                                    <button class="srch-btn-log-info"><i class="fa fa-envelope mx-1" aria-hidden="true"></i> Send Email</button>
-                                    <button type="reset" class="srch-btn-log-info rstbtn"><i class="fa fa-times mx-1" aria-hidden="true"></i> Cancel</button>
+                                <div class="col-lg-4 col-md-12 mt-2 mt-lg-0 rgn-sent-bnts">
+                                    <button class="srch-btn-log-info mx-2 my-0"><i class="fa fa-envelope mx-1" aria-hidden="true"></i> Send Email</button>
+                                    <button type="reset" class="srch-btn-log-info rstbtn mx-2 my-0"><i class="fa fa-times mx-1" aria-hidden="true"></i> Cancel</button>
                                 </div>
                             </div>
                         </form>
@@ -284,13 +300,13 @@
             //alert(val);
             var url = "{{route('getogron')}}"
             $.ajax({
-                url: url
-                , method: 'get'
-                , data: {
-                    id: id
-                    , _token: '{{ csrf_token() }}'
-                }
-                , success: function(result) {
+                url: url,
+                method: 'get',
+                data: {
+                    id: id,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(result) {
                     //alert(result);
                     $("#getorgdiv").html(result);
                 }
@@ -301,13 +317,13 @@
             // alert(id);
             var url = "{{route('orgcategory')}}"
             $.ajax({
-                url: url
-                , method: 'get'
-                , data: {
-                    id: id
-                    , _token: '{{ csrf_token() }}'
-                }
-                , success: function(result) {
+                url: url,
+                method: 'get',
+                data: {
+                    id: id,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(result) {
                     //alert(result);
                     $("#getorgdiv").html(result);
                 }
@@ -318,4 +334,5 @@
         });
     });
 </script>
+
 </html>

@@ -5,6 +5,11 @@
     // print_r($data);
     //die;
     ?>
+    <style>
+        .SubscribeEmail {
+    margin-bottom: 15px;
+} 
+    </style>
     <section>
         <div style="background: #c5e3ed">
             <div class="container d-flex justify-content-center align-items-center">
@@ -20,23 +25,25 @@
                 <div id="content-core">
                     <div id="main">
                         <div id="main-core">
+                            {{-- <div class="ErrorMessage">This email address already is associated with an account. <a
+                                    href="{{ route('messengersub.login') }}">Click here to log in</a>.<br>
+                            </div> --}}
                             @if ($errorMessage)
                                 <div class="alert alert-danger">
                                     {{ $errorMessage }} <a
                                     href="{{ route('messengersub.login') }}">Click here to log in</a>.<br>
                                 </div>
-                                @else
-                                <div class="alert alert-success">
-                                    "Please check that the email addresses you entered match.<br>
-                                    Set a password of four or more letters/numbers, not case sensitive."
-                                </div>
-                            @endif
+                            @else
+                            <div class="alert alert-success">
+                                "Please check that the email addresses you entered match.<br>
+                                Set a password of four or more letters/numbers, not case sensitive."
+                            </div>
+                        @endif
                             <div class="SubscribeEmail">
                                 <form action="{{ route('messSubscribeManage') }}" method="post">
                                     @csrf
-                                    {{-- <input type="hidden" value={{ $data['id'] }} name="id" class="srch-form"> --}}
                                     <label for="EmailAddress" class="mb-2"><b>Email Address</b></label>
-                                    <input type="text" value="{{ optional($data)['EmailAddress'] ?? old('EmailAddress') }}"
+                                    <input type="text" value="{{ $data['EmailAddress'] }}{{ old('EmailAddress') }}"
                                         name="EmailAddress" class="srch-form">
                                     @error('EmailAddress')
                                         <div class="text-danger">

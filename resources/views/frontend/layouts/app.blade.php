@@ -17,6 +17,7 @@
 <link rel="stylesheet" id="wp-block-library-css" href="{{asset('front_assets/css/style.min.css')}}" type="text/css" media="all">
 <link rel="stylesheet"  href="{{asset('front_assets/css/style.css')}}" type="text/css" media="all">
 <link rel="stylesheet"  href="//fonts.googleapis.com/css?family=Raleway%3A300%2C400%2C600%2C700%7COpen+Sans%3A300%2C400%2C600%2C700&amp;subset=latin%2Clatin-ext" type="text/css" media="all">
+<link rel="stylesheet"  href="{{asset('front_assets/css/bootstrap.min.css')}}" type="text/css" media="all">
 <link rel="stylesheet"  href="{{asset('front_assets/css/font-awesome.min.css')}}" type="text/css" media="all">
 <link rel="stylesheet"  href="{{asset('front_assets/css/style-shortcodes.css')}}" type="text/css" media="all">
 <link rel="stylesheet"  href="{{asset('front_assets/css/style.css')}}" type="text/css" media="all">
@@ -26,8 +27,9 @@
 <link rel="stylesheet" id="su-shortcodes-css" href="{{asset('front_assets/css/shortcodes.css')}}" type="text/css" media="all">
 <script type="text/javascript" src="{{asset('front_assets/js/jquery.min.js')}}" id="jquery-core-js"></script>
 <style>#body-core {background: #FFFFFF;}#introaction-core h1, #introaction-core h2, #introaction-core h3, #introaction-core h4, #introaction-core h5, #introaction-core h6,#outroaction-core h1, #outroaction-core h2, #outroaction-core h3, #outroaction-core h4, #outroaction-core h5, #outroaction-core h6,#content h1, #content h2, #content h3, #content h4, #content h5, #content h6 {color: #FFFFFF;}body,button,input,select,textarea,.action-teaser {color: #000000;}#content a {color: #FFFFFF;}#content a:hover {color: #FFFFFF;}</style><link rel="icon" href="images/cropped-FlashAlert-app-logo-32x32.png" sizes="32x32">
-<link rel="stylesheet"  href="{{asset('front_assets/css/my.css')}}" type="text/css" media="all">
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>		
+<link rel="stylesheet"  href="{{asset('front_assets/css/my.css')}}" type="text/css" media="all">	
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>	
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> 
 </head>
 <body class="home page-template-default page page-id-17 wp-custom-logo layout-sidebar-none layout-responsive layout-wide pre-header-style2 header-style1">
 <div id="body-core" class="hfeed site">
@@ -40,6 +42,8 @@ $data=Helper::MenuHeaderData();
 </div><!-- #body-core -->
 <script type="text/javascript" src="{{asset('front_assets/js/bootstrap.js')}}" id="thinkup-bootstrap-js"></script>
 <script type="text/javascript" src="{{asset('front_assets/js/main-frontend.js')}}" id="thinkup-frontend-js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script> -->
 </body>
 </html>

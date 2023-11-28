@@ -43,8 +43,12 @@ class Helper {
         }
         return $getData;
     }
-    public static function getDataID($table, $id, $uid){
-        $getData=DB::table($table)->where($uid,$id)->get();
+    public static function getDataID($table, $id='', $uid=''){
+        if($id=='' && $uid== ''){
+         $getData=DB::table($table)->get();
+        }else{
+         $getData=DB::table($table)->where($uid,$id)->get();
+        }
         return $getData;
     }
      public static function getOrgRegion($table, $id, $rid,$type){

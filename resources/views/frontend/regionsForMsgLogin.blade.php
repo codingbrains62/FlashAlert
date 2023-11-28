@@ -40,10 +40,10 @@
                 </div>
 
                 @if (isset($searchResults) && count($searchResults) > 0)
-                    <div>
+                    <div class="org-name">
                         @foreach ($searchResults as $result)
                             <span>{{ $result->regionDescription }}</span><br>
-                            <span><a href="/id/{{ $result->URLName }}">{{ $result->Name }}</a> *<br></span>
+                            <span class="org-box d-flex flex-wrap"><a href="/id/{{ $result->URLName }}">{{ $result->Name }} *</a></span>
                         @endforeach
                     </div>
                 @else

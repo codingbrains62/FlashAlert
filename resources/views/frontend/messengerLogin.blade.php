@@ -10,34 +10,28 @@
                 </div>
             </div>
         </div>
+
         <div id="content">
             <div id="content-core">
 
                 <div id="main">
                     <div id="main-core">
-
                         <form class="log-input front-login" method="post" action="{{ route('mesSubLogin') }}">
                             @csrf
+                            @if (session('failed'))
+                                <div class="alert alert-danger mt-2">
+                                    {{ session('failed') }}
+                                </div>
+                            @endif
                             <label for="EmailAddress" class="mb-2"><b>Email Address</b></label>
                             <input placeholder="E-mail" type="text" id="EmailAddress" name="EmailAddress"
                                 class="srch-form" required>
-                            @error('EmailAddress')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                            @if (session()->has('failed'))
-                            <div class="text-danger">
-                                {{ session('failed') }}
-                            </div>
-                            @endif
                             <!-- <br> -->
                             <label for="PW" class="mb-2"><b>Password (Min. 4 characters, not case
                                     sensitive)</b></label>
                             <input placeholder="Password" type="password" id="PW" name="NPW" minlength="4"
                                 class="srch-form" required>
                             <!-- <br> -->
-                            @error('NPW')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
                             <span>
                                 <label class="my-3">
                                     <input type="checkbox" id="showPassword" title="Not recommended in public areas."

@@ -187,7 +187,7 @@
                                 new google.translate.TranslateElement({
                                     pageLanguage: 'en',
                                     includedLanguages: 'zh-CN,fr,de,ja,ko,ru,es,vi',
-                                    //layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                                    //layout: google.translate.TranslateElement.InlineLayout.SIMPLE, 
                                     autoDisplay: false,
                                 }, 'translate');
                             }
@@ -205,37 +205,37 @@
                 </div>
             </div>
             @if ($data1[0]->FlashAlertSubscriber == 1)
-            <div class="box-padding bg-head">
-                <p class="mb-0">Subscribe to receive FlashAlert messages from {{ $data[0]->Name }}.</p>
-            </div>
+                <div class="box-padding bg-head">
+                    <p class="mb-0">Subscribe to receive FlashAlert messages from {{ $data[0]->Name }}.</p>
+                </div>
 
-            <form action="{{ route('messSubscribe') }}" method="post">
-                @csrf
-                <div class="box-padding">
-                    <div class="search-bar emg-srch">
-                        <label class="form-label">Primary email address for a new account</label>
-                        <div class="d-flex flex-wrap">
-                            <input type="hidden" name="OrgID" value="{{ $data[0]->id }}">
-                            <input class="srch-form form-control" style="width:30%" type="text" name="EmailAddress" id="searchInput"
-                                placeholder="Enter Email..." autocomplete="off">
-                            <div class="d-flex align-items-center emg-mail-check">
-                                <div class="form-check form-check-inline mx-2">
-                                    <input class="form-check-input" type="checkbox" name="EmergSub" id="inlineCheckbox1"
-                                        value="1" checked>
-                                    <label class="form-check-label" for="inlineCheckbox1">Emergency Alerts</label>
+                <form action="{{ route('messSubscribe') }}" method="post">
+                    @csrf
+                    <div class="box-padding">
+                        <div class="search-bar emg-srch">
+                            <label class="form-label">Primary email address for a new account</label>
+                            <div class="d-flex flex-wrap">
+                                <input type="hidden" name="OrgID" value="{{ $data[0]->id }}">
+                                <input class="srch-form" type="text" name="EmailAddress" id="searchInput"
+                                    placeholder="Enter Email..." autocomplete="off">
+                                <div class="d-flex align-items-center emg-mail-check">
+                                    <div class="form-check form-check-inline mx-2">
+                                        <input class="form-check-input" type="checkbox" name="EmergSub"
+                                            id="inlineCheckbox1" value="1" checked>
+                                        <label class="form-check-label" for="inlineCheckbox1">Emergency Alerts</label>
+                                    </div>
+                                    <div class="form-check form-check-inline mx-2">
+                                        <input class="form-check-input" type="checkbox" name="NewsSub"
+                                            id="inlineCheckbox2" value="1" checked>
+                                        <label class="form-check-label" for="inlineCheckbox2">News Releases</label>
+                                    </div>
                                 </div>
-                                <div class="form-check form-check-inline mx-2">
-                                    <input class="form-check-input" type="checkbox" name="NewsSub" id="inlineCheckbox2"
-                                        value="1" checked>
-                                    <label class="form-check-label" for="inlineCheckbox2">News Releases</label>
-                                </div>
+                                <button type="submit" class="srch-btn">Subscribe</button>
                             </div>
-                            <button type="submit" class="srch-btn">Subscribe</button>
                         </div>
                     </div>
-                </div>
-            </form>
-            {{-- @if ($data1[0]->FlashAlertSubscriber == 1) --}}
+                </form>
+                {{-- @if ($data1[0]->FlashAlertSubscriber == 1) --}}
                 <div class="box-padding bg-head">
                     <p class="mb-0">News Release</p>
                 </div>
@@ -297,7 +297,7 @@
                         <div class="col-md-4"></div>
                     </div>
                 </div>
-            {{-- @endif --}}
+                {{-- @endif --}}
         </div>
         @endif
     </section>
@@ -311,4 +311,5 @@
     integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous">
 </script>
 <script src="{{ url('public/js/custom.js') }}"></script>
+
 </html>

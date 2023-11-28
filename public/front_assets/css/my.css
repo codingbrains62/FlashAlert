@@ -17,6 +17,8 @@
     display: flex;
     justify-content: center;
 }
+
+
 /* -------------------------------- */
 
 .border-0 {
@@ -562,7 +564,9 @@
     font-size: 14px !important;
 }
 
+
 /* --------------------------------- */
+
 #content1::after {
     content: "\a";
     white-space: pre;
@@ -911,6 +915,27 @@ p {
 
 #main-core form .srch-form {
     margin-bottom: 10px !important;
+    height: 38px;
+}
+
+.SubscribeEmail {
+    margin-bottom: 15px;
+}
+
+input[type=text],
+input[type=email],
+input[type=password],
+input[type=search],
+input[type=tel],
+select,
+textarea {
+    background: white;
+    border: 2px solid #939292;
+    padding: 10px 15px;
+}
+
+.srch-form {
+    border-radius: 4px!important;
 }
 
 #main-core form .sub-btn {
@@ -949,88 +974,109 @@ p {
     width: 33%;
     background-color: #f1edee;
 }
-.bg-blu-cover{
+
+.bg-blu-cover {
     background: #c5e3ed;
 }
-.tbl-info-client tbody tr td{
+
+.tbl-info-client tbody tr td {
     vertical-align: middle;
     padding: 8px;
 }
-.tbl-info-client tbody tr .fw-6{
+
+.tbl-info-client tbody tr .fw-6 {
     font-weight: bold;
     font-size: 13px;
 }
-.fw-4{
+
+.fw-4 {
     font-weight: 400
 }
-.news_form.cst-send-msg{
+
+.news_form.cst-send-msg {
     box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
     background: #efefef;
 }
-.cst-send-msg .send-head{
+
+.cst-send-msg .send-head {
     text-align: center;
     /* color: #097397 !important; */
     font-size: 22px;
     font-weight: 600;
 }
+
 .cst-send-msg .form-label {
     font-size: 17px;
     font-weight: 300;
     color: #000;
 }
-.cst-send-msg input.form-control{
+
+.cst-send-msg input.form-control {
     font-size: 13px;
     border: 1px solid #ccc;
 }
-.cst-send-msg .form-control:focus{
+
+.cst-send-msg .form-control:focus {
     border-color: #99212e3b;
     outline: 0;
     box-shadow: 0 0 0 0.25rem rgb(153 33 46 / 13%);
 }
-.v-align-mid tr td{ 
+
+.v-align-mid tr td {
     vertical-align: middle;
 }
+
 .fw-6 {
     font-weight: 600;
 }
-.clk-here-btn{
+
+.clk-here-btn {
     font-weight: 600;
     padding: 6px;
     text-decoration: underline;
 }
-.clk-here-btn:hover{
+
+.clk-here-btn:hover {
     background: #c5e3ed;
     color: #097397 !important;
     text-decoration: none;
 }
-.btn.participant{
+
+.btn.participant {
     font-size: 13px;
     text-decoration: underline;
     color: #097397;
     font-weight: 600;
 }
-.btn.participant:hover{
+
+.btn.participant:hover {
     text-decoration: none;
     color: #097397;
     font-weight: 600;
     background: #c2e5f1;
 }
-.log-input .srch-form{
+
+.log-input .srch-form {
     /* width: 55%; */
     border: 1px solid #d3d3d3;
 }
-.bg-grey-lite{
+
+.bg-grey-lite {
     background: #ccc;
 }
-.txt-blu{
+
+.txt-blu {
     color: #097397;
 }
-.img-fluid.ios-img{
+
+.img-fluid.ios-img {
     width: 25%;
 }
-.font-15{
+
+.font-15 {
     font-size: 15px;
 }
+
 form.front-login {
     width: 375px;
     /* height: 100vh; */
@@ -1041,46 +1087,76 @@ form.front-login {
     /* align-items: center; */
     position: relative;
 }
-#loginDropdown{
+
+#loginDropdown {
     font-weight: bold;
     font-size: 12px;
     color: #097397;
     font-family: inherit;
 }
-#loginDropdown:hover{
+
+#loginDropdown:hover {
     text-decoration: none;
     color: #097397;
     font-weight: bold;
     background: #c2e5f1;
 }
-#loginDropdown:focus{
+
+#loginDropdown:focus {
     box-shadow: none;
     border: 1px solid #097397;
 }
-.iconTbl-mh{
-    min-height: 160px;;
+
+.iconTbl-mh {
+    min-height: 160px;
+    ;
 }
-.loginColor .dropdown-menu{
+
+.loginColor .dropdown-menu {
     margin: 0;
     padding-top: 0;
     padding-bottom: 0;
 }
-.loginColor .dropdown-menu li a{
-    
+
+.loginColor .dropdown-menu li a {
     font-size: 12px;
     font-weight: 700;
     color: #097397 !important;
     padding: 6px 18px;
 }
-.loginColor .dropdown-menu li a:hover{
+
+.loginColor .dropdown-menu li a:hover {
     color: #097397;
     font-weight: bold;
     background: #c2e5f1;
 }
-..loginColor .dropdown-menu li i{
+
+.loginColor .dropdown-menu li i {
     color: #097397;
 }
+
+
 /*Media Query*/
+
+
+/* @media (min-width: 1024.98px) {
+    .tbl-tablet{
+        display: none;
+    }
+    .tbl-large{
+        display: block;
+    }
+}
+
+@media (max-width: 1024.98px) {
+    .tbl-tablet{
+        display: block;
+    }
+    .tbl-large{
+        display: none;
+    }
+} */
+
 @media (max-width: 920.98px) {
     .form-select.info-select {
         width: 50%;
@@ -1092,24 +1168,21 @@ form.front-login {
         font-size: 12px;
         padding: 25px 18px;
     }
-
     .bank-union .list a {
         width: 47%;
         margin: 8px;
     }
-
     .head-btn .d-flex .mb-0 {
         flex: 0 0 60%;
         text-align: start;
     }
-
     .btn-rss {
         height: fit-content;
     }
     .emg-srch .srch-form {
         width: 50%;
     }
-    .emg-srch .srch-btn{
+    .emg-srch .srch-btn {
         margin: 12px 0 0;
     }
     .form-select.info-select {
@@ -1121,34 +1194,30 @@ form.front-login {
     .txt-sm {
         font-size: 28px !important;
     }
-
     .org-name .org-box a {
         width: 48%;
         margin: 6px;
         padding: 18px 6px;
     }
-
     .bank-union .list a {
         display: block;
         width: 47%;
         margin: 7px;
         padding: 12px 8px;
     }
-
     .btn-rss {
         height: fit-content;
     }
     .emg-srch .srch-form {
         width: 48%;
     }
-    .tbl-info-client tbody tr td{
+    .tbl-info-client tbody tr td {
         display: inline-block;
         width: 30%;
     }
     .form-select.info-select {
         width: 62%;
     }
-    
 }
 
 @media (max-width: 540.98px) {
@@ -1157,33 +1226,32 @@ form.front-login {
         margin: 6px;
         padding: 16px 8px;
     }
-
     .container .intro-box {
         width: 75%;
         height: 100px;
         padding: 8px;
     }
-    .emergency-msg{
+    .emergency-msg {
         margin: 10px;
     }
-    .head-btn .form-switch{
+    .head-btn .form-switch {
         justify-content: unset !important;
     }
     .head-btn .form-check-label {
         flex: 0 0 74%;
     }
-    .text-start-sm{
+    .text-start-sm {
         text-align: start !important;
     }
-    .tbl-info-client tbody tr td{
+    .tbl-info-client tbody tr td {
         display: inline-block;
         width: 50%;
     }
-    .news_form.cst-send-msg{
+    .news_form.cst-send-msg {
         margin: unset;
         width: 100%;
     }
-    .log-input .srch-form{
+    .log-input .srch-form {
         width: 100%;
     }
     .emg-srch .srch-form {
@@ -1192,47 +1260,39 @@ form.front-login {
     .form-select.info-select {
         width: 25%;
     }
-    
 }
 
 @media (max-width: 420.98px) {
     .txt-sm {
         font-size: 18px !important;
     }
-
     .width-sm9 {
         width: 95%;
     }
-
     .width-sm {
         width: 100%;
     }
-
     #introaction .action-teaser p {
         font-size: 16px;
     }
-
     .org-name .org-box a {
         width: 100%;
         margin: 8px;
         padding: 14px 6px;
     }
-
     .intro-box .intro-text h1 {
         font-size: 18px;
     }
-
     .search-bar .srch-btn {
         font-size: 12px;
     }
-
     .bank-union .list a {
         display: block;
         width: 100%;
         margin: 6px;
         padding: 10px 8px;
     }
-    .emg-srch .emg-mail-check{
+    .emg-srch .emg-mail-check {
         margin: 14px 0 0;
     }
     .emg-srch .srch-btn {
@@ -1244,7 +1304,7 @@ form.front-login {
     .head-btn .form-check-label {
         flex: 0 0 100%;
     }
-    .container.bank-union{
+    .container.bank-union {
         padding: 12px;
     }
     #header-responsive .sub-menu a {
@@ -1253,10 +1313,10 @@ form.front-login {
     .form-select.info-select {
         width: 36%;
     }
-    
 }
-@media (max-width: 390.98px){
-    .tbl-info-client tbody tr td{
+
+@media (max-width: 390.98px) {
+    .tbl-info-client tbody tr td {
         display: block;
         width: 100%;
     }

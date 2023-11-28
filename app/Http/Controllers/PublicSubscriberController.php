@@ -58,10 +58,6 @@ class PublicSubscriberController extends Controller
         return view('backend.P_SubscriberList', compact('data','response','category','selectedRegion','selectedorgcat','firstIdCounts'));
     }
 
-    public function deleteUsers(Request $request){
-        
-    }
-
         public function SubscriberEmailList($id)
             {
             // Retrieve the user IDs from the PublicUserSubscription table
@@ -191,5 +187,29 @@ class PublicSubscriberController extends Controller
        //___________________Email change tool______________________________//
        public function changeEmailT(){
         return view('backend.emailChangTool');
+        }
+       public function previewEmailChange(Request $request)
+        {
+           $oldEmail = $request->input('oldEmail');
+           $newEmail = $request->input('newEmail');
+           $user = DB::table('publicuser')->where('EmailAddress', $oldEmail)->first();
+   
+           if (!$user) {
+               return redirect()->route('email.changeTool')->with('error', 'Old email not found.');
+           }
+           return view('backend.emailChangTool', compact('oldEmail', 'newEmail'));
+        }
+       public function updateEmail(Request $request)
+        {
+           $oldEmail = $request->input('oldEmail');
+           $newEmail = $request->input('newEmail');
+   
+           $user = DB::table('publicuser')->where('EmailAddress', $oldEmail)->first();
+   
+           if ($user) {
+               DB::table('publicuser')->where('EmailAddress', $oldEmail)->update(['EmailAddress' => $newEmail]);
+               return redirect()->route('email.changeTool')->with('success', 'Email updated successfully.');
+           }
+           return redirect()->route('email.changeTool')->with('error', 'Old email not found in the database.');
         }
 }

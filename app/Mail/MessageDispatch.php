@@ -35,7 +35,7 @@ class MessageDispatch extends Mailable
         $user['name'] = $this->name;
         $user['token'] = $this->token;
 
-        return $this->from("flashalert@projects-codingbrains.com", "Flash Alert")
+        return $this->from("flashalert@projects-codingbrains.com", "FlashAlert")
         ->subject($this->name)
         ->view('template.message-dispatch-mail', ['user' => $user]);
     }

@@ -31,7 +31,7 @@ class MyTestMail extends Mailable
     {
         $user['name'] = $this->name;
         $user['password'] = $this->password;
-        return $this->from("codingbrains32@gmail.com", "Test")
+        return $this->from("codingbrains32@gmail.com", "FlashAlert")
         ->subject('Your Login Details With us')
         ->view('template.send-password', ['user' => $user]);
     }

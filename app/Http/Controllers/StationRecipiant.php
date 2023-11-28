@@ -272,14 +272,13 @@ public function addftp(Request $request){
 //------------------------style Templates-----------------------------------------------------//
   
  public function styletemplates(){
-    // $data=DB::table('styles')->orderby('name','asc')->get();
-     $data = DB::table('styles')
-     ->leftJoin('SubFTP', 'styles.id', '=', 'SubFTP.StyleID')
-     ->select('styles.id', 'styles.Name', 'styles.URL', DB::raw('COUNT(SubFTP.id) as UseCount'))
+    //  $data=DB::table('styles')->orderby('name','asc')->get();
+    $data = DB::table('styles')
+     ->leftJoin('subftp', 'styles.id', '=', 'subftp.StyleID')
+     ->select('styles.id', 'styles.Name', 'styles.URL', DB::raw('COUNT(subftp.id) as UseCount'))
      ->groupBy('styles.id', 'styles.Name', 'styles.URL')
      ->orderby('name','asc')
      ->get();
-     //dd($data);
      return view('backend.manage_style_templates',compact('data'));
  }
  public function styletempedit($id){

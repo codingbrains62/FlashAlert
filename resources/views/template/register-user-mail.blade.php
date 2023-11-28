@@ -35,22 +35,26 @@ p {
                 <table role="presentation"
                     style="border-collapse:collapse;border:1px solid #cccccc;border-spacing:0;text-align:left;">
                     <tr style="border-collapse:collapse;border:1px solid #cccccc;border-spacing:0;">
-                        <td align="left" style="padding:10px 25px;background:#fff; display: flex; align-items: center;">
-                             <span style="font-weight: bold; padding-top: 10px;"> Hello {{$user['region']}} </span>
+                    <td align="left" style="padding:10px 230px; display: flex; align-items: center;justify-content: center;background: #e4e5eb;">
+                            <img src="flashalert.projects-codingbrains.com/admin_assets/dist/img/FlashAlert-Icon.png" alt="logo" style="pading:6px;">
+                             <span style="font-weight: bold;font-size: 16px;color: #9b381b;margin: 4px 5px;"> Flash Alert </span>
                         </td>
-                       
+    
                     </tr>
                     <tr>
                         <td style="padding:36px 30px 42px 30px;">
                             <table role="presentation"
                                 style="width:100%;border-collapse:collapse;border:0;border-spacing:0;">
                                 <tr style="color: #3c3c3c;">
+                                <!-- <td align="left" style="padding:10px 25px;background:#fff; display: flex; align-items: center;">
+                                    <span style="font-weight: bold; padding-top: 10px;"> Hello {{$user['region']}} </span>
+                                </td> -->
                                     <td style="padding:0;color:#153643;">
-                                           
+                                    <span style="font-weight: bold; padding-top: 10px; padding-bottom: 15px;"> Hello {{$user['region']}} </span>
                                         <p
-                                            style="margin:0 0 12px 0;font-size:14px;line-height:24px;font-family:'Roboto';font-weight: 500;color: #3c3c3c;">
+                                            style="margin:30 0 12px 0;font-size:14px;line-height:24px;font-family:'Roboto';font-weight: 500;color: #3c3c3c;">
                                             
-                                            <a href="{{ url('http://127.0.0.1:8000/user-login-link/'.$user['name'].'/'.$user['region']) }}"
+                                            <a href="{{ url('https://flashalert.projects-codingbrains.com/user-login-link/'.$user['name'].'/'.$user['region']) }}"
                                                 class="btn btn-link">Please click on this link to validate this address for receiving FlashAlerts. </a>
                                         </p>
                                         <p

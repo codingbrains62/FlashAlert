@@ -16,16 +16,14 @@ class UserRegister extends Mailable
      *
      * @return void
      */
-     public $region;
-     public $name;
-    
-    public function __construct($region,$name)
-    {
-        $this->region =$region;
-        $this->name =$name;
-       
-    }
-
+      public $region;
+      public $name;
+     public function __construct($region,$name)
+     {
+         $this->region =$region;
+         $this->name =$name;
+        
+     }
     /**
      * Build the message.
      *
@@ -36,7 +34,7 @@ class UserRegister extends Mailable
         $user['region'] =  $this->region;
         $user['name'] =  $this->name;
 
-        return $this->from("flashalert@projects-codingbrains.com", "Test")
+        return $this->from("flashalert@projects-codingbrains.com", "FlashAlert")
         ->subject('Flash Alert -Account Validation')
         ->view('template.register-user-mail', ['user' => $user]);
     }

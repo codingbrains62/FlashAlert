@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\UserRegister;
+use App\Mail\SendTest;
+use App\Mail\ResetPasswordMail;
 use Carbon\Carbon;
 class MessengerSubscriptionController extends Controller
 {
@@ -45,6 +47,82 @@ class MessengerSubscriptionController extends Controller
         public function lostpass(){
             return view('frontend.msg_forgetPass');
         }
+        public function forgetpass($email, $token){
+            $EmaillAddress = $email;
+            $Resetcode = $token;
+            $listdata['EmaillAddress'] = $EmaillAddress;
+            $listdata['Resetcode'] = $Resetcode;
+            $listdata['success'] = 'Reset Code accepted';
+            $msguser = DB::table('publicuser')->where('EmailAddress', $EmaillAddress)->first();
+            if ($msguser->ResetCode == $Resetcode) {
+                //DB::table('Publicuser')->where('EmailAddress', $EmaillAddress)->update(['ResetCode' => '']);
+                return view('frontend.msg-recovery',compact('listdata'));
+            }
+            return view('frontend.msg-recovery', ['error' => 'Invalid reset link']);
+        }
+          public function sendPasswordReset(Request $request)
+            {
+                //dd($request->all());
+                $email = $request->input('EmailAddress');
+                $user = DB::table('publicuser')->where('EmailAddress', $email)->first();
+                //dd($user->EmailAddress);
+                if ($user) {
+                    $token = Str::random(30);
+                    DB::table('publicuser')->where('EmailAddress', $email)->update([
+                        'ResetCode' => $token,
+                        'ResetDate' => now(),
+                    ]);
+                    Mail::to($user->EmailAddress)->send(new ResetPasswordMail($user->EmailAddress, $token));
+                    return redirect()->route('frontend-lostpass')->with('success', 'An email has been sent to all (non cell-phone) email addresses attached to this account.
+                    <br> Please confirm your password reset by clicking on the URL in that message..');
+                }
+                return redirect()->route('frontend-lostpass')->with('error', 'We were unable to find the email address you entered. Please check your spelling and try again, or select Create a new subscription.');
+            }
+
+           public function changepasss(Request $request){
+                $EmaillAddress = $request->email;
+                $Resetcode = $request->token;
+                try {
+                    request()->validate([
+                        'NPW' => 'required|min:4', // Adjust the minimum length as needed
+                        'ConfirmNPW' => 'required|same:NPW',
+                    ]);
+            
+                    $newPassword = request()->input('NPW');
+                    $dt = DB::table('publicuser')->where('EmailAddress', $EmaillAddress)->first();
+            
+                    if ($dt) {
+                        $lastid = $dt->id;
+            
+                        DB::table('publicuser')->where('EmailAddress', $EmaillAddress)->update([
+                            'NPW' => bcrypt($newPassword),
+                            'ResetCode' => '',
+                            'ResetDate' => '0001-01-01 00:00:00',
+                        ]);
+            
+                        $request->session()->put('ret', $lastid);
+            
+                        return redirect()->route('sub-dashboard');
+                    } else {
+                        // User not found, handle accordingly
+                        $listdata = [
+                            'EmaillAddress' => $EmaillAddress,
+                            'Resetcode' => $Resetcode,
+                            'error' => 'User not found', // You can customize this message
+                        ];
+            
+                        return view('frontend.msg-recovery')->with($listdata);
+                    }
+                } catch (\Illuminate\Validation\ValidationException $e) {
+                    $errors = $e->validator->errors();
+                    $listdata = [
+                        'EmaillAddress' => $EmaillAddress,
+                        'Resetcode' => $Resetcode,
+                        'success' => 'Reset Code accepted',
+                    ];
+                    return view('frontend.msg-recovery', ['error' => $errors->first()])->with($listdata);
+                   }
+            }
         public function attach_app(){
             return view('frontend.attachAppTut');
         }
@@ -102,8 +180,6 @@ class MessengerSubscriptionController extends Controller
             } 
             return view('frontend.subSignup')->with('data', $data)->with('errorMessage', $errorMessage);
         }
-        
-        
         public function msmanage(Request $request)
         {
             $plainPassword = $request->input('NPW');
@@ -276,36 +352,7 @@ class MessengerSubscriptionController extends Controller
             DB::table('publicuseremail')->where('id',$id)->delete();
             return redirect()->route('sub-dashboard');
         }
-        // public function resendcode($id){
-        //    $user= DB::table('publicuseremail')->where('id',$id)->first();
-        //    //echo '<pre>';print_r($user); die;
-        //     // $currentDateTime = Carbon::now();
-        //     // $carbonDate1 = Carbon::parse($currentDateTime);
-        //     // $timeOnly1 = $carbonDate1->format('H:i:s');
-        //     // $dateTimeFromDatabase = $user->CreateDate;
-        //     // $carbonDate = Carbon::parse($dateTimeFromDatabase);
-        //     // $timeOnly = $carbonDate->format('H:i:s');
-
-        //     // echo $timeOnly;
-        //     // echo $timeOnly1;
-        //      $dateTimeFromDatabase = $user->CreateDate;
-        //      $carbonDate = Carbon::parse($dateTimeFromDatabase);
-        //      $timeOnly = $carbonDate->format('H:i:s');
-
-        //      $compareTimePlus2Minutes = $timeOnly->addMinutes(2);
-        //       echo $timeOnly.'<br>';
-        //       echo $compareTimePlus2Minutes;
-        // }
-
-        // public function resendcode($id){
-        //     $user = DB::table('publicuseremail')->where('id', $id)->first();
-
-        //     $dateTimeFromDatabase = $user->CreateDate;
-        //     $carbonDate = Carbon::parse($dateTimeFromDatabase);
-        //     $compareTimePlus2Minutes = $carbonDate->copy()->addMinutes(2);
-        //     echo $carbonDate->format('H:i:s') . '<br>';
-        //     echo $compareTimePlus2Minutes->format('H:i:s');
-        // }
+        
 
         public function resendcode($id)
         {
@@ -328,6 +375,173 @@ class MessengerSubscriptionController extends Controller
                 return back()->with('msg','You Can Resend Code After 2 Minutes');
             }
         }
+        public function showorganization(Request $request){
+            $id= $request->id;
+            $response=DB::table('orgcats as oc')
+            ->join('orgs as o', 'oc.id', '=', 'o.OrgCatID')
+            ->where('oc.RegionID', $id)
+            ->get(); 
+            if(count($response)>0){
+            $current_state = null;
+            $html = '';
+            foreach ($response as $datas){
+            $state_name =  $datas->CatagoryName;
+            if($state_name != $current_state) {
+            $current_state = $state_name;
+            $nameCount = $response->where('CatagoryName', $state_name)->count();
+            $html .= '<optgroup label="'.$state_name.'('.$nameCount.')">';
+            }
+            $html.='<option value="'.$datas->id.'">'.$datas->Name.'</option>
+            </optgroup><input type="hidden" id="optgroupid" value="'.$datas->id.'">';
+            }  
+            echo $html; 
+            }else{
+                echo '';
+            }                   
+        }
+        public function showorganizationbyserch(Request $request){
+            $id= $request->id;
+            $searchText=$request->searchvalue;
+            // $response = DB::table('orgcats as oc')
+            // ->join('orgs as o', 'oc.id', '=', 'o.OrgCatID')
+            // ->where('oc.RegionID', $id)
+            // ->where(function ($query) use ($searchText) {
+            //     $query->where('o.Name', 'like', '%'.$searchText.'%');
+            // })
+            // ->get();
 
-            
+
+            $response = DB::table('orgcats as oc')
+            ->join('orgs as o', 'oc.id', '=', 'o.OrgCatID');
+            if (!empty($id)) {
+                $response->where('oc.RegionID', $id);    
+               
+            }
+            if (!empty($searchText)) {
+                $response->where('o.Name', 'like', '%' . $searchText . '%');    
+               
+            }
+            $html = '';
+            $response= $response->get();
+            if(count($response)>0){
+                $current_state = null;
+                
+                foreach ($response as $datas){
+                $state_name =  $datas->CatagoryName;
+                if($state_name != $current_state) {
+                $current_state = $state_name;
+                $nameCount = $response->where('CatagoryName', $state_name)->count();
+                $html .= '<optgroup label="'.$state_name.'('.$nameCount.')">';
+                }
+                $html.='<option value="'.$datas->id.'">'.$datas->Name.'</option>
+                </optgroup><input type="hidden" name="orgid" id="optgroupid" value="'.$datas->id.'">';
+                }  
+                echo $html; 
+                }else{
+                    $html .= '<optgroup label="Opps">
+                    <option value="">No Matches</option>';
+                    echo $html;
+                }        
+        }
+        // public function addsubscription(Request $request){
+        //   //echo '<pre>'; print_r($request->all()); die;
+        // $data=[
+        //     'OrgID'=>$request->orgid,
+        //     'PublicUserID'=>$request->userid,
+        //     'EmergSub' => $request->Ealert,
+        //     'NewsSub' => $request->Nrelease,
+        // ];
+
+        // DB::table('publicusersubscription')->insert($data);
+        // return redirect()->route('sub-dashboard')->with('success','You Subscription Added SuccesfullY!');
+        // } 
+          public function addsubscription(Request $request)
+        {
+            //echo '<pre>'; print_r($request->all()); die;
+            try {
+                $data = [
+                    'OrgID' => $request->orgid,
+                    'PublicUserID' => $request->userid,
+                    'EmergSub' => $request->Ealert,
+                    'NewsSub' => $request->Nrelease,
+                ];
+
+                DB::table('publicusersubscription')->insert($data);
+
+            return redirect()->route('sub-dashboard')->with('success', 'Your Subscription Added Successfully!');
+            } catch (\Illuminate\Database\QueryException $e) {
+                if ($e->errorInfo[1] == 1062) {
+                    return redirect()->route('sub-dashboard')->with('error', 'You Already Subscribe with this Organization.');
+                }
+
+                \Log::error($e);
+
+                return redirect()->route('sub-dashboard')->with('error', 'An error occurred while processing your request.');
+            }
+        }
+        
+        
+        // public function updatenewssubs(Request $request){
+        //     $data=[
+        //         'EmergSub' => $request->Ealertup,
+        //         'NewsSub' => $request->Nreleaseup,
+              
+        //     ];
+
+        //     DB::table('publicusersubscription')->where('id',$request->hidden)->update($data);
+        //     return redirect()->route('sub-dashboard')->with('success','You Subscription Updated SuccesfullY!');
+        // }
+         public function updatenewssubs(Request $request){
+            foreach ($request->all() as $key => $value) {
+                if (Str::startsWith($key, ['Ealertup_', 'Nreleaseup_'])) {
+                    $orgId = explode('_', $key)[1];
+                    $data = [
+                        'EmergSub' => $request->input("Ealertup_{$orgId}"),
+                        'NewsSub' => $request->input("Nreleaseup_{$orgId}"),
+                    ];
+                    DB::table('publicusersubscription')->where('id', $orgId)->update($data);
+                }
+            }
+            return redirect()->route('sub-dashboard')->with('success', 'Your Subscription Updated Successfully!');
+        }
+        public function deletesubscription($id){
+            DB::table('publicusersubscription')->where('id',$id)->delete();
+            return redirect()->route('sub-dashboard')->with('success','You Subscription Deleted Succesfully!');
+
+        }
+        public function changePasswrd(Request $request){
+          //echo '<pre>'; print_r($request->all()); die;
+          try{
+            $request->validate([
+                'newpassword' => 'required|min:4', 
+                'confirm_new_password' => 'required|same:newpassword',
+            ]);
+              
+            $plainPassword = $request->input('newpassword');
+            $decrypted = password_hash($plainPassword, PASSWORD_DEFAULT);
+            $data=[
+                'NPW' => $decrypted,
+            ];
+            DB::table('publicuser')->where('id',$request->reset_pass_id)->update($data);
+            return redirect()->route('sub-dashboard')->with('success','Password Changed Succesfully!');
+
+          }catch (\Illuminate\Validation\ValidationException $e) {
+            $errors = $e->validator->errors();
+            return back()->withErrors($errors)->withInput();
+          }
+        }
+        public function deletesubscriptionaccount($id){
+           // DB::table('publicuser')->where('id',$id)->delete();
+            Session::pull('ret');
+            return redirect()->route('messengersub.login')->with('success','Your Account Deleted Succesfully!');
+        }
+
+         public function sendtest($id){
+           $user=DB::table('publicuseremail')->where('id',$id)->get();
+           if($user[0]->Validated==1){
+           Mail::to($user[0]->UserEmailAddress)->send(new SendTest());
+           }
+        return redirect()->route('sub-dashboard')->with('success','Test mail Send Successfully!');
+
+        }
 }

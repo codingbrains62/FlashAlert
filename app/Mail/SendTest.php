@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class MyMail extends Mailable
+class SendTest extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -16,12 +16,9 @@ class MyMail extends Mailable
      *
      * @return void
      */
-    public $name;
-    public $token;
-    public function __construct($name,$token)
+    public function __construct()
     {
-         $this->name = $name;
-        $this->token = $token;
+        //
     }
 
     /**
@@ -31,11 +28,8 @@ class MyMail extends Mailable
      */
     public function build()
     {
-        $user['name'] = $this->name;
-        $user['token'] = $this->token;
-
         return $this->from("flashalert@projects-codingbrains.com", "FlashAlert")
-        ->subject('Login Link')
-        ->view('template.login_link', ['user' => $user]);
+        ->subject('Flash Alert Test Message')
+        ->view('template.sendtest');
     }
 }

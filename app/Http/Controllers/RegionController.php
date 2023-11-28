@@ -130,7 +130,6 @@ class RegionController extends Controller
                  //echo $OrgNameList;
                 return $OrgNameList;
         }
-        
         //after click Post Your News page Dropdown
         public function postnews(Request $request)
         {
@@ -443,5 +442,7 @@ class RegionController extends Controller
             return redirect()->back();
         }
         //_________________________________________End org Page______________________________
+      
+      
 
 }

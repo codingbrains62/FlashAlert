@@ -50,7 +50,8 @@
         -o-transition: height 0.35s ease;
         transition: height 0.35s ease;
     }
-    .sub-menu li a{
+
+    .sub-menu li a {
         font-weight: 600 !important;
     }
 </style>
@@ -220,7 +221,7 @@
                             </li>
 
                             @foreach ($data['region'] as $key => $headerData)
-                            <li><a class="dropdown-item" href="{{ URL('region/' . strtolower(explode('/', $headerData['Description'])[0])) }}">
+                            <li><a class="dropdown-item" href="{{ URL('regions/' . strtolower(explode('/', $headerData['Description'])[0])) }}">
                                     {{ str_replace('/', '-', $headerData['Description']) }}</a></li>
                             @endforeach
 
@@ -311,6 +312,15 @@
                 logdropdown.hide(); // Close the dropdown
             }
         });
+
+        // jQuery('.msngr-tabs a').click(function(e) {
+        //     e.preventDefault();
+        //     var tabId = jQuery(this).attr('href');
+        //     jQuery('.msngr-pane').removeClass('active');
+        //     jQuery('#' + tabId).addClass('active');
+        //     jQuery(this).tab('show');
+        // });
+        
     });
 </script>
 <!-- header -->
