@@ -1,70 +1,11 @@
-<?php
-// echo '<pre>';
-// print_r($data);
-// die;
+<?php 
+//echo '<pre>';
+//print_r($data);
+//die;
 ?>
-@extends('frontend.layouts.app')
-@section('content')
-{{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> --}}
-<style>
-    .my-email-add table tr td {
-        border: 1px solid #ddd;
-    }
-
-    .msgr-subs-tabs li .nav-link {
-        padding: 8px 20px;
-        font-size: 13px;
-        font-weight: 600;
-        color: #666;
-    }
-
-    .msgr-subs-tabs li a:hover {
-        background: #bbdae5;
-        opacity: 1;
-    }
-
-    .msgr-subs-tabs li a {
-        font-size: 12px;
-        font-weight: 600;
-        text-transform: capitalize;
-        text-decoration: none;
-    }
-    .msgr-subs-tabs li a:focus{
-        background: #bbdae5 !important;
-        color: #2e2e2e !important;
-        border: none;
-        border-bottom: 2px solid #097397 !important;
-        outline: none;
-    }
-    .msgr-subs-tabs li.active a {
-        background: #bbdae5;
-        color: #2e2e2e;
-        border-bottom: 2px solid #097397;
-    }
-
-    .bg-e3 {
-        background: #eee;
-    }
-
-    .msngr-tab-cont .tab-pane.active {
-        min-height: 45vh;
-    }
-    .font-12{
-        font-size: 12px;
-    }
-</style>
-@if (Session::has('success'))
-    <script>
-        swal({
-                    title: "Done!",
-                    text: "{{ Session::get('success') }}",
-                    icon: "success",
-                    timer: 3000
-                });
 
 @extends('frontend.layouts.app')
 @section('content')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <style>
 .my-email-add table tr td {
     border: 1px solid #ddd;
@@ -96,39 +37,6 @@
     min-height: 45vh;
 }
 </style>
-<!-- @if (Session::has('success'))
-    <script>
-        toastr.success('{{ Session::get("success") }}', 'Success', { timeOut: 4000 });
-        setTimeout(function () {
-            window.location.href = '{{ route("sub-dashboard") }}';
-        }, 4000);
-    </script>
-@endif -->
-@if (Session::has('success'))
-    <script>
-        swal({
-            title: "Done!",
-            text: "{{ Session::get('success') }}",
-            icon: "success",
-            timer: 3000
-        });
-    </script>
-@endif
-@if (Session::has('error'))
-    <script>
-        swal({
-            title: "Opps!",
-            text: "{{ Session::get('error') }}",
-            icon: "error",
-            timer: 3000
-        });
-    </script>
-@endif
-
-
-
-
-
 <section>
     <div style="background: #c5e3ed">
         <div class="container d-flex justify-content-center align-items-center">
@@ -141,20 +49,6 @@
     </div>
 
     {{-- <?php
-            //echo"<pre>";
-            // print_r($data);
-            // die;
-            ?> --}}
-    @php
-    $org=Helper::getDataID1('publicusersubscription',$data[0]->id,'PublicUserID');
-    @endphp
-    <div id="content">
-        <div id="content-core">
-            <div class="acount-info row align-items-center mb-3 font-12">
-                @foreach ($data as $item)
-                <h4 class="col-lg-8">Welcome, {{ $item->EmailAddress }}</h4>
-                @endforeach
-                <a href={{ route('msgsublogout') }} class="col-lg-4 text-end text-danger">
         //echo"<pre>";
         // print_r($data);
         // die;
@@ -173,34 +67,6 @@
                 </a>
 
             </div>
-            <!-- <ul class="msgr-subs-tabs nav nav-tabs ml-0 justify-content-between bg-e3" id="myTab" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-msg" type="button" role="tab" aria-controls="home" aria-selected="true">My Email Address
-                        <span>{{count($data1)}}</span></button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">My Linked Phone
-                        Apps</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">My Subscriptions
-                        <span>{{count($org)}}</span></button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="add-subscriber" data-bs-toggle="tab" data-bs-target="#addSubs" type="button" role="tab" aria-controls="contact" aria-selected="false">add Subscriptions
-                        <span></span></button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="acc-setting" data-bs-toggle="tab" data-bs-target="#accSet" type="button" role="tab" aria-controls="contact" aria-selected="false">Account Settings
-                        <span></span></button>
-                </li>
-            </ul> -->
-            <!-- <div class="tab-content msngr-tab-cont" id="myTabContent">
-                <div class="tab-pane fade show active p-4 border" id="home-msg" role="tabpanel" aria-labelledby="home-tab">
-                    <div class="my-email-add table-responsive">
-                        <table class="table table-bordered fw-6">
-                            <tbody>
-                                
             <ul class="msgr-subs-tabs nav nav-tabs ml-0 justify-content-between bg-e3" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-msg"
@@ -249,7 +115,8 @@
                                             <input class="form-control border-0" type="hidden" value="{{$datas1->id}}"
                                                 name="hidden">
                                             <div class="tbl-input-email">
-                                                <input class="form-control border-0" type="text" value="{{$datas1->UserEmailAddress}}">
+                                                <input class="form-control border-0" type="text"
+                                                    value="{{$datas1->UserEmailAddress}}">
                                                 @if($datas1->Validated!=1)
                                                 <span class="text-danger">Validation email sent. <a
                                                         href="{{url('resendcode/'.$datas1->id)}}">Click here to send
@@ -286,9 +153,9 @@
                                         </td>
                                         <td class="align-middle">
                                             <div class="tbl-btns">
+                                                <!-- <input type="submit" name="submit" value="UPDATE"> -->
                                                 <button type="submit" class="btn btn-outline-warning">Update</button>
-                                                <!-- <button type="button" class="btn btn-outline-primary">Send Test</button> -->
-                                                <a href="{{url('sendtest/'.$datas1->id)}}" class="btn btn-outline-primary">Send Test</a>
+                                                <button type="button" class="btn btn-outline-primary">Send Test</button>
                                                 @if($datas1->IsPrimary !=1)
                                                 <a href="{{url('deleteemail/'.$datas1->id)}}"
                                                     class="btn btn-outline-danger">Delete</a>
@@ -338,20 +205,10 @@
                                                     role="alert"><strong>{{ $message }}</strong></span>
                                                 @enderror
                                             </div>
-                                           <div>
-                                                <span class="text-danger">Enter validation code and press Update to
-                                                    submit.</span><br>
-                                                <label for="" class="form-label">Enter code from validation
-                                                    message</label>
-                                                <input class="form-control border" type="text" value="">
-                                                <span>Alerts are not sent to non-validated addresses.</span>
-                                            </div> 
                                         </td>
                                         <td class="align-middle">
                                             <div class="tbl-btns">
-                                                <button type="button" class="btn btn-outline-warning">Update</button>
-                                                <button type="button" class="btn btn-outline-primary">Send Test</button>
-                                                <button type="button" class="btn btn-outline-danger">Delete</button>
+                                                <button type="submit" class="btn btn-outline-success">Add</button>
                                             </div>
                                         </td>
                                     </form>
@@ -429,11 +286,11 @@
                     <p class="fw-6">Organizations that you are subscribed to</p>
 
                     <div class="">
-                        <form method="post" action="{{route('updatenewssubs')}}">
-                            @csrf
+                        <form method="post" class="">
+                            
                             @foreach($org as $orgs)
                             <div class="row">
-                                <input type="hidden" name="hidden_{{ $orgs->id }}" value="{{@$orgs->id}}">
+                                <input type="hidden" name="hidden" value="{{@$orgs->id}}">
                                 <div class="four columns"><span class="fw-6">
                                         @php
                                         $orgname=Helper::getDataID1('orgs',$orgs->OrgID ,'id');
@@ -443,30 +300,27 @@
                                         @endforeach
                                     </span></div>
                                 <div class="form-check">
-                                <input type="hidden" name="Ealertup_{{$orgs->id}}" value="0">
-                                    <input class="form-check-input" name="Ealertup_{{$orgs->id}}" type="checkbox" value="1" id="flexCheckDefault_{{$orgs->id}}"
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
                                         @if($orgs->EmergSub == 1) checked @endif>
-                                    <label class="form-check-label" for="flexCheckDefault_{{$orgs->id}}">
+                                    <label class="form-check-label" for="flexCheckDefault">
                                         Emergency Alerts
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                <input type="hidden" name="Nreleaseup_{{$orgs->id}}" value="0">
-                                    <input class="form-check-input" name="Nreleaseup_{{$orgs->id}}" type="checkbox" value="1" id="flexCheckChecked_{{$orgs->id}}"
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked"
                                         @if($orgs->NewsSub == 1) checked @endif>
-                                    <label class="form-check-label" for="flexCheckChecked_{{$orgs->id}}">
+                                    <label class="form-check-label" for="flexCheckChecked">
                                         News Releases
                                     </label>
                                 </div>
 
                                 <div class="text-end">
                                     <input type="Submit" class="py-2 px-4 " value="Update">
-                                    <a href="{{url('deletesubscription/'.$orgs->id)}}"  class="py-2 px-4" onclick="return confirm('Are You Sure You Want To Delete?')">Delete</a>
+                                    <input type="Submit" class="py-2 px-4 " value="Delete">
                                 </div>
                             </div>
                             @endforeach
                         </form>
-      
                         <div style="clear:both;"></div>
                     </div>
                 </div>
@@ -497,80 +351,31 @@
                             </div>
                             <div class="col-lg-6">
                                 <label for="" class="form-label fw-6">Search</label>
-                                <input class="form-control border" type="text" value="" id="serchtext"><br>
-                                <span id='msgserch' class="text-danger"></span>
+                                <input class="form-control border" type="text" value="" id="serchtext">
                             </div>
-                           
-                            <div class="col-12 text-end mt-3">
-                                <button type="submit" class="py-2 px-4 text-white" style="display:none;" id="reset">Reset</button>
-                                <input type="Submit" class="py-2 px-4" value="Search">
-                            </div>
-                            </form>
                             <div class="col-lg-12 mt-3" id="showorg" style="display:none;">
                             <p>Organization:</p>
                                 <select name="cars" size="10" id="cars" style="width:100%;">
                                     
                                 </select>
                             </div>
-                           
-                            <div class="col-lg-6 mt-3" id="showsubscriber" style="display:none;">
-                            <h4>Check the types of messages you would like to receive :</h4>
-                              <div class="ml-4">
-                                <h4 id="orgname"></h4>
-                                <form method="post" action="{{route('addsubscription')}}">
-                                    @csrf
-                                <input type="hidden" name="userid" value="{{@$data[0]->id}}">
-                                <input type="hidden" name="orgid" value="" id="orgid">
-                                <div class="form-check">
-                                <input type="hidden" name="Ealert" value="0">
-                                    <input class="form-check-input" name="Ealert" type="checkbox" value="1" id="flexCheckDefault"
-                                      checked >
-                                    <label class="form-check-label" for="flexCheckDefault">
-                                        Emergency Alerts
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                <input type="hidden" name="Nrelease" value="0">
-                                    <input class="form-check-input" name="Nrelease" type="checkbox" value="1" id="flexCheckChecked"
-                                      checked >
-                                    <label class="form-check-label" for="flexCheckChecked">
-                                        News Releases
-                                    </label>
-                                </div>
-                                <div class="mt-3">
-                                    <input type="Submit" class="py-2 px-4 " value="SUBSCRIBE">
-                                    <!-- <input type="Submit" class="py-2 px-4 " value="CANCEL"> -->
-                                </div>
-                                </form>
-                                <div class="mt-3">
-                                Also available on :  <a here="">Twitter</a> | <a here="">Facebook</a>
-                                    
-                                </div>
-                              </div> 
+                            <div class="col-12 text-end mt-3">
+                                <button type="submit" class="py-2 px-4 text-white" style="display:none;" id="reset">Reset</button>
+                                <input type="Submit" class="py-2 px-4" value="Search">
                             </div>
-                            
                         </div>
-                    
+                    </form>
                 </div>
                 <div class="tab-pane fade p-4 border" id="accSet" role="tabpanel" aria-labelledby="acc-setting">
                     <p class="fw-6 ">Change your Account Password</p>
-                    <form method="post" action="{{route('changePasswrd')}}">
-                        @csrf
                     <div class="row">
                         <div class="col-lg-6">
-                            <input type="hidden" name="reset_pass_id" value="{{session::get('ret')}}">
                             <label for="" class="form-label fw-6">New Password</label>
-                            <input class="form-control border" type="password" value="" name="newpassword">
-                            @error('newpassword')
-                                <span style="color:red;" role="alert"><strong>{{ $message }}</strong></span>
-                            @enderror
+                            <input class="form-control border" type="text" value="">
                         </div>
                         <div class="col-lg-6">
                             <label for="" class="form-label fw-6">Confirm Password</label>
-                            <input class="form-control border" type="password" value="" name="confirm_new_password">
-                            @error('confirm_new_password')
-                                <span style="color:red;" role="alert"><strong>{{ $message }}</strong></span>
-                            @enderror
+                            <input class="form-control border" type="text" value="">
                         </div>
                         <div class="col-12 mt-3 text-end">
                             <input type="Submit" class="py-2 px-4 " value="Change password">
@@ -578,9 +383,8 @@
                     </div>
                     <div class="del-account mt-3">
                         <p>Delete your FlashAlert account</p>
-                        <a href="{{url('deletesubscriptionaccount/'.session::get('ret'))}}" class="btn btn-danger p-3 text-white" onclick="return confirm('Are You Sure You want to Delete Account?')">Delete this Account</a>
+                        <button type="button" class="btn btn-danger p-3">Delete this Account</button>
                     </div>
-                    </form>
                 </div>
             </div>
 
@@ -616,7 +420,6 @@ $(document).ready(function() {
         }
     });
     $('#regionSelect').on('change', function() {
-        
         $('#serchtext').val('');
         $('#cars').html('');
         var selectedValue = $(this).val();
@@ -632,7 +435,7 @@ $(document).ready(function() {
                 }else{
                 $('#showorg').hide();  
                 }
-                console.log(response);
+                //console.log(response);
             },
             error: function(error) {
                 console.error(error);
@@ -640,128 +443,13 @@ $(document).ready(function() {
         });
     });
 
-    $(document).ready(function() {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $('#regionSelect').on('change', function() {
-            $('#serchtext').val('');
-            $('#cars').html('');
-            var selectedValue = $(this).val();
-            var url = "{{route('showorganization')}}"
-            $.ajax({
-                type: 'POST',
-                url: url,
-                data: {
-                    id: selectedValue
-                },
-                success: function(response) {
-                    if (response != "") {
-                        $('#showorg').show();
-                        $('#cars').append(response);
-                    } else {
-                        $('#showorg').hide();
-                    }
-                    console.log(response);
-                },
-                error: function(error) {
-                    console.error(error);
-                }
-            });
-        });
-
-
-
-        $('#formSearch').submit(function(e) {
-           // $("#showsubscriber").show();
-            $('#msgserch').text('');
-            $('#cars').html('');
-            e.preventDefault();
-            var serchtext = $('#serchtext').val();
-            var selectedvalue = $('#regionSelect').val();
-             if(serchtext==''){
-             $('#msgserch').text('<b>Plz Enter Organization Name</b>');
-        
-             }else{
-            $("#showsubscriber").show();
-            $("#orgname").text(serchtext + ' :');
-            var url = "{{route('showorganizationbyserch')}}"
-            $.ajax({
-                type: 'POST',
-                url: url,
-                data: {
-                    id: selectedvalue,
-                    searchvalue: serchtext
-                },
-                success: function(response) {
-                    if (response != "") {
-                        $('#showorg').show();
-                        $('#cars').append(response);
-                        $("#reset").show();
-                        var orgid=$('#optgroupid').val();
-                        $('#orgid').val(orgid);
-                    } else {
-                        $('#showorg').hide();
-                    }
-                    console.log(response);
-                },
-                error: function(error) {
-                    console.error(error);
-                }
-            });
-        }
-
-        });
-        $("#reset").click(function(e) {
-            $('#cars').html('');
-            $("#reset").hide();
-            e.preventDefault();
-            var selectedValue = $('#regionSelect').val();
-            $('#serchtext').val('');
-            var url = "{{route('showorganization')}}"
-            $.ajax({
-                type: 'POST',
-                url: url,
-                data: {
-                    id: selectedValue
-                },
-                success: function(response) {
-                    if (response != "") {
-                        $('#showorg').show();
-                        $('#cars').append(response);
-                        $("#reset").hide();
-                        $("#showsubscriber").hide();
-                    } else {
-                        $('#showorg').hide();
-                    }
-                    //console.log(response);
-                },
-                error: function(error) {
-                    console.error(error);
-                }
-            });
-        })
-        $('#cars').on('change', function() {
-            $("#showsubscriber").show();
-
 
 
     $('#formSearch').submit(function(e){
-        e.preventDefault();
-        $('#msgserch').text('');
-     //$("#showsubscriber").show();
      $('#cars').html('');
-      
+      e.preventDefault();
       var serchtext= $('#serchtext').val();
       var selectedvalue= $('#regionSelect').val();
-      if(serchtext==''){
-        $('#msgserch').text('Plz Enter Organization');
-        
-      }else{
-     $("#showsubscriber").show();
-      $("#orgname").text(serchtext+' :');
       var url ="{{route('showorganizationbyserch')}}"
         $.ajax({
             type: 'POST', 
@@ -772,8 +460,6 @@ $(document).ready(function() {
                 $('#showorg').show();
                 $('#cars').append(response);
                 $("#reset").show();
-                var orgid=$('#optgroupid').val();
-                $('#orgid').val(orgid);
                 }else{
                 $('#showorg').hide();  
                 }
@@ -783,11 +469,9 @@ $(document).ready(function() {
                 console.error(error);
             }
         });
-        }
+
     });
     $("#reset").click(function(e){
-        $('#cars').html('');
-        $("#reset").hide();
       e.preventDefault();
       var selectedValue= $('#regionSelect').val();
       $('#serchtext').val('');
@@ -801,7 +485,6 @@ $(document).ready(function() {
                 $('#showorg').show();
                 $('#cars').append(response);
                 $("#reset").hide();
-                $("#showsubscriber").hide();
                 }else{
                 $('#showorg').hide();  
                 }
@@ -813,15 +496,12 @@ $(document).ready(function() {
         });
     })
     $('#cars').on('change', function() {
-        $("#showsubscriber").show();
-        
-
         var selectedValue = $(this).val();
-        $("#orgid").val(selectedValue);
+        alert(selectedValue);
 
 
-    });
-   
+    })
 });
+
 </script>
 @endsection

@@ -57,6 +57,7 @@
                                 <tr>
                                     <td style="padding:0 0 3px 0;color:#153643;">
                                         <p style="font-weight:bold;font-family:'Roboto';font-size:16px;color:#606060">
+<<<<<<< HEAD
                                         This is a FlashAlert test message successfully sent from FlashAlert.net.
                                        <!--  <p
                                             style="margin:10px 0 12px 0;font-size:13px;font-weight: 600;line-height:24px;font-family:Arial,sans-serif;color:#504f4f">
@@ -65,6 +66,18 @@
                                         <p
                                         style="margin:50px 0 12px 0;font-size:16px;font-family:Arial,sans-serif;font-weight:600;text-align:end;color:#606060">
                                         Thank you</p>
+=======
+                                            This is a FlashAlert test message successfully sent from FlashAlert.net.
+                                        </p>
+                                        <p
+                                            style="margin:10px 0 12px 0;font-size:13px;font-weight: 600;line-height:24px;font-family:Arial,sans-serif;color:#504f4f">
+                                            Thank you for contacting us. We have received your message and will get back to you as soon as possible.
+                                        </p>
+                                        <p
+                                        style="margin:50px 0 12px 0;font-size:16px;font-family:Arial,sans-serif;font-weight:600;text-align:end;color:#606060">
+                                        Thank you
+                                        </p>
+>>>>>>> 70ddfa705c446d98531632a5b1ed5e4d2fb060a1
                                     </td>
                                 </tr>
                             </table>
@@ -73,7 +86,12 @@
                     <tr style="text-align:center;background: #e4e5eb;">
                         <p
                             style="letter-spacing: 0.8px;font-weight: bold;font-family: 'Roboto';color: #9b381b;font-size: 16px;margin: 8px 0;">
+<<<<<<< HEAD
                             © Flash Alert </p>
+=======
+                            © Flash Alert 
+                        </p>
+>>>>>>> 70ddfa705c446d98531632a5b1ed5e4d2fb060a1
                     </tr>
                 </table>
             </td>
