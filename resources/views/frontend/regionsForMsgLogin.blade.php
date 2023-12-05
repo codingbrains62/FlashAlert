@@ -1,3 +1,6 @@
+@php 
+$data=Helper::MenuHeaderData();
+@endphp
 @extends('frontend.layouts.app')
 @section('content')
     <section>
@@ -12,7 +15,6 @@
         </div>
         <div class="container bank-union my-4">
             <p>Choose your region below to start a new FlashAlert Messenger subscription, or search for the org here</p>
-
             <form action="{{ route('frontend-region') }}" method="post">
                 @csrf
                 <div class="row">
@@ -56,7 +58,16 @@
             <div id="regions_wrapper">
                 <div class="regions">
                     <ul>
-                        <li>
+                        <h4> 
+                            @foreach ($data['region'] as $key => $headerData)
+                                <li class="{{ Route::currentRouteName() === 'regions' && Request::is('region/' . strtolower(explode('/', $headerData['Description'])[0])) ? 'active1' : '' }} mt-2">
+                                    <a class="" href="{{ URL('regions/' . strtolower(explode('/', $headerData['Description'])[0]))}}">
+                                        {{ str_replace('/', '-', $headerData['Description']) }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </h4>
+                        <!-- <li>
                             <h4><a href="/regions/portland-vancouver-salem/">Portland/Vancouver/Salem</a></h4>
                         </li>
                         <li>
@@ -87,7 +98,7 @@
                         </li>
                         <li>
                             <h4><a href="/regions/colorado-springs-pueblo/">Colorado Springs/Pueblo</a></h4>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
             </div>

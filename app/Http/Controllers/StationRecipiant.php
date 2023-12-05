@@ -47,14 +47,14 @@ class StationRecipiant extends Controller
      $id=$request->id;
      $data1= DB::table('regioncities')->where('RegionID',$id)->get();
      $output = '<div style="margin-top:20px;"> Category:</div>
-                 <div style="width:50%">
+                <div style="width:50%">
                  <select class="form-control" id="city" name="city">
                   <option value="">Select</option>';
                     foreach($data1 as $datas1){
                         $output .= '<option value='."$datas1->cid".'>'."$datas1->CityName".'</option>';
                     }
-                '</select>
-               </div>';
+                 '</select>
+                </div>';
     return $output;
 }
 
@@ -150,7 +150,6 @@ public function deletestation($id){
         return redirect()->route('station.recipiant')->with('success',"Station Deleted Succesfully!");
        }
   }
-
 public function addstationemail(Request $request){
     try {
         $request->validate([
@@ -207,8 +206,6 @@ public function addstationemail(Request $request){
    $id=$dataRegion[0]->SubID; 
    return view('backend.ftp_page', compact('dataRegion','style','data','id'));
 }
-
-
 public function addftp(Request $request){
 
     // echo '<pre>';
@@ -255,7 +252,6 @@ public function addftp(Request $request){
  public function newsmediarecipients(Request $request){
     $decodedRegion = $request->input('Region');
     $selectedRegion = $decodedRegion ?? '0';
-    
     $response='';
     if($request->Region!=''){
     $id=$request->Region;
@@ -296,14 +292,11 @@ public function styletempdel($id){
     $result=DB::table('styles')->delete($data);
     return back()->with('success',"Style Templates Deleted Succesfully!");
 }
-
-
 public function addstyletemp(Request $request){
     try {
         $request->validate([
             'Name' => 'required',
             'URL' => 'required',
-           
         ]);
         $data=[
             'Name'=>$request->Name,

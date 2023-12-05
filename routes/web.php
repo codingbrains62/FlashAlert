@@ -63,10 +63,8 @@ Route::middleware(['subuser'])->group(function () {
 
     
     });
-    Route::get('/msgsublogout', [MessengerSubscriptionController::class,'logout'])->name('msgsublogout');
-
+Route::get('/msgsublogout', [MessengerSubscriptionController::class,'logout'])->name('msgsublogout');
 Route::get('user-login-link/{token}/{email}', [MessengerSubscriptionController::class, 'UserLoginLinkValidate']);
-
 Route::post('sub-login', [MessengerSubscriptionController::class, 'mesSubLogin'])->name('mesSubLogin');
 Route::get('forgetPass',[MessengerSubscriptionController::class,'lostpass'])->name('frontend-lostpass');
 Route::get('/post-your-news/{url}/{id}', [RegionController::class,'postnews'])->name('postnewsregions');

@@ -152,7 +152,7 @@
                                         @php
                                         $date = @$datas->DateLastPaid;
                                         $year = substr($date, 0, 4);
-                                        //$output = ($year === '0000') ? 'Never' : $year;
+                                        $output = ($year === '0000') ? 'Never' : $year;
                                         if($year === '0000' || $datas->AmountPaid==''){
                                             $output="Never";
                                         }else{

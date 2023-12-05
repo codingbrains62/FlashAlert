@@ -11,7 +11,7 @@
         </div>
     </div>
     <div class="container bank-union my-4" style="min-height: 42vh;">
-        <form class="log-input front-login" method="post" action="your_action_url_here">
+        <form class="log-input front-login" method="post" action="">
             <label for="EmailAddress" class="mb-3"><b>Please enter your Email Address</b></label>
             <input placeholder="E-mail" type="text" id="EmailAddress" name="EmailAddress" class="srch-form mb-4" required>
             <button type="submit" name="Submit" class="srch-btn">Reset password</button>
